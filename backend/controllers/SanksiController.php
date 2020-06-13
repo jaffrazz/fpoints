@@ -80,7 +80,7 @@ class SanksiController extends Controller
     {
         $model = new Sanksi();
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+        if ($model->loadAll(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', "Sanksi berhasil ditambahkan.");
 
             return $this->redirect(['view', 'id' => $model->id_sanksi]);
@@ -101,7 +101,7 @@ class SanksiController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+        if ($model->loadAll(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', "Sanksi berhasil diubah.");
 
             return $this->redirect(['view', 'id' => $model->id_sanksi]);
