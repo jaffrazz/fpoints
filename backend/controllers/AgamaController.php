@@ -132,11 +132,9 @@ class AgamaController extends Controller
             $this->findModel($id)->delete();
             $trans->commit();
             Yii::$app->session->setFlash('success', "Agama berhasil dihapus.");
-            return $this->redirect(['index']);
         } catch (\Exception $e) {
             $trans->rollBack();
             Yii::$app->session->setFlash('error', 'Error, cant perform this action correctly.');
-            return $this->redirect(['index']);
         }
 
         return $this->redirect(['index']);

@@ -64,6 +64,8 @@ class PekerjaanController extends Controller
         $model = new Pekerjaan();
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+            Yii::$app->session->setFlash('success', "Pekerjaan berhasil ditambahkan.");
+
             return $this->redirect(['index']);
         } else {
             return $this->render('create', [
@@ -83,6 +85,8 @@ class PekerjaanController extends Controller
         $model = $this->findModel($id);
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+            Yii::$app->session->setFlash('success', "Pekerjaan berhasil diubah.");
+
             return $this->redirect(['index']);
         } else {
             return $this->render('update', [
@@ -99,8 +103,16 @@ class PekerjaanController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->deleteWithRelated();
 
+        $trans = Yii::$app->db->beginTransaction();
+        try {
+            $this->findModel($id)->delete();
+            $trans->commit();
+            Yii::$app->session->setFlash('success', "Pekerjaan berhasil dihapus.");
+        } catch (\Exception $e) {
+            $trans->rollBack();
+            Yii::$app->session->setFlash('error', 'Error, cant perform this action correctly.');
+        }
         return $this->redirect(['index']);
     }
 

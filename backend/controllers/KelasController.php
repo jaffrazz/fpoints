@@ -88,6 +88,8 @@ class KelasController extends Controller
                 $this->namaKelas($model, 'create');
 
                 $trans->commit();
+                Yii::$app->session->setFlash('success', "Kelas berhasil ditambahkan.");
+
                 return $this->redirect(['view', 'id' => $model->id_kelas]);
             } catch (\Exception $e) {
                 $trans->rollBack();
@@ -120,6 +122,8 @@ class KelasController extends Controller
                 $this->namaKelas($model, 'update');
 
                 $trans->commit();
+                Yii::$app->session->setFlash('success', "Kelas berhasil diubah.");
+
                 return $this->redirect(['view', 'id' => $model->id_kelas]);
 
             } catch (\Exception $e) {
@@ -151,6 +155,7 @@ class KelasController extends Controller
             $this->namaKelas($model, 'delete');
             $model->deleteWithRelated();
             $trans->commit();
+            Yii::$app->session->setFlash('success', "Kelas berhasil dihapus.");
         }catch(\Exception $e){
             $trans->rollBack();
             Yii::$app->session->setFlash('error','Error, cant perform this action correctly');

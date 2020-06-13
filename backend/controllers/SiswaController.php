@@ -97,6 +97,8 @@ class SiswaController extends Controller
         $model = new Siswa();
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+            Yii::$app->session->setFlash('success', "Siswa berhasil ditambahkan.");
+
             return $this->redirect(['view', 'id' => $model->id_siswa]);
         } else {
             return $this->render('create', [
@@ -116,6 +118,8 @@ class SiswaController extends Controller
         $model = $this->findModel($id);
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+            Yii::$app->session->setFlash('success', "Siswa berhasil diubah.");
+
             return $this->redirect(['view', 'id' => $model->id_siswa]);
         } else {
             return $this->render('update', [
@@ -132,7 +136,16 @@ class SiswaController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->deleteWithRelated();
+        $trans = Yii::$app->db->beginTransaction();
+        try {
+            $this->findModel($id)->delete();
+
+            $trans->commit();
+            Yii::$app->session->setFlash('success', "Siswa berhasil dihapus.");
+        } catch (\Exception $e) {
+            $trans->rollBack();
+            Yii::$app->session->setFlash('error', 'Error, cant perform this action correctly.');
+        }
 
         return $this->redirect(['index']);
     }

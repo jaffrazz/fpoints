@@ -118,13 +118,14 @@ class WaliKelasController extends Controller
     {
         $trans = Yii::$app->db->beginTransaction();
         try{
-            $this->findModel($id)->deleteWithRelated();
+            $this->findModel($id)->delete();
             $trans->commit();
-            return $this->redirect(['index']);
+            Yii::$app->session->setFlash('success', "Wali Kelas berhasil dihapus.");
+
         }catch(\Exception $e){
             $trans->rollBack();
             Yii::$app->session->setFlash('error', 'Error, cant perform this action correctly.');
-            return $this->redirect(['index']);
+            
         }
 
     }

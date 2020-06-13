@@ -86,6 +86,7 @@ class PegawaiController extends Controller
         $agama = $this->getDropdownAgama();
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+            Yii::$app->session->setFlash('success', "Pegawai berhasil ditambahkan.");
             return $this->redirect(['view', 'id' => $model->id_pegawai]);
         } else {
             return $this->render('create', [
@@ -107,6 +108,7 @@ class PegawaiController extends Controller
         $agama = $this->getDropdownAgama();
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+            Yii::$app->session->setFlash('success', "Pegawai berhasil diubah.");
             return $this->redirect(['view', 'id' => $model->id_pegawai]);
         } else {
             return $this->render('update', [
@@ -124,7 +126,16 @@ class PegawaiController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->deleteWithRelated();
+
+        $trans = Yii::$app->db->beginTransaction();
+        try {
+            $this->findModel($id)->deleteWithRelated();
+            $trans->commit();
+            Yii::$app->session->setFlash('success', "Pegawai berhasil dihapus.");
+        } catch (\Exception $e) {
+            $trans->rollBack();
+            Yii::$app->session->setFlash('error', 'Error, cant perform this action correctly.');
+        }
 
         return $this->redirect(['index']);
     }

@@ -119,12 +119,10 @@ class HariTidakEfektifController extends Controller
         try {
             $this->findModel($id)->deleteWithRelated();
             $trans->commit();
-            Yii::$app->session->setFlash('success', "Tindakan berhasil dihapus.");
-            return $this->redirect(['index']);
+            Yii::$app->session->setFlash('success', "Hari tidak efektif berhasil dihapus.");
         } catch (\Exception $e) {
             $trans->rollBack();
             Yii::$app->session->setFlash('error', 'Error, cant perform this action correctly.');
-            return $this->redirect(['index']);
         }
 
         return $this->redirect(['index']);

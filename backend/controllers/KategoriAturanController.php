@@ -81,6 +81,8 @@ class KategoriAturanController extends Controller
         $model = new KategoriAturan();
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+            Yii::$app->session->setFlash('success', "Kategori aturan berhasil ditambahkan.");
+
             return $this->redirect(['view', 'id' => $model->id_kategori]);
         } else {
             return $this->render('create', [
@@ -100,6 +102,8 @@ class KategoriAturanController extends Controller
         $model = $this->findModel($id);
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+            Yii::$app->session->setFlash('success', "Kategori aturan berhasil diubah.");
+
             return $this->redirect(['view', 'id' => $model->id_kategori]);
         } else {
             return $this->render('update', [
@@ -116,7 +120,15 @@ class KategoriAturanController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->deleteWithRelated();
+        $trans = Yii::$app->db->beginTransaction();
+        try {
+            $this->findModel($id)->deleteWithRrelated();
+            $trans->commit();
+            Yii::$app->session->setFlash('success', "Kategori aturan berhasil dihapus.");
+        } catch (\Exception $e) {
+            $trans->rollBack();
+            Yii::$app->session->setFlash('error', 'Error, cant perform this action correctly.');
+        }
 
         return $this->redirect(['index']);
     }

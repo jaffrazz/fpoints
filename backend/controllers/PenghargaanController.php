@@ -81,6 +81,8 @@ class PenghargaanController extends Controller
         $model = new Penghargaan();
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+            Yii::$app->session->setFlash('success', "Penghargaan berhasil ditambahkan.");
+
             return $this->redirect(['view', 'id' => $model->id_penghargaan]);
         } else {
             return $this->render('create', [
@@ -100,6 +102,8 @@ class PenghargaanController extends Controller
         $model = $this->findModel($id);
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+            Yii::$app->session->setFlash('success', "Penghargaan berhasil diubah.");
+
             return $this->redirect(['view', 'id' => $model->id_penghargaan]);
         } else {
             return $this->render('update', [
@@ -116,7 +120,16 @@ class PenghargaanController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->deleteWithRelated();
+        $trans = Yii::$app->db->beginTransaction();
+        try {
+            $this->findModel($id)->deleteWithRelated();
+
+            $trans->commit();
+            Yii::$app->session->setFlash('success', "Penghargaan berhasil dihapus.");
+        } catch (\Exception $e) {
+            $trans->rollBack();
+            Yii::$app->session->setFlash('error', 'Error, cant perform this action correctly.');
+        }
 
         return $this->redirect(['index']);
     }
