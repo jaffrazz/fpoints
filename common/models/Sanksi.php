@@ -18,7 +18,7 @@ class Sanksi extends BaseSanksi
         return array_replace_recursive(parent::rules(),
 	    [
             [['uraian'], 'string'],
-            [['minimum_point', 'maximum_point'], 'integer']
+            [['minimum_point'], 'integer']
         ]);
     }
 	

@@ -39,7 +39,7 @@ class Sanksi extends \yii\db\ActiveRecord
     {
         return [
             [['uraian'], 'string'],
-            [['minimum_point', 'maximum_point'], 'integer']
+            [['minimum_point'], 'integer']
         ];
     }
 

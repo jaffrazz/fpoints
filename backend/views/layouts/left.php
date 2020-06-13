@@ -43,6 +43,7 @@
                             ['label' => 'Pegawai', 'icon' => 'file-code-o', 'url' => ['/pegawai']],
                             ['label' => 'Pekerjaan', 'icon' => 'file-code-o', 'url' => ['/pekerjaan']],
                             ['label' => 'Penghargaan', 'icon' => 'file-code-o', 'url' => ['/penghargaan']],
+                            ['label' => 'Sanksi', 'icon' => 'file-code-o', 'url' => ['/sanksi']],
                             ['label' => 'Status Absensi', 'icon' => 'file-code-o', 'url' => ['/status-absensi']],
                             ['label' => 'Tindakan', 'icon' => 'file-code-o', 'url' => ['/tindakan']],
                         ]
