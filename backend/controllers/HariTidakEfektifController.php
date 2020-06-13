@@ -76,7 +76,8 @@ class HariTidakEfektifController extends Controller
     {
         $model = new HariTidakEfektif();
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+        if ($model->loadAll(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', "Hari tidak efektif berhasil ditambahkan.");
             return $this->redirect(['view', 'id' => $model->id_hari_tidak_efektif]);
         } else {
             return $this->render('create', [
@@ -95,7 +96,8 @@ class HariTidakEfektifController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+        if ($model->loadAll(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', "Hari tidak efektif berhasil diubah.");
             return $this->redirect(['view', 'id' => $model->id_hari_tidak_efektif]);
         } else {
             return $this->render('update', [
@@ -112,7 +114,18 @@ class HariTidakEfektifController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->deleteWithRelated();
+
+        $trans = Yii::$app->db->beginTransaction();
+        try {
+            $this->findModel($id)->deleteWithRelated();
+            $trans->commit();
+            Yii::$app->session->setFlash('success', "Tindakan berhasil dihapus.");
+            return $this->redirect(['index']);
+        } catch (\Exception $e) {
+            $trans->rollBack();
+            Yii::$app->session->setFlash('error', 'Error, cant perform this action correctly.');
+            return $this->redirect(['index']);
+        }
 
         return $this->redirect(['index']);
     }

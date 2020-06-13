@@ -89,6 +89,7 @@ class AgamaController extends Controller
         $model = new Agama();
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', "Agama berhasil ditambahkan.");
             return $this->redirect(['view', 'id' => $model->id_agama]);
         } else {
             return $this->render('create', [
@@ -108,6 +109,7 @@ class AgamaController extends Controller
         $model = $this->findModel($id);
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success', "Agama berhasil diubah.");
             return $this->redirect(['view', 'id' => $model->id_agama]);
         } else {
             return $this->render('update', [
@@ -124,7 +126,18 @@ class AgamaController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->deleteWithRelated();
+
+        $trans = Yii::$app->db->beginTransaction();
+        try {
+            $this->findModel($id)->delete();
+            $trans->commit();
+            Yii::$app->session->setFlash('success', "Agama berhasil dihapus.");
+            return $this->redirect(['index']);
+        } catch (\Exception $e) {
+            $trans->rollBack();
+            Yii::$app->session->setFlash('error', 'Error, cant perform this action correctly.');
+            return $this->redirect(['index']);
+        }
 
         return $this->redirect(['index']);
     }
