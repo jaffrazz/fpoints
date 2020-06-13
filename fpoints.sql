@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 13, 2020 at 10:40 AM
+-- Generation Time: Jun 14, 2020 at 06:58 AM
 -- Server version: 10.1.44-MariaDB-0ubuntu0.18.04.1
 -- PHP Version: 7.2.26-1+ubuntu18.04.1+deb.sury.org+1
 
@@ -66,6 +66,7 @@ INSERT INTO `agama` (`id_agama`, `agama`) VALUES
 CREATE TABLE `akumulasi_point` (
   `id_siswa` bigint(20) NOT NULL,
   `id_sanksi` int(11) NOT NULL,
+  `total_point` int(11) NOT NULL,
   `tanggal` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -136,6 +137,25 @@ CREATE TABLE `hari_tidak_efektif` (
 INSERT INTO `hari_tidak_efektif` (`id_hari_tidak_efektif`, `tanggal_tidak_efektif`, `keterangan_tidak_efektif`) VALUES
 (3, '2020-06-01', 'an only install one of: mpdf/mpdf[v8.0.6, v7.1.8].\r\n    - Installation request for mpdf/mpdf (locked at v7.1.8) -> satisfiable by mpdf/mpdf[v7.1.8].'),
 (4, '2020-06-02', 'an only install one of: mpdf/mpdf[v8.0.6, v7.1.8].\r\n    - Installation request for mpdf/mpdf (locked at v7.1.8) -> satisfiable by mpdf/mpdf[v7.1.8].');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `jabatan`
+--
+
+CREATE TABLE `jabatan` (
+  `id_jabatan` int(11) NOT NULL,
+  `jabatan` varchar(30) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `jabatan`
+--
+
+INSERT INTO `jabatan` (`id_jabatan`, `jabatan`) VALUES
+(2, 'Guru'),
+(1, 'Teknisi');
 
 -- --------------------------------------------------------
 
@@ -257,7 +277,7 @@ CREATE TABLE `pegawai` (
   `jenis_kelamin_pegawai` enum('L','P') NOT NULL,
   `no_hp_pegawai` varchar(15) NOT NULL,
   `status_kepegawaian` varchar(50) NOT NULL,
-  `jabatan_pegawai` varchar(50) NOT NULL,
+  `jabatan_pegawai` int(11) NOT NULL,
   `foto_pegawai` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -266,8 +286,8 @@ CREATE TABLE `pegawai` (
 --
 
 INSERT INTO `pegawai` (`id_pegawai`, `id_agama`, `nama_pegawai`, `alamat_pegawai`, `jenis_kelamin_pegawai`, `no_hp_pegawai`, `status_kepegawaian`, `jabatan_pegawai`, `foto_pegawai`) VALUES
-(1, 1, 'admin', 'admin', 'L', '081234567890', 'Pegawai Tetap', 'Teknisi', ''),
-(2, 1, 'Defri Indra Mahardika', 'Ds. Pulung Kec. Pulung', 'L', '+6285604845437', 'Tetap', 'Teknisi', '');
+(1, 1, 'admin', 'admin', 'L', '081234567890', 'Pegawai Tetap', 1, ''),
+(2, 1, 'Defri Indra Mahardika', 'Ds. Pulung Kec. Pulung', 'L', '+6285604845437', 'Tetap', 1, '');
 
 -- --------------------------------------------------------
 
@@ -344,6 +364,14 @@ CREATE TABLE `sanksi` (
   `maximum_point` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `sanksi`
+--
+
+INSERT INTO `sanksi` (`id_sanksi`, `uraian`, `minimum_point`, `maximum_point`) VALUES
+(1, 'Skorsing 3 hari', 25, 60),
+(2, 'Skorsing selama 6 hari\r\nMembuat surat pernyataan', 50, NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -358,7 +386,7 @@ CREATE TABLE `siswa` (
   `nama_siswa` varchar(50) NOT NULL,
   `tempat_lahir_siswa` varchar(40) NOT NULL,
   `tanggal_lahir_siswa` date NOT NULL,
-  `jenis_kelamin_siswa` char(1) NOT NULL,
+  `jenis_kelamin_siswa` enum('P','L') NOT NULL,
   `alamat_rumah_siswa` text NOT NULL,
   `alamat_domisili_siswa` text NOT NULL,
   `no_hp_siswa` varchar(15) NOT NULL,
@@ -370,7 +398,7 @@ CREATE TABLE `siswa` (
 --
 
 INSERT INTO `siswa` (`id_siswa`, `id_wali_murid`, `id_agama`, `nis`, `nama_siswa`, `tempat_lahir_siswa`, `tanggal_lahir_siswa`, `jenis_kelamin_siswa`, `alamat_rumah_siswa`, `alamat_domisili_siswa`, `no_hp_siswa`, `foto_siswa`) VALUES
-(1, 1, 1, '1', '1', '1', '2020-06-02', 'P', 'L', 'A', '091882', '12');
+(2, 1, 1, '1123463434534', 'Vlania Putri Deviantara', 'Ponorogo', '2002-05-19', 'P', '$trans->commit();', '$trans->commit();', '+6285604845437', '');
 
 -- --------------------------------------------------------
 
@@ -417,6 +445,13 @@ CREATE TABLE `tindakan` (
   `id_tindakan` int(11) NOT NULL,
   `tindakan` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tindakan`
+--
+
+INSERT INTO `tindakan` (`id_tindakan`, `tindakan`) VALUES
+(1, 'Membersihkan lingkungan sekolah');
 
 -- --------------------------------------------------------
 
@@ -533,6 +568,13 @@ ALTER TABLE `hari_tidak_efektif`
   ADD PRIMARY KEY (`id_hari_tidak_efektif`);
 
 --
+-- Indexes for table `jabatan`
+--
+ALTER TABLE `jabatan`
+  ADD PRIMARY KEY (`id_jabatan`),
+  ADD UNIQUE KEY `jabatan` (`jabatan`);
+
+--
 -- Indexes for table `jurusan`
 --
 ALTER TABLE `jurusan`
@@ -570,6 +612,7 @@ ALTER TABLE `nama_kelas`
 --
 ALTER TABLE `on_kelas_siswa`
   ADD PRIMARY KEY (`id_kelas`,`id_siswa`),
+  ADD UNIQUE KEY `id_siswa` (`id_siswa`),
   ADD KEY `FK_ON_KELAS_SISWA2` (`id_siswa`);
 
 --
@@ -577,7 +620,8 @@ ALTER TABLE `on_kelas_siswa`
 --
 ALTER TABLE `pegawai`
   ADD PRIMARY KEY (`id_pegawai`),
-  ADD KEY `FK_ON_AGAMA_PEGAWAI` (`id_agama`);
+  ADD KEY `FK_ON_AGAMA_PEGAWAI` (`id_agama`),
+  ADD KEY `fk_on_jabatan_pegawai` (`jabatan_pegawai`);
 
 --
 -- Indexes for table `pekerjaan`
@@ -696,6 +740,12 @@ ALTER TABLE `hari_tidak_efektif`
   MODIFY `id_hari_tidak_efektif` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
+-- AUTO_INCREMENT for table `jabatan`
+--
+ALTER TABLE `jabatan`
+  MODIFY `id_jabatan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `jurusan`
 --
 ALTER TABLE `jurusan`
@@ -711,7 +761,7 @@ ALTER TABLE `kategori_aturan`
 -- AUTO_INCREMENT for table `kelas`
 --
 ALTER TABLE `kelas`
-  MODIFY `id_kelas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id_kelas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `pegawai`
@@ -735,13 +785,13 @@ ALTER TABLE `penghargaan`
 -- AUTO_INCREMENT for table `sanksi`
 --
 ALTER TABLE `sanksi`
-  MODIFY `id_sanksi` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_sanksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `siswa`
 --
 ALTER TABLE `siswa`
-  MODIFY `id_siswa` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_siswa` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `sp`
@@ -753,13 +803,13 @@ ALTER TABLE `sp`
 -- AUTO_INCREMENT for table `status_absensi`
 --
 ALTER TABLE `status_absensi`
-  MODIFY `id_status_absensi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_status_absensi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tindakan`
 --
 ALTER TABLE `tindakan`
-  MODIFY `id_tindakan` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_tindakan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `user`
@@ -828,7 +878,8 @@ ALTER TABLE `on_kelas_siswa`
 -- Constraints for table `pegawai`
 --
 ALTER TABLE `pegawai`
-  ADD CONSTRAINT `FK_ON_AGAMA_PEGAWAI` FOREIGN KEY (`id_agama`) REFERENCES `agama` (`id_agama`);
+  ADD CONSTRAINT `FK_ON_AGAMA_PEGAWAI` FOREIGN KEY (`id_agama`) REFERENCES `agama` (`id_agama`),
+  ADD CONSTRAINT `fk_on_jabatan_pegawai` FOREIGN KEY (`jabatan_pegawai`) REFERENCES `jabatan` (`id_jabatan`);
 
 --
 -- Constraints for table `pelanggaran`
