@@ -9,6 +9,7 @@ use Yii;
  *
  * @property integer $id_siswa
  * @property integer $id_sanksi
+ * @property integer $total_point
  * @property string $tanggal
  *
  * @property \common\models\Siswa $siswa
@@ -18,7 +19,7 @@ class AkumulasiPoint extends \yii\db\ActiveRecord
 {
     use \mootensai\relation\RelationTrait;
 
-
+    
     /**
     * This function helps \mootensai\relation\RelationTrait runs faster
     * @return array relation names of this model
@@ -37,8 +38,8 @@ class AkumulasiPoint extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_siswa', 'id_sanksi'], 'required'],
-            [['id_siswa', 'id_sanksi'], 'integer'],
+            [['id_siswa', 'id_sanksi', 'total_point'], 'required'],
+            [['id_siswa', 'id_sanksi', 'total_point'], 'integer'],
             [['tanggal'], 'safe']
         ];
     }
@@ -57,8 +58,9 @@ class AkumulasiPoint extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_siswa' => 'Id Siswa',
-            'id_sanksi' => 'Id Sanksi',
+            'id_siswa' => 'Siswa',
+            'id_sanksi' => 'Sanksi',
+            'total_point' => 'Total Point',
             'tanggal' => 'Tanggal',
         ];
     }
