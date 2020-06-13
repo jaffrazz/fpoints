@@ -28,7 +28,7 @@ class WaliMuridController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'add-siswa'],
+                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
                         'roles' => ['@']
                     ],
                     [
@@ -80,7 +80,8 @@ class WaliMuridController extends Controller
     {
         $model = new WaliMurid();
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+        if ($model->loadAll(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success',"$model->nama_wali_murid berhasil ditambahkan.");
             return $this->redirect(['view', 'id' => $model->id_wali_murid]);
         } else {
             return $this->render('create', [
@@ -99,7 +100,8 @@ class WaliMuridController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+        if ($model->loadAll(Yii::$app->request->post()) && $model->save()) {
+            Yii::$app->session->setFlash('success',"$model->nama_wali_murid berhasil diubah.");
             return $this->redirect(['view', 'id' => $model->id_wali_murid]);
         } else {
             return $this->render('update', [
@@ -116,7 +118,16 @@ class WaliMuridController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->deleteWithRelated();
+        $trans = Yii::$app->db->beginTransaction();
+
+        try{
+            $this->findModel($id)->deleteWithRelated();            
+            $trans->commit();
+            Yii::$app->session->setFlash('success',"Data berhasil dihapus.");
+        }catch(\Exception $e){
+            $trans->rollBack();
+            Yii::$app->session->setFlash('error',"Data gagal dihapus.");
+        }
 
         return $this->redirect(['index']);
     }
@@ -133,26 +144,6 @@ class WaliMuridController extends Controller
     {
         if (($model = WaliMurid::findOne($id)) !== null) {
             return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
-    
-    /**
-    * Action to load a tabular form grid
-    * for Siswa
-    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-    *
-    * @return mixed
-    */
-    public function actionAddSiswa()
-    {
-        if (Yii::$app->request->isAjax) {
-            $row = Yii::$app->request->post('Siswa');
-            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('_action') == 'load' && empty($row)) || Yii::$app->request->post('_action') == 'add')
-                $row[] = [];
-            return $this->renderAjax('_formSiswa', ['row' => $row]);
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
