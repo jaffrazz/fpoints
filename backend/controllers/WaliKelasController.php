@@ -121,12 +121,12 @@ class WaliKelasController extends Controller
             $this->findModel($id)->delete();
             $trans->commit();
             Yii::$app->session->setFlash('success', "Wali Kelas berhasil dihapus.");
-
         }catch(\Exception $e){
             $trans->rollBack();
-            Yii::$app->session->setFlash('error', 'Error, cant perform this action correctly.');
-            
+            Yii::$app->session->setFlash('error', 'Error, cant perform this action correctly. Because this table relation with ');
         }
+
+        return $this->redirect(['index']);
 
     }
 
