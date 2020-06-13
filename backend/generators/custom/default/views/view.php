@@ -42,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'title' => " . $generator->generateString('Will open the generated PDF file in a new window') . "
                                 ]
                             )?>\n"
-?>
+                        ?>
                         <?php endif;?>
                         <?php if ($generator->saveAsNew): ?>
                         <?="            <?= Html::a(" . $generator->generateString('Save As New') . ", ['save-as-new', " . $generator->generateUrlParams() . "], ['class' => 'btn btn-info']) ?>"?>
@@ -63,22 +63,22 @@ $this->params['breadcrumbs'][] = $this->title;
                 <?="<?php \n"?>
                     $gridColumn = [
                 <?php
-if ($tableSchema === false) {
-    foreach ($generator->getColumnNames() as $name) {
-        if (++$count < 6) {
-            echo "            '" . $name . "',\n";
-        } else {
-            echo "            // '" . $name . "',\n";
-        }
-    }
-} else {
-    foreach ($tableSchema->getColumnNames() as $attribute) {
-        if (!in_array($attribute, $generator->skippedColumns)) {
-            echo "        " . $generator->generateDetailViewField($attribute, $fk, $tableSchema);
+                    if ($tableSchema === false) {
+                        foreach ($generator->getColumnNames() as $name) {
+                            if (++$count < 6) {
+                                echo "            '" . $name . "',\n";
+                            } else {
+                                echo "            // '" . $name . "',\n";
+                            }
+                        }
+                    } else {
+                        foreach ($tableSchema->getColumnNames() as $attribute) {
+                            if (!in_array($attribute, $generator->skippedColumns)) {
+                                echo "        " . $generator->generateDetailViewField($attribute, $fk, $tableSchema);
 
-        }
-    }
-}?>
+                            }
+                        }
+                    }?>
                     ];
                     echo DetailView::widget([
                         'model' => $model,
@@ -95,22 +95,22 @@ if ($tableSchema === false) {
                             $gridColumn<?=$rel[1]?> = [
                                 ['class' => 'yii\grid\SerialColumn'],
                         <?php
-$relTableSchema = $generator->getDbConnection()->getTableSchema($rel[3]);
-$fkRel = $generator->generateFK($relTableSchema);
-if ($tableSchema === false) {
-    foreach ($relTableSchema->getColumnNames() as $attribute) {
-        if (!in_array($attribute, $generator->skippedColumns)) {
-            echo "            '" . $attribute . "',\n";
-        }
-    }
-} else {
-    foreach ($relTableSchema->getColumnNames() as $attribute) {
-        if (!in_array($attribute, $generator->skippedColumns)) {
-            echo '            ' . $generator->generateGridViewField($attribute, $fkRel, $relTableSchema);
-        }
-    }
-}
-?>
+                            $relTableSchema = $generator->getDbConnection()->getTableSchema($rel[3]);
+                            $fkRel = $generator->generateFK($relTableSchema);
+                            if ($tableSchema === false) {
+                                foreach ($relTableSchema->getColumnNames() as $attribute) {
+                                    if (!in_array($attribute, $generator->skippedColumns)) {
+                                        echo "            '" . $attribute . "',\n";
+                                    }
+                                }
+                            } else {
+                                foreach ($relTableSchema->getColumnNames() as $attribute) {
+                                    if (!in_array($attribute, $generator->skippedColumns)) {
+                                        echo '            ' . $generator->generateGridViewField($attribute, $fkRel, $relTableSchema);
+                                    }
+                                }
+                            }
+                            ?>
                             ];
                             echo Gridview::widget([
                                 'dataProvider' => $provider<?=$rel[1]?>,
@@ -130,29 +130,29 @@ if ($tableSchema === false) {
 
                     </div>
                     <?php elseif (empty($rel[2])): ?>
-                    <div class="row">
-                        <h4><?=$rel[1]?><?="<?= "?>' '. Html::encode($this->title) ?></h4>
+                    <div class="pt-3">
+                        <h3><b><?=$rel[1]?><?="<?= "?>' '. Html::encode($this->title) ?></b></h3>
                     </div>
                     <?="<?php \n"?>
                     $gridColumn<?=$rel[1]?> = [
                     <?php
-$relTableSchema = $generator->getDbConnection()->getTableSchema($rel[3]);
-$fkRel = $generator->generateFK($relTableSchema);
-foreach ($relTableSchema->getColumnNames() as $attribute) {
-    if ($attribute == $rel[5]) {
-        continue;
-    }
-    if ($relTableSchema === false) {
-        if (!in_array($attribute, $generator->skippedColumns)) {
-            echo "        '" . $attribute . "',\n";
-        }
-    } else {
-        if (!in_array($attribute, $generator->skippedColumns)) {
-            echo "        " . $generator->generateDetailViewField($attribute, $fkRel);
-        }
-    }
-}
-?>
+                        $relTableSchema = $generator->getDbConnection()->getTableSchema($rel[3]);
+                        $fkRel = $generator->generateFK($relTableSchema);
+                        foreach ($relTableSchema->getColumnNames() as $attribute) {
+                            if ($attribute == $rel[5]) {
+                                continue;
+                            }
+                            if ($relTableSchema === false) {
+                                if (!in_array($attribute, $generator->skippedColumns)) {
+                                    echo "        '" . $attribute . "',\n";
+                                }
+                            } else {
+                                if (!in_array($attribute, $generator->skippedColumns)) {
+                                    echo "        " . $generator->generateDetailViewField($attribute, $fkRel);
+                                }
+                            }
+                        }
+                        ?>
                         ];
                         echo DetailView::widget([
                             'model' => $model-><?=$name?>,
