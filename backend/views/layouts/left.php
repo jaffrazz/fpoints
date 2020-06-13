@@ -36,6 +36,7 @@
                         'url' => '#',
                         'items' => [
                             ['label' => 'Agama', 'icon' => 'file-code-o', 'url' => ['/agama']],
+                            ['label' => 'Jabatan', 'icon' => 'file-code-o', 'url' => ['/jabatan']],
                             ['label' => 'Jurusan', 'icon' => 'file-code-o', 'url' => ['/jurusan']],
                             ['label' => 'Hari Efektif', 'icon' => 'file-code-o', 'url' => ['/hari-efektif']],
                             ['label' => 'Hari Tidak Efektif', 'icon' => 'file-code-o', 'url' => ['/hari-tidak-efektif']],
