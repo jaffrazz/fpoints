@@ -63,7 +63,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ?>
                     <!-- </div> -->
 
-                    <div class="pt-3">
+                    <div class="<?php if ($providerAbsensi->totalCount) {?>pt-3<?php }?>">
                         <?php
                             if ($providerAbsensi->totalCount) {
                                 $gridColumnAbsensi = [
@@ -91,7 +91,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     </div>
 
-                    <div class="pt-3">
+                        <div class="<?php if ($providerAkumulasiPoint->totalCount) { ?>pt-3<?php }?>">
                         <?php
                             if ($providerAkumulasiPoint->totalCount) {
                                 $gridColumnAkumulasiPoint = [
@@ -118,7 +118,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ?>
 
                     </div>
-                    <div class="pt-3">
+                    <div class="<?php if ($providerPelanggaran->totalCount) {?>pt-3<?php }?>">
                         <?php
                             if ($providerPelanggaran->totalCount) {
                                 $gridColumnPelanggaran = [
@@ -146,7 +146,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     </div>
 
-                    <div class="pt-3">
+                    <div class="<?php if ($providerPrestasi->totalCount) {?>pt-3<?php }?>">
                         <?php
                             if ($providerPrestasi->totalCount) {
                                 $gridColumnPrestasi = [
@@ -173,20 +173,38 @@ $this->params['breadcrumbs'][] = $this->title;
                             ?>
 
                     </div>
-                    <div class="row">
-                        <h4>WaliMurid<?=' ' . Html::encode($this->title)?></h4>
+                    <div class="pt-3">
+                        <h3><b>Wali Murid <?=' ' . Html::encode($this->title)?></b></h3>
                     </div>
                     <?php
                         $gridColumnWaliMurid = [
-                            'id_pekerjaan',
+                            [
+                                'attribute' => 'id_pekerjaan',
+                                'label' => 'id_pekerjaan',
+                                'value' => function($model) {
+                                    return $model->pekerjaan->nama_pekerjaan;
+                                }
+                            ],
                             [
                                 'attribute' => 'agama.agama',
-                                'label' => 'Id Agama',
+                                'label' => 'Agama',
+                                'value' => function($model) {
+                                    return $model->agama->agama;
+                                }
                             ],
                             'nama_wali_murid',
-                            'tempat_lahir_wali_murid',
-                            'tanggal_lahir_wali_murid',
-                            'jenis_kelamin_wali_murid',
+                            [
+                                'attribute' => 'ttl',
+                                'label' => 'TTL',
+                                'value' => function($model) {
+                                    return $model->tempat_lahir_wali_murid. ", ".$model->tanggal_lahir_wali_murid ;
+                                }
+                            ],
+                            [
+                                'attribute' => 'jenis_kelamin_wali_murid',
+                                'label' => 'Jenis Kelamin',
+                                'value' => function($model) { return ($model->jenis_kelamin_wali_murid == 'L') ? 'Laki-laki' : 'Perempuan'; }
+                            ],
                             'alamat_rumah_wali_murid',
                             'no_hp_wali_murid',
                         ];
