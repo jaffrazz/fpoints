@@ -60,6 +60,7 @@
                             ['label' => 'Siswa', 'icon' => 'file-code-o', 'url' => ['/siswa']],
                         ]
                     ],
+                    ['label' => 'Aturan', 'icon' => 'file-code-o', 'url' => ['/aturan']],
                     ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
                     ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
                     ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
