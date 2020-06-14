@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 14, 2020 at 06:58 AM
+-- Generation Time: Jun 14, 2020 at 09:58 AM
 -- Server version: 10.1.44-MariaDB-0ubuntu0.18.04.1
 -- PHP Version: 7.2.26-1+ubuntu18.04.1+deb.sury.org+1
 
@@ -90,8 +90,9 @@ CREATE TABLE `aturan` (
 --
 
 INSERT INTO `aturan` (`id_aturan`, `id_kategori`, `id_tindakan`, `pasal`, `uraian_aturan`, `point_aturan`) VALUES
-(4, 2, NULL, 'A1', 'Datang terlambat < 15 menit', 5),
-(5, 2, NULL, 'A2', 'Datang terlambat > 15 menit', 15);
+(4, 1, 1, 'A1', 'Datang terlambat < 15 menit', 5),
+(5, 1, 1, 'A2', 'Datang terlambat > 15 menit', 15),
+(6, 1, 1, 'A3', 'Tidak masuk tanpa keterangan', 20);
 
 -- --------------------------------------------------------
 
@@ -192,7 +193,7 @@ CREATE TABLE `kategori_aturan` (
 --
 
 INSERT INTO `kategori_aturan` (`id_kategori`, `kategori_aturan`) VALUES
-(2, 'Kehadiran');
+(1, 'Kehadiran');
 
 -- --------------------------------------------------------
 
@@ -286,7 +287,7 @@ CREATE TABLE `pegawai` (
 --
 
 INSERT INTO `pegawai` (`id_pegawai`, `id_agama`, `nama_pegawai`, `alamat_pegawai`, `jenis_kelamin_pegawai`, `no_hp_pegawai`, `status_kepegawaian`, `jabatan_pegawai`, `foto_pegawai`) VALUES
-(1, 1, 'admin', 'admin', 'L', '081234567890', 'Pegawai Tetap', 1, ''),
+(1, 1, 'admin', 'admin', 'L', '+6281234567890', 'Pegawai Tetap', 1, ''),
 (2, 1, 'Defri Indra Mahardika', 'Ds. Pulung Kec. Pulung', 'L', '+6285604845437', 'Tetap', 1, '');
 
 -- --------------------------------------------------------
@@ -725,7 +726,7 @@ ALTER TABLE `agama`
 -- AUTO_INCREMENT for table `aturan`
 --
 ALTER TABLE `aturan`
-  MODIFY `id_aturan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id_aturan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `hari_efektif`
@@ -851,8 +852,8 @@ ALTER TABLE `akumulasi_point`
 -- Constraints for table `aturan`
 --
 ALTER TABLE `aturan`
-  ADD CONSTRAINT `FK_ON_KATEGORI_ATURAN` FOREIGN KEY (`id_kategori`) REFERENCES `kategori_aturan` (`id_kategori`),
-  ADD CONSTRAINT `FK_ON_TINDAKAN_ATURAN` FOREIGN KEY (`id_tindakan`) REFERENCES `tindakan` (`id_tindakan`);
+  ADD CONSTRAINT `FK_ON_KATEGORI_ATURAN` FOREIGN KEY (`id_kategori`) REFERENCES `kategori_aturan` (`id_kategori`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `FK_ON_TINDAKAN_ATURAN` FOREIGN KEY (`id_tindakan`) REFERENCES `tindakan` (`id_tindakan`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `kelas`
