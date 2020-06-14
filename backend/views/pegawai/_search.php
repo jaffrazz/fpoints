@@ -27,7 +27,7 @@ use yii\widgets\ActiveForm;
 
     <?php /* echo $form->field($model, 'no_hp_pegawai')->textInput(['maxlength' => true, 'placeholder' => 'No Hp Pegawai']) */ ?>
 
-    <?php /* echo $form->field($model, 'status_kepegawaian')->textInput(['maxlength' => true, 'placeholder' => 'Status Kepegawaian']) */ ?>
+    <?= $form->field($model, 'status_kepegawaian')->dropDownList($status_kepegawaian, ['prompt' => 'Status Kepegawaian']) ?>
 
     <?php /* echo $form->field($model, 'jabatan_pegawai')->textInput(['maxlength' => true, 'placeholder' => 'Jabatan Pegawai']) */ ?>
 

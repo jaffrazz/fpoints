@@ -18,11 +18,11 @@ class Pegawai extends BasePegawai
         return array_replace_recursive(parent::rules(),
 	    [
             [['id_agama', 'nama_pegawai', 'alamat_pegawai', 'jenis_kelamin_pegawai', 'no_hp_pegawai', 'status_kepegawaian', 'jabatan_pegawai'], 'required'],
-            [['id_agama'], 'integer'],
+            [['id_agama', 'jabatan_pegawai'], 'integer'],
             [['alamat_pegawai', 'jenis_kelamin_pegawai'], 'string'],
             [['nama_pegawai'], 'string', 'max' => 100],
             [['no_hp_pegawai'], 'string', 'max' => 15],
-            [['status_kepegawaian', 'jabatan_pegawai'], 'string', 'max' => 50],
+            [['status_kepegawaian'], 'string', 'max' => 50],
             [['foto_pegawai'], 'string', 'max' => 255],
             [['no_hp_pegawai'],  PhoneInputValidator::className()]
         ]);

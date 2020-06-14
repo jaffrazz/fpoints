@@ -18,8 +18,8 @@ use common\models\Pegawai;
     public function rules()
     {
         return [
-            [['id_pegawai', 'id_agama'], 'integer'],
-            [['nama_pegawai', 'alamat_pegawai', 'jenis_kelamin_pegawai', 'no_hp_pegawai', 'status_kepegawaian', 'jabatan_pegawai', 'foto_pegawai'], 'safe'],
+            [['id_pegawai', 'id_agama', 'jabatan_pegawai'], 'integer'],
+            [['nama_pegawai', 'alamat_pegawai', 'jenis_kelamin_pegawai', 'no_hp_pegawai', 'status_kepegawaian', 'foto_pegawai'], 'safe'],
         ];
     }
 

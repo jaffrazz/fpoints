@@ -27,7 +27,7 @@ $this->registerJs($search);
                         <?=Html::a('Advance Search', '#', ['class' => 'btn btn-info search-button'])?>
                     </p>
                     <div class="search-form" style="display:none">
-                        <?=$this->render('_search', ['model' => $searchModel]);?>
+                        <?=$this->render('_search', ['model' => $searchModel, 'status_kepegawaian' => $status_kepegawaian]);?>
                     </div>
                 </div>
                 <div class="box-body">
@@ -35,6 +35,8 @@ $this->registerJs($search);
                     $gridColumn = [
                         ['class' => 'yii\grid\SerialColumn'],
                         ['attribute' => 'id_pegawai', 'visible' => false],
+                        'nama_pegawai',
+                        'alamat_pegawai:ntext',
                         [
                             'attribute' => 'id_agama',
                             'label' => 'Agama',
@@ -48,8 +50,6 @@ $this->registerJs($search);
                             ],
                             'filterInputOptions' => ['placeholder' => 'Agama', 'id' => 'grid-pegawai-search-id_agama'],
                         ],
-                        'nama_pegawai',
-                        'alamat_pegawai:ntext',
                         [
                             'attribute' => 'jenis_kelamin_pegawai',
                             'value' => function ($model) {
@@ -62,10 +62,32 @@ $this->registerJs($search);
                             ],
                             'filterInputOptions' => ['placeholder' => 'Jenis Kelamin', 'id' => 'grid-pegawai-search-jenis_kelamin_pegawai'],
                         ],
-                        'no_hp_pegawai',
-                        'status_kepegawaian',
-                        'jabatan_pegawai',
-                        'foto_pegawai',
+                        [
+                            'attribute' => 'status_kepegawaian',
+                            'label' => 'Status Kepegawaian',
+                            'value' => function ($model) {
+                                return $model->status_kepegawaian;
+                            },
+                            'filterType' => GridView::FILTER_SELECT2,
+                            'filter' => $status_kepegawaian,
+                            'filterWidgetOptions' => [
+                                'pluginOptions' => ['allowClear' => true],
+                            ],
+                            'filterInputOptions' => ['placeholder' => 'Status Kepegawaian', 'id' => 'grid-pegawai-search-status_kepegawaian'],
+                        ],
+                        [
+                            'attribute' => 'jabatan_pegawai',
+                            'label' => 'Jabatan',
+                            'value' => function ($model) {
+                                return $model->jabatan->jabatan;
+                            },
+                            'filterType' => GridView::FILTER_SELECT2,
+                            'filter' => \yii\helpers\ArrayHelper::map(\common\models\Jabatan::find()->asArray()->all(), 'id_jabatan', 'jabatan'),
+                            'filterWidgetOptions' => [
+                                'pluginOptions' => ['allowClear' => true],
+                            ],
+                            'filterInputOptions' => ['placeholder' => 'Jabatan', 'id' => 'grid-pegawai-search-id_jabatan'],
+                        ],
                         [
                             'class' => 'yii\grid\ActionColumn',
                         ],

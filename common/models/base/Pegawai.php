@@ -35,7 +35,8 @@ class Pegawai extends \yii\db\ActiveRecord
         return [
             'agama',
             'users',
-            'waliKelas'
+            'waliKelas',
+            'jabatan'
         ];
     }
 
@@ -46,11 +47,11 @@ class Pegawai extends \yii\db\ActiveRecord
     {
         return [
             [['id_agama', 'nama_pegawai', 'alamat_pegawai', 'jenis_kelamin_pegawai', 'no_hp_pegawai', 'status_kepegawaian', 'jabatan_pegawai'], 'required'],
-            [['id_agama'], 'integer'],
+            [['id_agama', 'jabatan_pegawai'], 'integer'],
             [['alamat_pegawai', 'jenis_kelamin_pegawai'], 'string'],
             [['nama_pegawai'], 'string', 'max' => 100],
             [['no_hp_pegawai'], 'string', 'max' => 15],
-            [['status_kepegawaian', 'jabatan_pegawai'], 'string', 'max' => 50],
+            [['status_kepegawaian'], 'string', 'max' => 50],
             [['foto_pegawai'], 'string', 'max' => 255],
             [['no_hp_pegawai'], PhoneInputValidator::className() ]
         ];
@@ -89,6 +90,16 @@ class Pegawai extends \yii\db\ActiveRecord
     {
         return $this->hasOne(\common\models\Agama::className(), ['id_agama' => 'id_agama']);
     }
+
+     
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getJabatan()
+    {
+        return $this->hasOne(\common\models\Jabatan::className(), ['id_jabatan' => 'jabatan_pegawai']);
+    }
+    
         
     /**
      * @return \yii\db\ActiveQuery

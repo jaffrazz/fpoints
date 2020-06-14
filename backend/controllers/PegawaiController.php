@@ -14,6 +14,12 @@ use yii\filters\VerbFilter;
  */
 class PegawaiController extends Controller
 {
+    public $status_kepegawaian = [
+        'Pegawai Tetap' => 'Pegawai Tetap', 
+        'Pegawai Tidak Tetap' => 'Pegawai Tidak Tetap', 
+        'Magang' => 'Magang'
+    ];
+
     public function behaviors()
     {
         return [
@@ -28,7 +34,7 @@ class PegawaiController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'add-user', 'add-wali-kelas'],
+                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
                         'roles' => ['@']
                     ],
                     [
@@ -51,6 +57,7 @@ class PegawaiController extends Controller
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'status_kepegawaian' => $this->status_kepegawaian,
         ]);
     }
 
@@ -84,14 +91,17 @@ class PegawaiController extends Controller
     {
         $model = new Pegawai();
         $agama = $this->getDropdownAgama();
+        $jabatan = $this->getDropdownJabatan();
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+        if ($model->loadAll(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', "Pegawai berhasil ditambahkan.");
             return $this->redirect(['view', 'id' => $model->id_pegawai]);
         } else {
             return $this->render('create', [
                 'model' => $model,
                 'agama' => $agama,
+                'jabatan' => $jabatan,
+                'status_kepegawaian' => $this->status_kepegawaian,
             ]);
         }
     }
@@ -106,14 +116,17 @@ class PegawaiController extends Controller
     {
         $model = $this->findModel($id);
         $agama = $this->getDropdownAgama();
+        $jabatan = $this->getDropdownJabatan();
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+        if ($model->loadAll(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', "Pegawai berhasil diubah.");
             return $this->redirect(['view', 'id' => $model->id_pegawai]);
         } else {
             return $this->render('update', [
                 'model' => $model,
                 'agama' => $agama,
+                'jabatan' => $jabatan,
+                'status_kepegawaian' => $this->status_kepegawaian,
             ]);
         }
     }
@@ -157,50 +170,16 @@ class PegawaiController extends Controller
         }
     }
     
-    /**
-    * Action to load a tabular form grid
-    * for User
-    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-    *
-    * @return mixed
-    */
-    public function actionAddUser()
-    {
-        if (Yii::$app->request->isAjax) {
-            $row = Yii::$app->request->post('User');
-            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('_action') == 'load' && empty($row)) || Yii::$app->request->post('_action') == 'add')
-                $row[] = [];
-            return $this->renderAjax('_formUser', ['row' => $row]);
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
-    
-    /**
-    * Action to load a tabular form grid
-    * for WaliKelas
-    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-    *
-    * @return mixed
-    */
-    public function actionAddWaliKelas()
-    {
-        if (Yii::$app->request->isAjax) {
-            $row = Yii::$app->request->post('WaliKelas');
-            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('_action') == 'load' && empty($row)) || Yii::$app->request->post('_action') == 'add')
-                $row[] = [];
-            return $this->renderAjax('_formWaliKelas', ['row' => $row]);
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
-
     public function getDropdownAgama(){
         return \yii\helpers\ArrayHelper::map(
             \common\models\Agama::find()->orderBy('id_agama')->asArray()->all(), 
             'id_agama', 
             'agama');
+    }
+    public function getDropdownJabatan(){
+        return \yii\helpers\ArrayHelper::map(
+            \common\models\Jabatan::find()->orderBy('id_jabatan')->asArray()->all(), 
+            'id_jabatan', 
+            'jabatan');
     }
 }
