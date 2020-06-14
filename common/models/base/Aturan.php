@@ -65,8 +65,8 @@ class Aturan extends \yii\db\ActiveRecord
     {
         return [
             'id_aturan' => 'Id Aturan',
-            'id_kategori' => 'Id Kategori',
-            'id_tindakan' => 'Id Tindakan',
+            'id_kategori' => 'Kategori',
+            'id_tindakan' => 'Tindakan',
             'pasal' => 'Pasal',
             'uraian_aturan' => 'Uraian Aturan',
             'point_aturan' => 'Point Aturan',
