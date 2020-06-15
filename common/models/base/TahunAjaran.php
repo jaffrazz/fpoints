@@ -37,7 +37,8 @@ class TahunAjaran extends \yii\db\ActiveRecord
     {
         return [
             [['tahun_ajaran'], 'required'],
-            [['tahun_ajaran'], 'string', 'max' => 9]
+            [['tahun_ajaran'], 'string', 'max' => 9],
+            [['tahun_ajaran'], 'unique']
         ];
     }
 

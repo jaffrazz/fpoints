@@ -18,7 +18,8 @@ class TahunAjaran extends BaseTahunAjaran
         return array_replace_recursive(parent::rules(),
 	    [
             [['tahun_ajaran'], 'required'],
-            [['tahun_ajaran'], 'string', 'max' => 9]
+            [['tahun_ajaran'], 'string', 'max' => 9],
+            [['tahun_ajaran'], 'unique']
         ]);
     }
 	
