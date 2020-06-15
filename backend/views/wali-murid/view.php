@@ -74,17 +74,37 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ['attribute' => 'id_wali_murid', 'visible' => false],
                                 'nis',
                                 'nama_siswa',
-                                'tempat_lahir_siswa',
-                                'tanggal_lahir_siswa',
-                                'jenis_kelamin_siswa',
                                 [
-                                    'attribute' => 'agama.agama',
-                                    'label' => 'Agama',
+                                    'attribute' => 'kelas',
+                                    'value' => function($model) {
+                                        return $model->onKelasSiswa->kelas->namaKelas->nama_kelas;
+                                    }
                                 ],
-                                'alamat_rumah_siswa:ntext',
-                                'alamat_domisili_siswa:ntext',
                                 'no_hp_siswa',
-                                'foto_siswa',
+                                [
+                                    'class' => 'yii\grid\ActionColumn',
+                                    'template' => '{view}',
+                                    'urlCreator' => function ($action, $model, $key, $index) {
+                                        if ($action === 'view') {
+                                            $url =Yii::$app->homeUrl.'/siswa/view?id='.$model->id_siswa;
+                                            return $url;
+                                        }
+                                    }
+                                ],
+                                // [
+                                //     'attribute' => 'ttl.siswa',
+                                //     'label' => 'TTL',
+                                //     'value' => function($model){
+                                //         return $model->tempat_lahir_siswa. ", ". $model->tanggal_lahir_siswa;
+                                //     }
+                                // ],
+                                // [
+                                //     'attribute' => 'jenis_kelamin_siswa',
+                                //     'label' => 'Jenis Kelamin',
+                                //     'value' => function($model){
+                                //         return ($model->jenis_kelamin_siswa == 'L') ? 'Laki-laki' : 'Perempuan';
+                                //     }
+                                // ],
                             ];
                             echo Gridview::widget([
                                 'dataProvider' => $providerSiswa,
@@ -92,7 +112,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container-siswa']],
                                 'panel' => [
                                     //'type' => GridView::TYPE_PRIMARY,
-                                    'heading' => '<span class="glyphicon glyphicon-book"></span> ' . Html::encode('Siswa'),
+                                    'heading' => '<span class="glyphicon glyphicon-book"></span> ' . Html::encode('Anak'),
                                 ],
                                 'export' => false,
                                 'columns' => $gridColumnSiswa,
