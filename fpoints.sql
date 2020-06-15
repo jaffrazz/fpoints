@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 14, 2020 at 09:58 AM
+-- Generation Time: Jun 15, 2020 at 12:26 PM
 -- Server version: 10.1.44-MariaDB-0ubuntu0.18.04.1
 -- PHP Version: 7.2.26-1+ubuntu18.04.1+deb.sury.org+1
 
@@ -67,7 +67,9 @@ CREATE TABLE `akumulasi_point` (
   `id_siswa` bigint(20) NOT NULL,
   `id_sanksi` int(11) NOT NULL,
   `total_point` int(11) NOT NULL,
-  `tanggal` date DEFAULT NULL
+  `tanggal` date DEFAULT NULL,
+  `id_tahun_ajaran` int(11) NOT NULL,
+  `id_semester` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -198,6 +200,24 @@ INSERT INTO `kategori_aturan` (`id_kategori`, `kategori_aturan`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `kategori_penghargaan`
+--
+
+CREATE TABLE `kategori_penghargaan` (
+  `id_kategori_penghargaan` int(11) NOT NULL,
+  `kategori_penghargaan` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `kategori_penghargaan`
+--
+
+INSERT INTO `kategori_penghargaan` (`id_kategori_penghargaan`, `kategori_penghargaan`) VALUES
+(1, 'Membawa nama baik sekolah dan megikuti kegiatan sekolah');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `kelas`
 --
 
@@ -206,15 +226,17 @@ CREATE TABLE `kelas` (
   `id_jurusan` int(11) DEFAULT NULL,
   `id_wali_kelas` int(11) DEFAULT NULL,
   `kelas` varchar(3) DEFAULT NULL,
-  `grade` varchar(3) DEFAULT NULL
+  `grade` varchar(3) DEFAULT NULL,
+  `id_tahun_ajaran` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `kelas`
 --
 
-INSERT INTO `kelas` (`id_kelas`, `id_jurusan`, `id_wali_kelas`, `kelas`, `grade`) VALUES
-(19, 1, 8, 'C', 'XII');
+INSERT INTO `kelas` (`id_kelas`, `id_jurusan`, `id_wali_kelas`, `kelas`, `grade`, `id_tahun_ajaran`) VALUES
+(19, 1, 8, 'B', 'XII', 1),
+(20, 1, 9, 'A', 'XII', 1);
 
 -- --------------------------------------------------------
 
@@ -251,7 +273,8 @@ CREATE TABLE `nama_kelas` (
 --
 
 INSERT INTO `nama_kelas` (`id_kelas`, `nama_kelas`) VALUES
-(19, 'XII Rekayasa Perangkat Lunak C');
+(19, 'XII Rekayasa Perangkat Lunak B'),
+(20, 'XII Rekayasa Perangkat Lunak A');
 
 -- --------------------------------------------------------
 
@@ -263,6 +286,14 @@ CREATE TABLE `on_kelas_siswa` (
   `id_kelas` int(11) NOT NULL,
   `id_siswa` bigint(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `on_kelas_siswa`
+--
+
+INSERT INTO `on_kelas_siswa` (`id_kelas`, `id_siswa`) VALUES
+(19, 2),
+(19, 6);
 
 -- --------------------------------------------------------
 
@@ -329,6 +360,7 @@ CREATE TABLE `pelanggaran` (
 
 CREATE TABLE `penghargaan` (
   `id_penghargaan` int(11) NOT NULL,
+  `id_kategori_penghargaan` int(11) NOT NULL,
   `uraian_penghargaan` text,
   `point_penghargaan` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -337,8 +369,8 @@ CREATE TABLE `penghargaan` (
 -- Dumping data for table `penghargaan`
 --
 
-INSERT INTO `penghargaan` (`id_penghargaan`, `uraian_penghargaan`, `point_penghargaan`) VALUES
-(1, 'Membawa nama sekolah ke tingkat Provinsi', 10);
+INSERT INTO `penghargaan` (`id_penghargaan`, `id_kategori_penghargaan`, `uraian_penghargaan`, `point_penghargaan`) VALUES
+(1, 1, 'Membawa nama sekolah ke tingkat Provinsi', 10);
 
 -- --------------------------------------------------------
 
@@ -376,6 +408,27 @@ INSERT INTO `sanksi` (`id_sanksi`, `uraian`, `minimum_point`, `maximum_point`) V
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `semester`
+--
+
+CREATE TABLE `semester` (
+  `id_semester` int(11) NOT NULL,
+  `semester` enum('1','2') NOT NULL,
+  `awal_bulan_semester` enum('1','2','3','4','5','6','7','8','9','10','11','12') NOT NULL,
+  `akhir_bulan_semester` enum('1','2','3','4','5','6','7','8','9','10','11','12') NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `semester`
+--
+
+INSERT INTO `semester` (`id_semester`, `semester`, `awal_bulan_semester`, `akhir_bulan_semester`) VALUES
+(1, '1', '6', '12'),
+(2, '2', '1', '6');
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `siswa`
 --
 
@@ -399,7 +452,8 @@ CREATE TABLE `siswa` (
 --
 
 INSERT INTO `siswa` (`id_siswa`, `id_wali_murid`, `id_agama`, `nis`, `nama_siswa`, `tempat_lahir_siswa`, `tanggal_lahir_siswa`, `jenis_kelamin_siswa`, `alamat_rumah_siswa`, `alamat_domisili_siswa`, `no_hp_siswa`, `foto_siswa`) VALUES
-(2, 1, 1, '1123463434534', 'Vlania Putri Deviantara', 'Ponorogo', '2002-05-19', 'P', '$trans->commit();', '$trans->commit();', '+6285604845437', '');
+(2, 1, 1, '1123463434534', 'Vlania Putri Deviantara', 'Ponorogo', '2002-05-19', 'P', '$trans->commit();', '$trans->commit();', '+6285604845437', ''),
+(6, 1, 1, '1123463434534', 'Vlania Putri Deviantara II', 'Ponorogo', '2002-05-19', 'L', '-', '-', '+6285604845437', '-');
 
 -- --------------------------------------------------------
 
@@ -435,6 +489,25 @@ INSERT INTO `status_absensi` (`id_status_absensi`, `keterangan_status_absensi`) 
 (3, 'Hadir'),
 (4, 'Sakit'),
 (5, 'Izin');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tahun_ajaran`
+--
+
+CREATE TABLE `tahun_ajaran` (
+  `id_tahun_ajaran` int(11) NOT NULL,
+  `tahun_ajaran` varchar(9) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tahun_ajaran`
+--
+
+INSERT INTO `tahun_ajaran` (`id_tahun_ajaran`, `tahun_ajaran`) VALUES
+(1, '2017/2018'),
+(3, '2018/2019');
 
 -- --------------------------------------------------------
 
@@ -496,6 +569,7 @@ CREATE TABLE `wali_kelas` (
 --
 
 INSERT INTO `wali_kelas` (`id_wali_kelas`, `id_pegawai`) VALUES
+(9, 1),
 (8, 2);
 
 -- --------------------------------------------------------
@@ -545,7 +619,9 @@ ALTER TABLE `agama`
 --
 ALTER TABLE `akumulasi_point`
   ADD PRIMARY KEY (`id_siswa`,`id_sanksi`),
-  ADD KEY `FK_AKUMULASI_POINT2` (`id_sanksi`);
+  ADD KEY `FK_AKUMULASI_POINT2` (`id_sanksi`),
+  ADD KEY `FK_AKUMULASI_POINT_3` (`id_tahun_ajaran`),
+  ADD KEY `FK_SEMESTER_1` (`id_semester`);
 
 --
 -- Indexes for table `aturan`
@@ -588,13 +664,20 @@ ALTER TABLE `kategori_aturan`
   ADD PRIMARY KEY (`id_kategori`);
 
 --
+-- Indexes for table `kategori_penghargaan`
+--
+ALTER TABLE `kategori_penghargaan`
+  ADD PRIMARY KEY (`id_kategori_penghargaan`);
+
+--
 -- Indexes for table `kelas`
 --
 ALTER TABLE `kelas`
   ADD PRIMARY KEY (`id_kelas`),
   ADD UNIQUE KEY `id_wali_kelas` (`id_wali_kelas`),
   ADD KEY `FK_ON_JURUSAN_KELAS` (`id_jurusan`),
-  ADD KEY `FK_ON_WALIKELAS` (`id_wali_kelas`);
+  ADD KEY `FK_ON_WALIKELAS` (`id_wali_kelas`),
+  ADD KEY `FK_TAHUN_AJARAN` (`id_tahun_ajaran`);
 
 --
 -- Indexes for table `migration`
@@ -641,7 +724,8 @@ ALTER TABLE `pelanggaran`
 -- Indexes for table `penghargaan`
 --
 ALTER TABLE `penghargaan`
-  ADD PRIMARY KEY (`id_penghargaan`);
+  ADD PRIMARY KEY (`id_penghargaan`),
+  ADD KEY `FK_KATEGORI_PENGHARGAAN` (`id_kategori_penghargaan`);
 
 --
 -- Indexes for table `prestasi`
@@ -655,6 +739,12 @@ ALTER TABLE `prestasi`
 --
 ALTER TABLE `sanksi`
   ADD PRIMARY KEY (`id_sanksi`);
+
+--
+-- Indexes for table `semester`
+--
+ALTER TABLE `semester`
+  ADD PRIMARY KEY (`id_semester`);
 
 --
 -- Indexes for table `siswa`
@@ -676,6 +766,13 @@ ALTER TABLE `sp`
 --
 ALTER TABLE `status_absensi`
   ADD PRIMARY KEY (`id_status_absensi`);
+
+--
+-- Indexes for table `tahun_ajaran`
+--
+ALTER TABLE `tahun_ajaran`
+  ADD PRIMARY KEY (`id_tahun_ajaran`),
+  ADD UNIQUE KEY `tahun_ajaran` (`tahun_ajaran`);
 
 --
 -- Indexes for table `tindakan`
@@ -726,7 +823,7 @@ ALTER TABLE `agama`
 -- AUTO_INCREMENT for table `aturan`
 --
 ALTER TABLE `aturan`
-  MODIFY `id_aturan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_aturan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `hari_efektif`
@@ -756,13 +853,19 @@ ALTER TABLE `jurusan`
 -- AUTO_INCREMENT for table `kategori_aturan`
 --
 ALTER TABLE `kategori_aturan`
-  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_kategori` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `kategori_penghargaan`
+--
+ALTER TABLE `kategori_penghargaan`
+  MODIFY `id_kategori_penghargaan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT for table `kelas`
 --
 ALTER TABLE `kelas`
-  MODIFY `id_kelas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+  MODIFY `id_kelas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
 
 --
 -- AUTO_INCREMENT for table `pegawai`
@@ -789,10 +892,16 @@ ALTER TABLE `sanksi`
   MODIFY `id_sanksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
+-- AUTO_INCREMENT for table `semester`
+--
+ALTER TABLE `semester`
+  MODIFY `id_semester` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `siswa`
 --
 ALTER TABLE `siswa`
-  MODIFY `id_siswa` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_siswa` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `sp`
@@ -805,6 +914,12 @@ ALTER TABLE `sp`
 --
 ALTER TABLE `status_absensi`
   MODIFY `id_status_absensi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+
+--
+-- AUTO_INCREMENT for table `tahun_ajaran`
+--
+ALTER TABLE `tahun_ajaran`
+  MODIFY `id_tahun_ajaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `tindakan`
@@ -822,7 +937,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT for table `wali_kelas`
 --
 ALTER TABLE `wali_kelas`
-  MODIFY `id_wali_kelas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id_wali_kelas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `wali_murid`
@@ -846,7 +961,9 @@ ALTER TABLE `absensi`
 --
 ALTER TABLE `akumulasi_point`
   ADD CONSTRAINT `FK_AKUMULASI_POINT` FOREIGN KEY (`id_siswa`) REFERENCES `siswa` (`id_siswa`),
-  ADD CONSTRAINT `FK_AKUMULASI_POINT2` FOREIGN KEY (`id_sanksi`) REFERENCES `sanksi` (`id_sanksi`);
+  ADD CONSTRAINT `FK_AKUMULASI_POINT2` FOREIGN KEY (`id_sanksi`) REFERENCES `sanksi` (`id_sanksi`),
+  ADD CONSTRAINT `FK_AKUMULASI_POINT_3` FOREIGN KEY (`id_tahun_ajaran`) REFERENCES `tahun_ajaran` (`id_tahun_ajaran`),
+  ADD CONSTRAINT `FK_SEMESTER_1` FOREIGN KEY (`id_semester`) REFERENCES `semester` (`id_semester`);
 
 --
 -- Constraints for table `aturan`
@@ -860,7 +977,8 @@ ALTER TABLE `aturan`
 --
 ALTER TABLE `kelas`
   ADD CONSTRAINT `FK_ON_JURUSAN_KELAS` FOREIGN KEY (`id_jurusan`) REFERENCES `jurusan` (`id_jurusan`),
-  ADD CONSTRAINT `FK_ON_WALIKELAS` FOREIGN KEY (`id_wali_kelas`) REFERENCES `wali_kelas` (`id_wali_kelas`);
+  ADD CONSTRAINT `FK_ON_WALIKELAS` FOREIGN KEY (`id_wali_kelas`) REFERENCES `wali_kelas` (`id_wali_kelas`),
+  ADD CONSTRAINT `FK_TAHUN_AJARAN` FOREIGN KEY (`id_tahun_ajaran`) REFERENCES `tahun_ajaran` (`id_tahun_ajaran`);
 
 --
 -- Constraints for table `nama_kelas`
@@ -888,6 +1006,12 @@ ALTER TABLE `pegawai`
 ALTER TABLE `pelanggaran`
   ADD CONSTRAINT `FK_PELANGGARAN` FOREIGN KEY (`id_siswa`) REFERENCES `siswa` (`id_siswa`),
   ADD CONSTRAINT `FK_PELANGGARAN2` FOREIGN KEY (`id_aturan`) REFERENCES `aturan` (`id_aturan`);
+
+--
+-- Constraints for table `penghargaan`
+--
+ALTER TABLE `penghargaan`
+  ADD CONSTRAINT `FK_KATEGORI_PENGHARGAAN` FOREIGN KEY (`id_kategori_penghargaan`) REFERENCES `kategori_penghargaan` (`id_kategori_penghargaan`);
 
 --
 -- Constraints for table `prestasi`
