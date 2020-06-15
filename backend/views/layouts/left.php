@@ -64,6 +64,8 @@
                     ],
                     ['label' => 'Aturan', 'icon' => 'file-code-o', 'url' => ['/aturan']],
                     ['label' => 'Penghargaan', 'icon' => 'file-code-o', 'url' => ['/penghargaan']],
+                    ['label' => 'Prestasi', 'icon' => 'file-code-o', 'url' => ['/prestasi']],
+                    ['label' => 'Pelaggaran', 'icon' => 'file-code-o', 'url' => ['/pelaggaran']],
                     ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
                     ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
                     ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
