@@ -63,7 +63,7 @@ class StatusAbsensiController extends Controller
     {
         $model = new StatusAbsensi();
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+        if ($model->loadAll(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success',"$model->keterangan_status_absensi berhasil ditambahkan.");
             return $this->redirect(['index']);
         } else {
@@ -83,7 +83,7 @@ class StatusAbsensiController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+        if ($model->loadAll(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success',"$model->keterangan_status_absensi berhasil diubah.");
             return $this->redirect(['index']);
         } else {
@@ -104,12 +104,12 @@ class StatusAbsensiController extends Controller
         $trans = Yii::$app->db->beginTransaction();
 
         try{
-            $this->findModel($id)->deleteWithRelated();
+            $this->findModel($id)->delete();
             $trans->commit();
             Yii::$app->session->setFlash('success', "Data berhasil dihapus.");
         }catch(\Exception $e){
             $trans->rollBack();
-            Yii::$app->session->setFlash('error', "Data gagal diubah.");
+            Yii::$app->session->setFlash('error', "Error, cant perform this action correctly.");
         }
 
         return $this->redirect(['index']);
