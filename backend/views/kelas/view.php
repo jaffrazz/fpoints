@@ -61,7 +61,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ['attribute' => 'id_kelas', 'visible' => false],
                                 [
                                     'attribute' => 'siswa.id_siswa',
-                                    'label' => 'Id Siswa',
+                                    'label' => 'Siswa',
+                                    'value' => function($model){
+                                        return $model->siswa->nama_siswa;
+                                    }
                                 ],
                             ];
                             echo Gridview::widget([
@@ -70,7 +73,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container-on-kelas-siswa']],
                                 'panel' => [
                                     //'type' => GridView::TYPE_PRIMARY,
-                                    'heading' => '<span class="glyphicon glyphicon-book"></span> ' . Html::encode('On Kelas Siswa'),
+                                    'heading' => '<span class="glyphicon glyphicon-book"></span> ' . Html::encode('Daftar Siswa'),
                                 ],
                                 'export' => false,
                                 'columns' => $gridColumnOnKelasSiswa,
