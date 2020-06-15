@@ -19,6 +19,7 @@ $this->params['breadcrumbs'][] = 'Update';
                 <div class="box-body">
                     <?= $this->render('_form', [
                         'model' => $model,
+                        'modelOnKelas' => $modelOnKelas,
                     ]) ?>
                 </div>
             </div>
