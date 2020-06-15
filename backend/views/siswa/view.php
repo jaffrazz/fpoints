@@ -35,12 +35,23 @@ $this->params['breadcrumbs'][] = $this->title;
                             ['attribute' => 'id_siswa', 'visible' => false],
                             'nis',
                             'nama_siswa',
+                            [
+                                'attribute' => 'TTL',
+                                'label' => 'TTL',
+                                'value' => function($model){
+                                    return $model->tempat_lahir_siswa. ", " .$model->tanggal_lahir_siswa;
+                                }
+                            ],
                             'tempat_lahir_siswa',
                             'tanggal_lahir_siswa',
                             [
                                 'attribute' => 'jenis_kelamin_siswa',
                                 'label' => 'Jenis Kelamin',
                                 'value' => function($model) { return ($model->jenis_kelamin_siswa == 'L') ? 'Laki-laki' : 'Perempuan'; }
+                            ],
+                            [
+                                'attribute' => 'agama.agama',
+                                'label' => 'Agama',
                             ],
                             'alamat_rumah_siswa:ntext',
                             'alamat_domisili_siswa:ntext',
@@ -50,10 +61,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'label' => 'Wali Murid',
                                 'value' => function($model) { return $model->idWaliMur->nama_wali_murid; }
                             ],
-                            [
-                                'attribute' => 'agama.agama',
-                                'label' => 'Agama',
-                            ],
                             'foto_siswa',
                         ];
                         echo DetailView::widget([
@@ -61,7 +68,39 @@ $this->params['breadcrumbs'][] = $this->title;
                             'attributes' => $gridColumn,
                         ]);
                         ?>
-                    <!-- </div> -->
+
+                    <div class="pt-3">
+                        <h3>
+                            <b>Kelas</b>
+                        </h3>
+                            <?php
+                            $gridColumnKelas = [
+                                [
+                                    'attribute' => 'kelas',
+                                    'value' => function($model){
+                                        return $model->onKelasSiswa->kelas->namaKelas->nama_kelas;
+                                    }
+                                ],
+                                [
+                                    'attribute' => 'nama_wali_kelas',
+                                    'value' => function($model){
+                                        return $model->onKelasSiswa->kelas->waliKelas->pegawai->nama_pegawai;
+                                    }
+                                ],
+                                [
+                                    'attribute' => 'anggota_kelas',
+                                    'value' => function($model){
+                                        return count($model->onKelasSiswa->kelas->onKelasSiswas). " Orang";
+                                    }
+                                ],
+                            ];
+                                
+                            echo DetailView::widget([
+                                'model' => $model,
+                                'attributes' => $gridColumnKelas,
+                            ]);
+                             ?>
+                    </div>
 
                     <div class="<?php if ($providerAbsensi->totalCount) {?>pt-3<?php }?>">
                         <?php
@@ -174,24 +213,10 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     </div>
                     <div class="pt-3">
-                        <h3><b>Wali Murid <?=' ' . Html::encode($this->title)?></b></h3>
+                        <h3><b>Wali Murid</b></h3>
                     </div>
                     <?php
                         $gridColumnWaliMurid = [
-                            [
-                                'attribute' => 'id_pekerjaan',
-                                'label' => 'id_pekerjaan',
-                                'value' => function($model) {
-                                    return $model->pekerjaan->nama_pekerjaan;
-                                }
-                            ],
-                            [
-                                'attribute' => 'agama.agama',
-                                'label' => 'Agama',
-                                'value' => function($model) {
-                                    return $model->agama->agama;
-                                }
-                            ],
                             'nama_wali_murid',
                             [
                                 'attribute' => 'ttl',
@@ -201,9 +226,23 @@ $this->params['breadcrumbs'][] = $this->title;
                                 }
                             ],
                             [
+                                'attribute' => 'agama.agama',
+                                'label' => 'Agama',
+                                'value' => function($model) {
+                                    return $model->agama->agama;
+                                }
+                            ],
+                            [
                                 'attribute' => 'jenis_kelamin_wali_murid',
                                 'label' => 'Jenis Kelamin',
                                 'value' => function($model) { return ($model->jenis_kelamin_wali_murid == 'L') ? 'Laki-laki' : 'Perempuan'; }
+                            ],
+                            [
+                                'attribute' => 'id_pekerjaan',
+                                'label' => 'Pekerjaan',
+                                'value' => function($model) {
+                                    return $model->pekerjaan->nama_pekerjaan;
+                                }
                             ],
                             'alamat_rumah_wali_murid',
                             'no_hp_wali_murid',
