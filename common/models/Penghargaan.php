@@ -17,8 +17,10 @@ class Penghargaan extends BasePenghargaan
     {
         return array_replace_recursive(parent::rules(),
 	    [
+            [['id_kategori_penghargaan', 'pasal'], 'required'],
+            [['id_kategori_penghargaan', 'point_penghargaan'], 'integer'],
             [['uraian_penghargaan'], 'string'],
-            [['point_penghargaan'], 'integer']
+            [['pasal'], 'string', 'max' => 10]
         ]);
     }
 	

@@ -8,9 +8,12 @@ use Yii;
  * This is the base model class for table "penghargaan".
  *
  * @property integer $id_penghargaan
+ * @property integer $id_kategori_penghargaan
  * @property string $uraian_penghargaan
  * @property integer $point_penghargaan
+ * @property string $pasal
  *
+ * @property \common\models\KategoriPenghargaan $kategoriPenghargaan
  * @property \common\models\Prestasi[] $prestasis
  * @property \common\models\Siswa[] $siswas
  */
@@ -26,6 +29,7 @@ class Penghargaan extends \yii\db\ActiveRecord
     public function relationNames()
     {
         return [
+            'kategoriPenghargaan',
             'prestasis',
             'siswas'
         ];
@@ -37,8 +41,10 @@ class Penghargaan extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
+            [['id_kategori_penghargaan', 'pasal'], 'required'],
+            [['id_kategori_penghargaan', 'point_penghargaan'], 'integer'],
             [['uraian_penghargaan'], 'string'],
-            [['point_penghargaan'], 'integer']
+            [['pasal'], 'string', 'max' => 10]
         ];
     }
 
@@ -57,11 +63,21 @@ class Penghargaan extends \yii\db\ActiveRecord
     {
         return [
             'id_penghargaan' => 'Id Penghargaan',
+            'id_kategori_penghargaan' => 'Id Kategori Penghargaan',
             'uraian_penghargaan' => 'Uraian Penghargaan',
             'point_penghargaan' => 'Point Penghargaan',
+            'pasal' => 'Pasal',
         ];
     }
     
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getKategoriPenghargaan()
+    {
+        return $this->hasOne(\common\models\KategoriPenghargaan::className(), ['id_kategori_penghargaan' => 'id_kategori_penghargaan']);
+    }
+        
     /**
      * @return \yii\db\ActiveQuery
      */

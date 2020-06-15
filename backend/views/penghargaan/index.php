@@ -24,20 +24,33 @@ $this->registerJs($search);
                 <div class="box-header">
                     <p>
                         <?=Html::a('Create Penghargaan', ['create'], ['class' => 'btn btn-success'])?>
+                        <?=Html::a('Advance Search', '#', ['class' => 'btn btn-info search-button'])?>
                     </p>
+                    <div class="search-form" style="display:none">
+                        <?=$this->render('_search', ['model' => $searchModel]);?>
+                    </div>
                 </div>
                 <div class="box-body">
                     <?php
                         $gridColumn = [
                             ['class' => 'yii\grid\SerialColumn'],
                             ['attribute' => 'id_penghargaan', 'visible' => false],
-                            'uraian_penghargaan:ntext',
-                            [ 
-                                'attribute' => 'point_penghargaan',
-                                'value' => function($model) {
-                                    return $model->point_penghargaan . " Point";
-                                }
+                            [
+                                'attribute' => 'id_kategori_penghargaan',
+                                'label' => 'Id Kategori Penghargaan',
+                                'value' => function ($model) {
+                                    return $model->kategoriPenghargaan->kategori_penghargaan;
+                                },
+                                'filterType' => GridView::FILTER_SELECT2,
+                                'filter' => \yii\helpers\ArrayHelper::map(\common\models\KategoriPenghargaan::find()->asArray()->all(), 'id_kategori_penghargaan', 'kategori_penghargaan'),
+                                'filterWidgetOptions' => [
+                                    'pluginOptions' => ['allowClear' => true],
+                                ],
+                                'filterInputOptions' => ['placeholder' => 'Kategori penghargaan', 'id' => 'grid-penghargaan-search-id_kategori_penghargaan'],
                             ],
+                            'uraian_penghargaan:ntext',
+                            'point_penghargaan',
+                            'pasal',
                             [
                                 'class' => 'yii\grid\ActionColumn',
                             ],

@@ -28,7 +28,7 @@ class PenghargaanController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'add-prestasi'],
+                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
                         'roles' => ['@']
                     ],
                     [
@@ -151,23 +151,4 @@ class PenghargaanController extends Controller
         }
     }
     
-    /**
-    * Action to load a tabular form grid
-    * for Prestasi
-    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-    *
-    * @return mixed
-    */
-    public function actionAddPrestasi()
-    {
-        if (Yii::$app->request->isAjax) {
-            $row = Yii::$app->request->post('Prestasi');
-            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('_action') == 'load' && empty($row)) || Yii::$app->request->post('_action') == 'add')
-                $row[] = [];
-            return $this->renderAjax('_formPrestasi', ['row' => $row]);
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
 }

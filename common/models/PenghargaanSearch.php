@@ -18,8 +18,8 @@ use common\models\Penghargaan;
     public function rules()
     {
         return [
-            [['id_penghargaan', 'point_penghargaan'], 'integer'],
-            [['uraian_penghargaan'], 'safe'],
+            [['id_penghargaan', 'id_kategori_penghargaan', 'point_penghargaan'], 'integer'],
+            [['uraian_penghargaan', 'pasal'], 'safe'],
         ];
     }
 
@@ -57,10 +57,12 @@ use common\models\Penghargaan;
 
         $query->andFilterWhere([
             'id_penghargaan' => $this->id_penghargaan,
+            'id_kategori_penghargaan' => $this->id_kategori_penghargaan,
             'point_penghargaan' => $this->point_penghargaan,
         ]);
 
-        $query->andFilterWhere(['like', 'uraian_penghargaan', $this->uraian_penghargaan]);
+        $query->andFilterWhere(['like', 'uraian_penghargaan', $this->uraian_penghargaan])
+            ->andFilterWhere(['like', 'pasal', $this->pasal]);
 
         return $dataProvider;
     }

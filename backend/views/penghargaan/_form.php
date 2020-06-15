@@ -25,9 +25,19 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id_penghargaan', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
-    <?= $form->field($model, 'uraian_penghargaan')->textarea(['rows' => 3]) ?>
+    <?= $form->field($model, 'id_kategori_penghargaan')->widget(\kartik\widgets\Select2::classname(), [
+        'data' => \yii\helpers\ArrayHelper::map(\common\models\KategoriPenghargaan::find()->orderBy('id_kategori_penghargaan')->asArray()->all(), 'id_kategori_penghargaan', 'kategori_penghargaan'),
+        'options' => ['placeholder' => 'Choose Kategori penghargaan'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]); ?>
+
+    <?= $form->field($model, 'uraian_penghargaan')->textarea(['rows' => 6]) ?>
 
     <?= $form->field($model, 'point_penghargaan')->textInput(['placeholder' => 'Point Penghargaan']) ?>
+
+    <?= $form->field($model, 'pasal')->textInput(['maxlength' => true, 'placeholder' => 'Pasal']) ?>
 
     <?php
     $forms = [

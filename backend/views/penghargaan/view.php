@@ -33,13 +33,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     <?php
                         $gridColumn = [
                             ['attribute' => 'id_penghargaan', 'visible' => false],
-                            'uraian_penghargaan:ntext',
-                            [ 
-                                'attribute' => 'point_penghargaan',
-                                'value' => function($model) {
-                                    return $model->point_penghargaan . " Point";
-                                }
+                            [
+                                'attribute' => 'kategoriPenghargaan.kategori_penghargaan',
+                                'label' => 'Id Kategori Penghargaan',
                             ],
+                            'uraian_penghargaan:ntext',
+                            'point_penghargaan',
+                            'pasal',
                         ];
                         echo DetailView::widget([
                             'model' => $model,
@@ -47,6 +47,17 @@ $this->params['breadcrumbs'][] = $this->title;
                         ]);
                         ?>
                     <!-- </div> -->
+                    <div class="pt-3">
+                        <h3><b>KategoriPenghargaan<?=' ' . Html::encode($this->title)?></b></h3>
+                    </div>
+                    <?php
+                    $gridColumnKategoriPenghargaan = [
+                        'kategori_penghargaan',
+                    ];
+                    echo DetailView::widget([
+                        'model' => $model->kategoriPenghargaan,
+                        'attributes' => $gridColumnKategoriPenghargaan]);
+                    ?>
 
                     <div class="pt-3">
                         <?php
@@ -55,7 +66,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     ['class' => 'yii\grid\SerialColumn'],
                                     [
                                         'attribute' => 'siswa.id_siswa',
-                                        'label' => 'Id Siswa',
+                                        'label' => 'Siswa',
+                                        'value' => function($model){
+                                            return $model->siswa->nam_siswa;
+                                        }
                                     ],
                                     ['attribute' => 'id_penghargaan', 'visible' => false],
                                     'tanggal',
@@ -66,7 +80,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container-prestasi']],
                                     'panel' => [
                                         //'type' => GridView::TYPE_PRIMARY,
-                                        'heading' => '<span class="glyphicon glyphicon-book"></span> ' . Html::encode('Prestasi'),
+                                        'heading' => '<span class="glyphicon glyphicon-book"></span> ' . Html::encode('Peraih Prestasi'),
                                     ],
                                     'export' => false,
                                     'columns' => $gridColumnPrestasi,
