@@ -117,50 +117,6 @@ use borales\extensions\phoneInput\PhoneInput;
 
     <?= $form->field($model, 'foto_siswa')->textInput(['maxlength' => true, 'placeholder' => 'Foto']) ?>
 
-    <?php
-    $forms = [
-        [
-            'label' => '<i class="glyphicon glyphicon-book"></i> ' . Html::encode('Absensi'),
-            'content' => $this->render('_formAbsensi', [
-                'row' => \yii\helpers\ArrayHelper::toArray($model->absensis),
-            ]),
-        ],
-        [
-            'label' => '<i class="glyphicon glyphicon-book"></i> ' . Html::encode('AkumulasiPoint'),
-            'content' => $this->render('_formAkumulasiPoint', [
-                'row' => \yii\helpers\ArrayHelper::toArray($model->akumulasiPoints),
-            ]),
-        ],
-        [
-            'label' => '<i class="glyphicon glyphicon-book"></i> ' . Html::encode('Pelanggaran'),
-            'content' => $this->render('_formPelanggaran', [
-                'row' => \yii\helpers\ArrayHelper::toArray($model->pelanggarans),
-            ]),
-        ],
-        [
-            'label' => '<i class="glyphicon glyphicon-book"></i> ' . Html::encode('Prestasi'),
-            'content' => $this->render('_formPrestasi', [
-                'row' => \yii\helpers\ArrayHelper::toArray($model->prestasis),
-            ]),
-        ],
-        [
-            'label' => '<i class="glyphicon glyphicon-book"></i> ' . Html::encode('Sp'),
-            'content' => $this->render('_formSp', [
-                'row' => \yii\helpers\ArrayHelper::toArray($model->sps),
-            ]),
-        ],
-    ];
-    echo kartik\tabs\TabsX::widget([
-        'items' => $forms,
-        'position' => kartik\tabs\TabsX::POS_ABOVE,
-        'encodeLabels' => false,
-        'pluginOptions' => [
-            'bordered' => true,
-            'sideways' => true,
-            'enableCache' => false,
-        ],
-    ]);
-    ?>
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
         <?= Html::a(Yii::t('app', 'Cancel'), Yii::$app->request->referrer , ['class'=> 'btn btn-danger']) ?>
