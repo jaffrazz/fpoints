@@ -41,9 +41,9 @@
                             ['label' => 'Hari Efektif', 'icon' => 'file-code-o', 'url' => ['/hari-efektif']],
                             ['label' => 'Hari Tidak Efektif', 'icon' => 'file-code-o', 'url' => ['/hari-tidak-efektif']],
                             ['label' => 'Kategori Aturan', 'icon' => 'file-code-o', 'url' => ['/kategori-aturan']],
+                            ['label' => 'Kategori Penghargaan', 'icon' => 'file-code-o', 'url' => ['/kategori-penghargaan']],
                             ['label' => 'Pegawai', 'icon' => 'file-code-o', 'url' => ['/pegawai']],
                             ['label' => 'Pekerjaan', 'icon' => 'file-code-o', 'url' => ['/pekerjaan']],
-                            ['label' => 'Penghargaan', 'icon' => 'file-code-o', 'url' => ['/penghargaan']],
                             ['label' => 'Sanksi', 'icon' => 'file-code-o', 'url' => ['/sanksi']],
                             ['label' => 'Semester', 'icon' => 'file-code-o', 'url' => ['/semester']],
                             ['label' => 'Status Absensi', 'icon' => 'file-code-o', 'url' => ['/status-absensi']],
@@ -63,6 +63,7 @@
                         ]
                     ],
                     ['label' => 'Aturan', 'icon' => 'file-code-o', 'url' => ['/aturan']],
+                    ['label' => 'Penghargaan', 'icon' => 'file-code-o', 'url' => ['/penghargaan']],
                     ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
                     ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
                     ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
