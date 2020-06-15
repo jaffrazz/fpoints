@@ -3,18 +3,21 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
+$url = \yii\helpers\Url::to(['get-pasal']);
 
-$js = "
+$js = <<< Js
 $('#id_kategori').on('change',function(){
     let id = $('#id_kategori').children('option:selected').val();
-    $.ajax('".Yii::$app->homeUrl."/aturan/get-pasal/?id='+id).then(res => {
+    $.ajax('$url?id='+id).then(res => {
         let val = JSON.parse(res)
         $('#pasal').val(val.pasal);
         $('#pasal').attr('readonly','true');
     });
 });
-";
+Js;
+
 if($model->isNewRecord) $this->registerJs($js);
+
 ?>
 
 <div class="aturan-form">

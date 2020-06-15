@@ -6,17 +6,20 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model common\models\Penghargaan */
 /* @var $form yii\widgets\ActiveForm */
+$url = \yii\helpers\Url::to(['get-pasal']);
 
-$js = "
+$js = <<< Js
 $('#id_kategori_penghargaan').on('change',function(){
     let id = $('#id_kategori_penghargaan').children('option:selected').val();
-    $.ajax('" . Yii::$app->homeUrl . "/penghargaan/get-pasal/?id='+id).then(res => {
+    $.ajax('$url?id='+id).then(res => {
         let val = JSON.parse(res)
         $('#pasal').val(val.pasal);
         $('#pasal').attr('readonly','true');
     });
 });
-";
+Js;
+
+
 if ($model->isNewRecord) {
     $this->registerJs($js);
 }
