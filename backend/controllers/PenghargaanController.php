@@ -28,7 +28,7 @@ class PenghargaanController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'get-pasal'],
                         'roles' => ['@']
                     ],
                     [
@@ -80,7 +80,7 @@ class PenghargaanController extends Controller
     {
         $model = new Penghargaan();
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+        if ($model->loadAll(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', "Penghargaan berhasil ditambahkan.");
 
             return $this->redirect(['view', 'id' => $model->id_penghargaan]);
@@ -101,7 +101,7 @@ class PenghargaanController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+        if ($model->loadAll(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', "Penghargaan berhasil diubah.");
 
             return $this->redirect(['view', 'id' => $model->id_penghargaan]);
@@ -122,7 +122,7 @@ class PenghargaanController extends Controller
     {
         $trans = Yii::$app->db->beginTransaction();
         try {
-            $this->findModel($id)->deleteWithRelated();
+            $this->findModel($id)->delete();
 
             $trans->commit();
             Yii::$app->session->setFlash('success', "Penghargaan berhasil dihapus.");
@@ -149,6 +149,27 @@ class PenghargaanController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+    
+
+    public function actionGetPasal($id){
+        $number = Penghargaan::find()->Where(['id_kategori_penghargaan' => $id])->max("regexp_replace(pasal,'[A-Za-z]','')");
+        
+        if($id < 26){
+            $char = chr(64+$id);
+        }else{
+            $count = floor($id / 26);
+            $mod = $id % 26;
+            $char = '';
+            if($count < 26){
+                $char .= chr(64+$count) . chr(64+$mod);
+            }
+        }
+
+        $number += 1;
+        $pasal = $char.$number;
+        
+        return json_encode(['pasal' => $pasal]);
     }
     
 }

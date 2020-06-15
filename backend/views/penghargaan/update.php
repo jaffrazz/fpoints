@@ -5,9 +5,17 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model common\models\Penghargaan */
 
-$this->title = 'Update Penghargaan: ' . ' ' . $model->uraian_penghargaan;
+$title = explode(' ', $model->uraian_penghargaan);
+
+if (count($title) > 4) {
+    $title = implode(' ', array_slice($title, 0, 3)) . "...";
+} else {
+    $title = implode(' ', $title);
+}
+
+$this->title = 'Update Penghargaan: ' . ' ' . $title;
 $this->params['breadcrumbs'][] = ['label' => 'Penghargaan', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->uraian_penghargaan, 'url' => ['view', 'id' => $model->id_penghargaan]];
+$this->params['breadcrumbs'][] = ['label' => $title, 'url' => ['view', 'id' => $model->id_penghargaan]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="penghargaan-update">

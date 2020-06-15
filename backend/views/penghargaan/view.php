@@ -7,7 +7,17 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\Penghargaan */
 
-$this->title = $model->uraian_penghargaan;
+
+$title = explode(' ', $model->uraian_penghargaan);
+
+if (count($title) > 4) {
+    $title = implode(' ', array_slice($title, 0, 3)) . "...";
+} else {
+    $title = implode(' ', $title);
+}
+
+
+$this->title = $title;
 $this->params['breadcrumbs'][] = ['label' => 'Penghargaan', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -29,35 +39,22 @@ $this->params['breadcrumbs'][] = $this->title;
                     ?>
                 </div>
                 <div class="box-body">
-                    <!-- <div class="row"> -->
                     <?php
                         $gridColumn = [
                             ['attribute' => 'id_penghargaan', 'visible' => false],
                             [
                                 'attribute' => 'kategoriPenghargaan.kategori_penghargaan',
-                                'label' => 'Id Kategori Penghargaan',
+                                'label' => 'Kategori Penghargaan',
                             ],
-                            'uraian_penghargaan:ntext',
-                            'point_penghargaan',
                             'pasal',
+                            'point_penghargaan',
+                            'uraian_penghargaan:ntext',
                         ];
                         echo DetailView::widget([
                             'model' => $model,
                             'attributes' => $gridColumn,
                         ]);
                         ?>
-                    <!-- </div> -->
-                    <div class="pt-3">
-                        <h3><b>KategoriPenghargaan<?=' ' . Html::encode($this->title)?></b></h3>
-                    </div>
-                    <?php
-                    $gridColumnKategoriPenghargaan = [
-                        'kategori_penghargaan',
-                    ];
-                    echo DetailView::widget([
-                        'model' => $model->kategoriPenghargaan,
-                        'attributes' => $gridColumnKategoriPenghargaan]);
-                    ?>
 
                     <div class="pt-3">
                         <?php

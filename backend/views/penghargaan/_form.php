@@ -7,14 +7,20 @@ use yii\widgets\ActiveForm;
 /* @var $model common\models\Penghargaan */
 /* @var $form yii\widgets\ActiveForm */
 
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
-    'viewParams' => [
-        'class' => 'Prestasi', 
-        'relID' => 'prestasi', 
-        'value' => \yii\helpers\Json::encode($model->prestasis),
-        'isNewRecord' => ($model->isNewRecord) ? 1 : 0
-    ]
-]);
+$js = "
+$('#id_kategori_penghargaan').on('change',function(){
+    let id = $('#id_kategori_penghargaan').children('option:selected').val();
+    $.ajax('" . Yii::$app->homeUrl . "/penghargaan/get-pasal/?id='+id).then(res => {
+        let val = JSON.parse(res)
+        $('#pasal').val(val.pasal);
+        $('#pasal').attr('readonly','true');
+    });
+});
+";
+if ($model->isNewRecord) {
+    $this->registerJs($js);
+}
+
 ?>
 
 <div class="penghargaan-form">
@@ -27,38 +33,21 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id_kategori_penghargaan')->widget(\kartik\widgets\Select2::classname(), [
         'data' => \yii\helpers\ArrayHelper::map(\common\models\KategoriPenghargaan::find()->orderBy('id_kategori_penghargaan')->asArray()->all(), 'id_kategori_penghargaan', 'kategori_penghargaan'),
-        'options' => ['placeholder' => 'Choose Kategori penghargaan'],
-        'pluginOptions' => [
+        'options' => ['placeholder' => 'Pilih Kategori penghargaan'],
+        'pluginOptions' => $model->isNewRecord ? [
             'allowClear' => true
+        ] : [
+            'allowClear' => false,
+            'disabled' => true,
         ],
     ]); ?>
 
-    <?= $form->field($model, 'uraian_penghargaan')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'pasal')->textInput(['maxlength' => true, 'placeholder' => 'Pasal', 'readonly' => true]) ?>
 
-    <?= $form->field($model, 'point_penghargaan')->textInput(['placeholder' => 'Point Penghargaan']) ?>
+    <?= $form->field($model, 'uraian_penghargaan')->textarea(['rows' => 3]) ?>
 
-    <?= $form->field($model, 'pasal')->textInput(['maxlength' => true, 'placeholder' => 'Pasal']) ?>
+    <?= $form->field($model, 'point_penghargaan')->textInput(['placeholder' => 'Point Penghargaan','type' => 'number']) ?>
 
-    <?php
-    $forms = [
-        [
-            'label' => '<i class="glyphicon glyphicon-book"></i> ' . Html::encode('Prestasi'),
-            'content' => $this->render('_formPrestasi', [
-                'row' => \yii\helpers\ArrayHelper::toArray($model->prestasis),
-            ]),
-        ],
-    ];
-    echo kartik\tabs\TabsX::widget([
-        'items' => $forms,
-        'position' => kartik\tabs\TabsX::POS_ABOVE,
-        'encodeLabels' => false,
-        'pluginOptions' => [
-            'bordered' => true,
-            'sideways' => true,
-            'enableCache' => false,
-        ],
-    ]);
-    ?>
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
         <?= Html::a(Yii::t('app', 'Cancel'), Yii::$app->request->referrer , ['class'=> 'btn btn-danger']) ?>

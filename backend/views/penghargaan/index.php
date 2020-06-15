@@ -24,11 +24,7 @@ $this->registerJs($search);
                 <div class="box-header">
                     <p>
                         <?=Html::a('Create Penghargaan', ['create'], ['class' => 'btn btn-success'])?>
-                        <?=Html::a('Advance Search', '#', ['class' => 'btn btn-info search-button'])?>
                     </p>
-                    <div class="search-form" style="display:none">
-                        <?=$this->render('_search', ['model' => $searchModel]);?>
-                    </div>
                 </div>
                 <div class="box-body">
                     <?php
@@ -37,7 +33,7 @@ $this->registerJs($search);
                             ['attribute' => 'id_penghargaan', 'visible' => false],
                             [
                                 'attribute' => 'id_kategori_penghargaan',
-                                'label' => 'Id Kategori Penghargaan',
+                                'label' => 'Kategori Penghargaan',
                                 'value' => function ($model) {
                                     return $model->kategoriPenghargaan->kategori_penghargaan;
                                 },
@@ -48,9 +44,9 @@ $this->registerJs($search);
                                 ],
                                 'filterInputOptions' => ['placeholder' => 'Kategori penghargaan', 'id' => 'grid-penghargaan-search-id_kategori_penghargaan'],
                             ],
-                            'uraian_penghargaan:ntext',
-                            'point_penghargaan',
                             'pasal',
+                            'point_penghargaan',
+                            'uraian_penghargaan:ntext',
                             [
                                 'class' => 'yii\grid\ActionColumn',
                             ],
