@@ -5,6 +5,7 @@ namespace backend\controllers;
 use Yii;
 use common\models\Siswa;
 use common\models\SiswaSearch;
+use common\models\OnKelasSiswa;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -95,14 +96,32 @@ class SiswaController extends Controller
     public function actionCreate()
     {
         $model = new Siswa();
+        $modelOnKelas = new OnKelasSiswa();
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            Yii::$app->session->setFlash('success', "Siswa berhasil ditambahkan.");
+        if ($model->loadAll(Yii::$app->request->post())) {            
+            $trans = Yii::$app->db->beginTransaction();
 
-            return $this->redirect(['view', 'id' => $model->id_siswa]);
+            try {
+                $model->save();
+                $modelOnKelas->loadAll(Yii::$app->request->post());
+                $modelOnKelas->id_siswa = $model->id_siswa;
+
+                $modelOnKelas->save();
+                $trans->commit();
+                Yii::$app->session->setFlash('success', "Siswa berhasil ditambahkan.");
+
+                return $this->redirect(['view', 'id' => $model->id_siswa]);
+            } catch (\Exception $e) {
+                $trans->rollBack();
+
+                Yii::$app->session->setFlash('error', "Errorr, cant perform this action correctly.");
+                return $this->redirect(['index']);
+            }
+
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'modelOnKelas' => $modelOnKelas,
             ]);
         }
     }
@@ -116,14 +135,31 @@ class SiswaController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $modelOnKelas = OnKelasSiswa::find()->where(['id_siswa' => $id])->one();
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            Yii::$app->session->setFlash('success', "Siswa berhasil diubah.");
+        if ($model->loadAll(Yii::$app->request->post())) {      
+            $trans = Yii::$app->db->beginTransaction();
 
-            return $this->redirect(['view', 'id' => $model->id_siswa]);
+            try {
+                $model->save();
+                $modelOnKelas->loadAll(Yii::$app->request->post());
+                $modelOnKelas->id_siswa = $model->id_siswa;
+
+                $modelOnKelas->save();
+                $trans->commit();
+                Yii::$app->session->setFlash('success', "Siswa berhasil diubah.");
+
+                return $this->redirect(['view', 'id' => $model->id_siswa]);
+            } catch (\Exception $e) {
+                $trans->rollBack();
+
+                Yii::$app->session->setFlash('error', "Errorr, cant perform this action correctly.");
+                return $this->redirect(['index']);
+            }
         } else {
             return $this->render('update', [
                 'model' => $model,
+                'modelOnKelas' => $modelOnKelas,
             ]);
         }
     }
