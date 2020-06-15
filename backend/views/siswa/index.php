@@ -15,6 +15,7 @@ $search = "$('.search-button').click(function(){
 	return false;
 });";
 $this->registerJs($search);
+
 ?>
 <div class="siswa-index">
 
@@ -53,17 +54,37 @@ $this->registerJs($search);
                                 ],
                                 'filterInputOptions' => ['placeholder' => 'Agama', 'id' => 'grid-siswa-search-id_agama'],
                             ],
-                            // 'tempat_lahir_siswa',
-                            // 'tanggal_lahir_siswa',
                             [
                                 'attribute' => 'jenis_kelamin_siswa',
                                 'value' => function($model){
                                     return ($model->jenis_kelamin_siswa == 'L') ? 'Laki-laki' : 'Perempuan';
                                 }
                             ],
+                            [
+                                'attribute' => 'id_kelas',
+                                'label' => 'Kelas',
+                                'value' => function ($model) {
+                                    return $model->onKelasSiswa->kelas->namaKelas->nama_kelas;
+                                },
+                                'filterType' => GridView::FILTER_SELECT2,
+                                'filter' => \yii\helpers\ArrayHelper::map(
+                                    \common\models\Kelas::find()
+                                        ->joinWith('namaKelas')
+                                        ->asArray()
+                                        ->all(), 
+                                    'id_kelas', 
+                                    'namaKelas.nama_kelas'
+                                ),
+                                'filterWidgetOptions' => [
+                                    'pluginOptions' => ['allowClear' => true],
+                                ],
+                                'filterInputOptions' => ['placeholder' => 'Kelas', 'id' => 'grid-siswa-search-id_kelas'],
+                            ],
+                            // 'tempat_lahir_siswa',
+                            // 'tanggal_lahir_siswa',
                             // 'alamat_rumah_siswa:ntext',
                             // 'alamat_domisili_siswa:ntext',
-                            'no_hp_siswa',
+                            // 'no_hp_siswa',
                             // 'foto_siswa',
                             [
                                 'class' => 'yii\grid\ActionColumn',
