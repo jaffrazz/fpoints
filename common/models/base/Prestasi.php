@@ -7,6 +7,7 @@ use Yii;
 /**
  * This is the base model class for table "prestasi".
  *
+ * @property integer $id_prestasi
  * @property integer $id_siswa
  * @property integer $id_penghargaan
  * @property string $tanggal
@@ -57,8 +58,9 @@ class Prestasi extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_siswa' => 'Id Siswa',
-            'id_penghargaan' => 'Id Penghargaan',
+            'id_prestasi' => 'Id Prestasi',
+            'id_siswa' => 'Siswa',
+            'id_penghargaan' => 'Penghargaan',
             'tanggal' => 'Tanggal',
         ];
     }
