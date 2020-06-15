@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 15, 2020 at 12:26 PM
+-- Generation Time: Jun 15, 2020 at 04:43 PM
 -- Server version: 10.1.44-MariaDB-0ubuntu0.18.04.1
 -- PHP Version: 7.2.26-1+ubuntu18.04.1+deb.sury.org+1
 
@@ -362,15 +362,17 @@ CREATE TABLE `penghargaan` (
   `id_penghargaan` int(11) NOT NULL,
   `id_kategori_penghargaan` int(11) NOT NULL,
   `uraian_penghargaan` text,
-  `point_penghargaan` int(11) DEFAULT NULL
+  `point_penghargaan` int(11) DEFAULT NULL,
+  `pasal` varchar(10) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `penghargaan`
 --
 
-INSERT INTO `penghargaan` (`id_penghargaan`, `id_kategori_penghargaan`, `uraian_penghargaan`, `point_penghargaan`) VALUES
-(1, 1, 'Membawa nama sekolah ke tingkat Provinsi', 10);
+INSERT INTO `penghargaan` (`id_penghargaan`, `id_kategori_penghargaan`, `uraian_penghargaan`, `point_penghargaan`, `pasal`) VALUES
+(1, 1, 'Membawa nama sekolah ke tingkat Provinsi', 10, 'A1'),
+(2, 1, 'Membawa nama baik sekolah ketingkat Nasional', 15, 'A2');
 
 -- --------------------------------------------------------
 
@@ -383,6 +385,13 @@ CREATE TABLE `prestasi` (
   `id_penghargaan` int(11) NOT NULL,
   `tanggal` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `prestasi`
+--
+
+INSERT INTO `prestasi` (`id_siswa`, `id_penghargaan`, `tanggal`) VALUES
+(2, 1, '2020-06-01');
 
 -- --------------------------------------------------------
 
@@ -883,7 +892,7 @@ ALTER TABLE `pekerjaan`
 -- AUTO_INCREMENT for table `penghargaan`
 --
 ALTER TABLE `penghargaan`
-  MODIFY `id_penghargaan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id_penghargaan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `sanksi`
