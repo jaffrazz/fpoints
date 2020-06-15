@@ -90,6 +90,17 @@ use borales\extensions\phoneInput\PhoneInput;
         ],
     ]); ?>
 
+    <?= $form->field($modelOnKelas, 'id_kelas')->widget(\kartik\widgets\Select2::classname(), [
+        'data' => \yii\helpers\ArrayHelper::map(
+            \common\models\Kelas::find()->joinWith('namaKelas')->orderBy('nama_kelas.nama_kelas')->asArray()->all(), 
+            'id_kelas', 
+            'namaKelas.nama_kelas'),
+        'options' => ['placeholder' => 'Pilih Kelas'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]); ?>
+
     <?= $form->field($model, 'no_hp_siswa')->widget(PhoneInput::className(),[
         'jsOptions' => [
             'preferredCountries' => ['id'],
