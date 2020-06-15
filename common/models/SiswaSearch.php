@@ -12,13 +12,14 @@ use common\models\Siswa;
  */
  class SiswaSearch extends Siswa
 {
+    public $id_kelas;
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id_siswa', 'id_wali_murid', 'id_agama'], 'integer'],
+            [['id_siswa', 'id_wali_murid', 'id_agama', 'id_kelas'], 'integer'],
             [['nis', 'nama_siswa', 'tempat_lahir_siswa', 'tanggal_lahir_siswa', 'jenis_kelamin_siswa', 'alamat_rumah_siswa', 'alamat_domisili_siswa', 'no_hp_siswa', 'foto_siswa'], 'safe'],
         ];
     }
@@ -41,7 +42,8 @@ use common\models\Siswa;
      */
     public function search($params)
     {
-        $query = Siswa::find();
+        $query = Siswa::find()
+            ->joinWith('onKelasSiswa');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -60,6 +62,7 @@ use common\models\Siswa;
             'id_wali_murid' => $this->id_wali_murid,
             'id_agama' => $this->id_agama,
             'tanggal_lahir_siswa' => $this->tanggal_lahir_siswa,
+            'on_kelas_siswa.id_kelas' => $this->id_kelas
         ]);
 
         $query->andFilterWhere(['like', 'nis', $this->nis])
