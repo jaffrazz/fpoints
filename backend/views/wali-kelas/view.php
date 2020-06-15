@@ -36,7 +36,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'attribute' => 'nama_kelas',
                                 'label' => 'Kelas',
                                 'value' => function($model){
-                                    return $model->kelas->namaKelas->nama_kelas;
+                                    return ($model->kelas != null) ? $model->kelas->namaKelas->nama_kelas : ' - ';
                                 }
                             ],
                         ];
@@ -46,7 +46,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         ]);
                         ?>
                     <div class="pt-3">
-                        <h3><b> Biodata <?=' ' . Html::encode($this->title)?> </b></h3>
+                        <h3>
+                            <b> Biodata</b>
+                        </h3>
                     </div>
                     <?php
                         $gridColumnPegawai = [
@@ -66,7 +68,12 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                             'no_hp_pegawai',
                             'status_kepegawaian',
-                            'jabatan_pegawai',
+                            [
+                                'attribute' => 'jabatan_pegawai',
+                                'value' => function($model){
+                                    return $model->jabatan->jabatan;
+                                }
+                            ],
                             'foto_pegawai',
                         ];
                         echo DetailView::widget([
