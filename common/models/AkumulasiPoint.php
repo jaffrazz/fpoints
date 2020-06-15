@@ -17,8 +17,8 @@ class AkumulasiPoint extends BaseAkumulasiPoint
     {
         return array_replace_recursive(parent::rules(),
 	    [
-            [['id_siswa', 'id_sanksi', 'total_point'], 'required'],
-            [['id_siswa', 'id_sanksi', 'total_point'], 'integer'],
+            [['id_siswa', 'id_sanksi', 'total_point', 'id_tahun_ajaran', 'id_semester'], 'required'],
+            [['id_siswa', 'id_sanksi', 'total_point', 'id_tahun_ajaran', 'id_semester'], 'integer'],
             [['tanggal'], 'safe']
         ]);
     }
