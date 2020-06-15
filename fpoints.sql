@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 15, 2020 at 04:43 PM
+-- Generation Time: Jun 15, 2020 at 08:27 PM
 -- Server version: 10.1.44-MariaDB-0ubuntu0.18.04.1
 -- PHP Version: 7.2.26-1+ubuntu18.04.1+deb.sury.org+1
 
@@ -347,10 +347,19 @@ INSERT INTO `pekerjaan` (`id_pekerjaan`, `nama_pekerjaan`) VALUES
 --
 
 CREATE TABLE `pelanggaran` (
+  `id_pelanggaran` int(11) NOT NULL,
   `id_siswa` bigint(20) NOT NULL,
   `id_aturan` int(11) NOT NULL,
   `tanggal` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `pelanggaran`
+--
+
+INSERT INTO `pelanggaran` (`id_pelanggaran`, `id_siswa`, `id_aturan`, `tanggal`) VALUES
+(1, 2, 4, '2020-06-01'),
+(2, 2, 4, '2020-06-01');
 
 -- --------------------------------------------------------
 
@@ -381,6 +390,7 @@ INSERT INTO `penghargaan` (`id_penghargaan`, `id_kategori_penghargaan`, `uraian_
 --
 
 CREATE TABLE `prestasi` (
+  `id_prestasi` int(11) NOT NULL,
   `id_siswa` bigint(20) NOT NULL,
   `id_penghargaan` int(11) NOT NULL,
   `tanggal` date DEFAULT NULL
@@ -390,8 +400,10 @@ CREATE TABLE `prestasi` (
 -- Dumping data for table `prestasi`
 --
 
-INSERT INTO `prestasi` (`id_siswa`, `id_penghargaan`, `tanggal`) VALUES
-(2, 1, '2020-06-01');
+INSERT INTO `prestasi` (`id_prestasi`, `id_siswa`, `id_penghargaan`, `tanggal`) VALUES
+(1, 2, 1, '2020-06-01'),
+(2, 2, 2, '2020-06-01'),
+(3, 2, 2, '2020-06-01');
 
 -- --------------------------------------------------------
 
@@ -473,6 +485,7 @@ INSERT INTO `siswa` (`id_siswa`, `id_wali_murid`, `id_agama`, `nis`, `nama_siswa
 CREATE TABLE `sp` (
   `id_sp` int(11) NOT NULL,
   `id_siswa` bigint(20) NOT NULL,
+  `sp_ke` varchar(3) NOT NULL,
   `tanggal_sp` date NOT NULL,
   `jml_point_pelanggaran` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -726,8 +739,9 @@ ALTER TABLE `pekerjaan`
 -- Indexes for table `pelanggaran`
 --
 ALTER TABLE `pelanggaran`
-  ADD PRIMARY KEY (`id_siswa`,`id_aturan`),
-  ADD KEY `FK_PELANGGARAN2` (`id_aturan`);
+  ADD PRIMARY KEY (`id_pelanggaran`),
+  ADD KEY `FK_PELANGGARAN2` (`id_aturan`),
+  ADD KEY `FK_PELANGGARAN` (`id_siswa`);
 
 --
 -- Indexes for table `penghargaan`
@@ -740,8 +754,9 @@ ALTER TABLE `penghargaan`
 -- Indexes for table `prestasi`
 --
 ALTER TABLE `prestasi`
-  ADD PRIMARY KEY (`id_siswa`,`id_penghargaan`),
-  ADD KEY `FK_PRESTASI2` (`id_penghargaan`);
+  ADD PRIMARY KEY (`id_prestasi`),
+  ADD KEY `FK_PRESTASI2` (`id_penghargaan`),
+  ADD KEY `FK_PRESTASI` (`id_siswa`);
 
 --
 -- Indexes for table `sanksi`
@@ -889,10 +904,22 @@ ALTER TABLE `pekerjaan`
   MODIFY `id_pekerjaan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
+-- AUTO_INCREMENT for table `pelanggaran`
+--
+ALTER TABLE `pelanggaran`
+  MODIFY `id_pelanggaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT for table `penghargaan`
 --
 ALTER TABLE `penghargaan`
   MODIFY `id_penghargaan` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `prestasi`
+--
+ALTER TABLE `prestasi`
+  MODIFY `id_prestasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `sanksi`
