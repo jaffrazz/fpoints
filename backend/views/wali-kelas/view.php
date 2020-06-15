@@ -17,8 +17,6 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-header">
-
-                    <?=Html::a('Update', ['update', 'id' => $model->id_wali_kelas], ['class' => 'btn btn-primary'])?>
                     <?=Html::a('Delete', ['delete', 'id' => $model->id_wali_kelas], [
                         'class' => 'btn btn-danger',
                         'data' => [
