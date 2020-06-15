@@ -57,8 +57,8 @@ class Pelanggaran extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_siswa' => 'Id Siswa',
-            'id_aturan' => 'Id Aturan',
+            'id_siswa' => 'Siswa',
+            'id_aturan' => 'Aturan',
             'tanggal' => 'Tanggal',
         ];
     }
