@@ -78,9 +78,9 @@ use borales\extensions\phoneInput\PhoneInput;
 
     <?= $form->field($model, 'jenis_kelamin_siswa')->dropDownList([ 'L' => 'Laki-laki', 'P' => 'Perempuan', ], ['prompt' => 'Pilih Jenis Kelamin']) ?>
 
-    <?= $form->field($model, 'alamat_rumah_siswa')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'alamat_rumah_siswa')->textarea(['rows' => 3]) ?>
 
-    <?= $form->field($model, 'alamat_domisili_siswa')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'alamat_domisili_siswa')->textarea(['rows' => 3]) ?>
 
     <?= $form->field($model, 'id_agama')->widget(\kartik\widgets\Select2::classname(), [
         'data' => \yii\helpers\ArrayHelper::map(\common\models\Agama::find()->orderBy('id_agama')->asArray()->all(), 'id_agama', 'agama'),
