@@ -62,6 +62,19 @@ $this->registerJs($search);
                                 'filterInputOptions' => ['placeholder' => 'Wali kelas', 'id' => 'grid-kelas-search-id_wali_kelas'],
                             ],
                             [
+                                'attribute' => 'id_tahun_ajaran',
+                                'label' => 'Tahun Ajaran',
+                                'value' => function ($model) {
+                                    if ($model->tahunAjaran) {return $model->tahunAjaran->tahun_ajaran;} else {return null;}
+                                },
+                                'filterType' => GridView::FILTER_SELECT2,
+                                'filter' => \yii\helpers\ArrayHelper::map(\common\models\TahunAjaran::find()->asArray()->all(), 'id_tahun_ajaran', 'tahun_ajaran'),
+                                'filterWidgetOptions' => [
+                                    'pluginOptions' => ['allowClear' => true],
+                                ],
+                                'filterInputOptions' => ['placeholder' => 'Wali kelas', 'id' => 'grid-kelas-search-id_tahun_ajaran'],
+                            ],
+                            [
                                 'class' => 'yii\grid\ActionColumn',
                             ],
                         ];

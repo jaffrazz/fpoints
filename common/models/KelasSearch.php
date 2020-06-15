@@ -19,7 +19,7 @@ use common\models\Kelas;
     public function rules()
     {
         return [
-            [['id_kelas','id_wali_kelas', 'nama_kelas'], 'integer'],
+            [['id_kelas','id_wali_kelas', 'nama_kelas', 'id_tahun_ajaran'], 'integer'],
         ];
     }
 
@@ -59,6 +59,7 @@ use common\models\Kelas;
         
         $query->andFilterWhere([
             'id_wali_kelas' => $this->id_wali_kelas,
+            'id_tahun_ajaran' => $this->id_tahun_ajaran,
             'nama_kelas.id_kelas' => $this->nama_kelas,
         ]);
 

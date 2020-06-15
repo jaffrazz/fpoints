@@ -46,6 +46,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return $model->waliKelas->pegawai->nama_pegawai;
                             }
                         ],
+                        [
+                            'attribute' => 'id_tahun_ajaran',
+                            'label' => 'Tahun Ajaran',
+                            'value' => function($model){
+                                return $model->tahunAjaran->tahun_ajaran;
+                            }
+                        ],
                     ];
                     echo DetailView::widget([
                         'model' => $model,

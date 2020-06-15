@@ -27,7 +27,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id_jurusan')->widget(\kartik\widgets\Select2::classname(), [
         'data' => \yii\helpers\ArrayHelper::map(\common\models\Jurusan::find()->orderBy('id_jurusan')->asArray()->all(), 'id_jurusan', 'jurusan'),
-        'options' => ['placeholder' => 'Choose Jurusan'],
+        'options' => ['placeholder' => 'Pilih Jurusan'],
         'pluginOptions' => [
             'allowClear' => true
         ],
@@ -35,7 +35,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id_wali_kelas')->widget(\kartik\widgets\Select2::classname(), [
         'data' => \yii\helpers\ArrayHelper::map(\common\models\WaliKelas::find()->joinWith('pegawai')->orderBy('id_wali_kelas')->asArray()->all(), 'id_wali_kelas', 'pegawai.nama_pegawai'),
-        'options' => ['placeholder' => 'Choose Wali kelas'],
+        'options' => ['placeholder' => 'Pilih Wali Kelas'],
         'pluginOptions' => [
             'allowClear' => true
         ],
@@ -44,6 +44,14 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'kelas')->textInput(['maxlength' => true, 'placeholder' => 'Kelas']) ?>
 
     <?= $form->field($model, 'grade')->textInput(['maxlength' => true, 'placeholder' => 'Grade']) ?>
+
+    <?= $form->field($model, 'id_tahun_ajaran')->widget(\kartik\widgets\Select2::classname(), [
+        'data' => \yii\helpers\ArrayHelper::map(\common\models\TahunAjaran::find()->orderBy('id_tahun_ajaran')->asArray()->all(), 'id_tahun_ajaran', 'tahun_ajaran'),
+        'options' => ['placeholder' => 'Pilih Tahun Ajaran'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]); ?>
 
     <?php
     $forms = [

@@ -35,7 +35,8 @@ class Kelas extends \yii\db\ActiveRecord
             'waliKelas',
             'namaKelas',
             'onKelasSiswas',
-            'siswas'
+            'siswas',
+            'tahunAjaran',
         ];
     }
 
@@ -45,7 +46,7 @@ class Kelas extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_jurusan', 'id_wali_kelas'], 'integer'],
+            [['id_jurusan', 'id_wali_kelas', 'id_tahun_ajaran'], 'integer'],
             [['kelas', 'grade'], 'string', 'max' => 3],
             [['id_wali_kelas'], 'unique']
         ];
@@ -66,10 +67,11 @@ class Kelas extends \yii\db\ActiveRecord
     {
         return [
             'id_kelas' => 'Id Kelas',
-            'id_jurusan' => 'Id Jurusan',
-            'id_wali_kelas' => 'Id Wali Kelas',
+            'id_jurusan' => 'Jurusan',
+            'id_wali_kelas' => 'Wali Kelas',
             'kelas' => 'Kelas',
             'grade' => 'Grade',
+            'id_tahun_ajaran' => 'Tahun Ajaran',
         ];
     }
     
@@ -95,6 +97,14 @@ class Kelas extends \yii\db\ActiveRecord
     public function getNamaKelas()
     {
         return $this->hasOne(\common\models\NamaKelas::className(), ['id_kelas' => 'id_kelas']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTahunAjaran()
+    {
+        return $this->hasOne(\common\models\TahunAjaran::className(), ['id_tahun_ajaran' => 'id_tahun_ajaran']);
     }
         
     /**
