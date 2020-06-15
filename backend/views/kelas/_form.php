@@ -48,7 +48,7 @@ use yii\widgets\ActiveForm;
     <?php
     $forms = [
         [
-            'label' => '<i class="glyphicon glyphicon-book"></i> ' . Html::encode('OnKelasSiswa'),
+            'label' => '<i class="glyphicon glyphicon-book"></i> ' . Html::encode('Daftar Siswa'),
             'content' => $this->render('_formOnKelasSiswa', [
                 'row' => \yii\helpers\ArrayHelper::toArray($model->onKelasSiswas),
             ]),
