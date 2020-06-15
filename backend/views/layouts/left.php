@@ -45,7 +45,9 @@
                             ['label' => 'Pekerjaan', 'icon' => 'file-code-o', 'url' => ['/pekerjaan']],
                             ['label' => 'Penghargaan', 'icon' => 'file-code-o', 'url' => ['/penghargaan']],
                             ['label' => 'Sanksi', 'icon' => 'file-code-o', 'url' => ['/sanksi']],
+                            ['label' => 'Semester', 'icon' => 'file-code-o', 'url' => ['/semester']],
                             ['label' => 'Status Absensi', 'icon' => 'file-code-o', 'url' => ['/status-absensi']],
+                            ['label' => 'Tahun Ajaran', 'icon' => 'file-code-o', 'url' => ['/tahun-ajaran']],
                             ['label' => 'Tindakan', 'icon' => 'file-code-o', 'url' => ['/tindakan']],
                         ]
                     ],
