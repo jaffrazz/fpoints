@@ -55,8 +55,8 @@ class OnKelasSiswa extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_kelas' => 'Id Kelas',
-            'id_siswa' => 'Id Siswa',
+            'id_kelas' => 'Kelas',
+            'id_siswa' => 'Siswa',
         ];
     }
     
