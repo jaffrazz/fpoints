@@ -122,7 +122,7 @@ class SanksiController extends Controller
     {
         $trans = Yii::$app->db->beginTransaction();
         try {
-            $this->findModel($id)->deleteWithRelated();
+            $this->findModel($id)->delete();
 
             $trans->commit();
             Yii::$app->session->setFlash('success', "Sanksi berhasil dihapus.");
