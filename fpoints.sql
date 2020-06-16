@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 16, 2020 at 07:27 AM
+-- Generation Time: Jun 16, 2020 at 10:14 AM
 -- Server version: 10.1.44-MariaDB-0ubuntu0.18.04.1
 -- PHP Version: 7.2.26-1+ubuntu18.04.1+deb.sury.org+1
 
@@ -29,9 +29,10 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `absensi` (
+  `id_absensi` int(11) NOT NULL,
   `id_siswa` bigint(20) NOT NULL,
   `id_status_absensi` int(11) NOT NULL,
-  `tanggal` date DEFAULT NULL
+  `id_tanggal_efektif` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -540,8 +541,16 @@ INSERT INTO `tahun_ajaran` (`id_tahun_ajaran`, `tahun_ajaran`) VALUES
 
 CREATE TABLE `tanggal_efektif` (
   `id_tanggal_efektif` int(11) NOT NULL,
-  `tanggal_efektif` int(11) NOT NULL
+  `tanggal_efektif` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `tanggal_efektif`
+--
+
+INSERT INTO `tanggal_efektif` (`id_tanggal_efektif`, `tanggal_efektif`) VALUES
+(1, '2020-06-01'),
+(3, '2020-06-02');
 
 -- --------------------------------------------------------
 
@@ -639,8 +648,10 @@ INSERT INTO `wali_murid` (`id_wali_murid`, `id_pekerjaan`, `id_agama`, `nama_wal
 -- Indexes for table `absensi`
 --
 ALTER TABLE `absensi`
-  ADD PRIMARY KEY (`id_siswa`,`id_status_absensi`),
-  ADD KEY `FK_ABSENSI2` (`id_status_absensi`);
+  ADD PRIMARY KEY (`id_absensi`),
+  ADD KEY `FK_ABSENSI2` (`id_status_absensi`),
+  ADD KEY `FK_ABSENSI3` (`id_tanggal_efektif`),
+  ADD KEY `FK_ABSENSI` (`id_siswa`);
 
 --
 -- Indexes for table `agama`
@@ -814,7 +825,8 @@ ALTER TABLE `tahun_ajaran`
 -- Indexes for table `tanggal_efektif`
 --
 ALTER TABLE `tanggal_efektif`
-  ADD PRIMARY KEY (`id_tanggal_efektif`);
+  ADD PRIMARY KEY (`id_tanggal_efektif`),
+  ADD UNIQUE KEY `tanggal_efektif` (`tanggal_efektif`);
 
 --
 -- Indexes for table `tindakan`
@@ -853,7 +865,7 @@ ALTER TABLE `wali_murid`
 -- AUTO_INCREMENT for table `absensi`
 --
 ALTER TABLE `absensi`
-  MODIFY `id_siswa` bigint(20) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_absensi` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `agama`
@@ -979,7 +991,7 @@ ALTER TABLE `tahun_ajaran`
 -- AUTO_INCREMENT for table `tanggal_efektif`
 --
 ALTER TABLE `tanggal_efektif`
-  MODIFY `id_tanggal_efektif` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_tanggal_efektif` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `tindakan`
@@ -1014,7 +1026,8 @@ ALTER TABLE `wali_murid`
 --
 ALTER TABLE `absensi`
   ADD CONSTRAINT `FK_ABSENSI` FOREIGN KEY (`id_siswa`) REFERENCES `siswa` (`id_siswa`),
-  ADD CONSTRAINT `FK_ABSENSI2` FOREIGN KEY (`id_status_absensi`) REFERENCES `status_absensi` (`id_status_absensi`);
+  ADD CONSTRAINT `FK_ABSENSI2` FOREIGN KEY (`id_status_absensi`) REFERENCES `status_absensi` (`id_status_absensi`),
+  ADD CONSTRAINT `FK_ABSENSI3` FOREIGN KEY (`id_tanggal_efektif`) REFERENCES `tanggal_efektif` (`id_tanggal_efektif`);
 
 --
 -- Constraints for table `akumulasi_point`
