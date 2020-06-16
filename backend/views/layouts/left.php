@@ -62,7 +62,8 @@
                             ['label' => 'Siswa', 'icon' => 'file-code-o', 'url' => ['/siswa']],
                         ]
                     ],
-                    ['label' => 'Akumulasi Point', 'icon' => 'file-code-o', 'url' => ['/akumulasi-point']],
+                    ['label' => 'Absensi', 'icon' => 'file-code-o', 'url' => ['/absensi']],
+                    // ['label' => 'Akumulasi Point', 'icon' => 'file-code-o', 'url' => ['/akumulasi-point']],
                     ['label' => 'Aturan', 'icon' => 'file-code-o', 'url' => ['/aturan']],
                     ['label' => 'Penghargaan', 'icon' => 'file-code-o', 'url' => ['/penghargaan']],
                     ['label' => 'Prestasi', 'icon' => 'file-code-o', 'url' => ['/prestasi']],
