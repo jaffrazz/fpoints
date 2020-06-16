@@ -75,4 +75,11 @@ class TanggalEfektif extends \yii\db\ActiveRecord
     {
         return new \app\models\TanggalEfektifQuery(get_called_class());
     }
+
+    /**
+     * Disabled array params on search
+     */
+    public function formName(){
+        return '';
+    }
 }

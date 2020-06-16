@@ -31,7 +31,20 @@ $this->registerJs($search);
 					$gridColumn = [
 						['class' => 'yii\grid\SerialColumn'],
 						['attribute' => 'id_tanggal_efektif', 'visible' => false],
-						'tanggal_efektif',
+						[
+							'attribute' => 'tanggal_efektif',
+							'format' => 'date',
+							'filterType' => GridView::FILTER_DATE,
+								'filterWidgetOptions' => [
+								'size' => 'xs',
+								'pluginOptions' => [
+									'format' => 'dd-M-yyyy',
+									'autoWidget' => true,
+									'autoclose' => true,
+									'todayHighlight' => true
+								]
+							],
+						],
 						[
 							'class' => 'yii\grid\ActionColumn',
 						],
