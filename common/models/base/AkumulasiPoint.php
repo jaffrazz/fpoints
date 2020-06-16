@@ -9,7 +9,8 @@ use Yii;
  *
  * @property integer $id_siswa
  * @property integer $id_sanksi
- * @property integer $total_point
+ * @property integer $total_point_pelanggaran
+ * @property integer $total_point_prestasi
  * @property string $tanggal
  * @property integer $id_tahun_ajaran
  * @property integer $id_semester
@@ -44,8 +45,8 @@ class AkumulasiPoint extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_siswa', 'id_sanksi', 'total_point', 'id_tahun_ajaran', 'id_semester'], 'required'],
-            [['id_siswa', 'id_sanksi', 'total_point', 'id_tahun_ajaran', 'id_semester'], 'integer'],
+            [['id_siswa', 'id_sanksi', 'total_point_pelanggaran', 'total_point_prestasi', 'tanggal', 'id_tahun_ajaran', 'id_semester'], 'required'],
+            [['id_siswa', 'id_sanksi', 'total_point_pelanggaran', 'total_point_prestasi', 'id_tahun_ajaran', 'id_semester'], 'integer'],
             [['tanggal'], 'safe']
         ];
     }
@@ -66,7 +67,8 @@ class AkumulasiPoint extends \yii\db\ActiveRecord
         return [
             'id_siswa' => 'Siswa',
             'id_sanksi' => 'Sanksi',
-            'total_point' => 'Total Point',
+            'total_point_pelanggaran' => 'Total Point Pelanggaran',
+            'total_point_prestasi' => 'Total Point Prestasi',
             'tanggal' => 'Tanggal',
             'id_tahun_ajaran' => 'Tahun Ajaran',
             'id_semester' => 'Semester',
