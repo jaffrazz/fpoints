@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 15, 2020 at 08:27 PM
+-- Generation Time: Jun 16, 2020 at 07:27 AM
 -- Server version: 10.1.44-MariaDB-0ubuntu0.18.04.1
 -- PHP Version: 7.2.26-1+ubuntu18.04.1+deb.sury.org+1
 
@@ -66,8 +66,9 @@ INSERT INTO `agama` (`id_agama`, `agama`) VALUES
 CREATE TABLE `akumulasi_point` (
   `id_siswa` bigint(20) NOT NULL,
   `id_sanksi` int(11) NOT NULL,
-  `total_point` int(11) NOT NULL,
-  `tanggal` date DEFAULT NULL,
+  `total_point_pelanggaran` int(11) NOT NULL,
+  `total_point_prestasi` int(11) NOT NULL,
+  `tanggal` date NOT NULL,
   `id_tahun_ajaran` int(11) NOT NULL,
   `id_semester` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -534,6 +535,17 @@ INSERT INTO `tahun_ajaran` (`id_tahun_ajaran`, `tahun_ajaran`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `tanggal_efektif`
+--
+
+CREATE TABLE `tanggal_efektif` (
+  `id_tanggal_efektif` int(11) NOT NULL,
+  `tanggal_efektif` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `tindakan`
 --
 
@@ -799,6 +811,12 @@ ALTER TABLE `tahun_ajaran`
   ADD UNIQUE KEY `tahun_ajaran` (`tahun_ajaran`);
 
 --
+-- Indexes for table `tanggal_efektif`
+--
+ALTER TABLE `tanggal_efektif`
+  ADD PRIMARY KEY (`id_tanggal_efektif`);
+
+--
 -- Indexes for table `tindakan`
 --
 ALTER TABLE `tindakan`
@@ -955,7 +973,13 @@ ALTER TABLE `status_absensi`
 -- AUTO_INCREMENT for table `tahun_ajaran`
 --
 ALTER TABLE `tahun_ajaran`
-  MODIFY `id_tahun_ajaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_tahun_ajaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `tanggal_efektif`
+--
+ALTER TABLE `tanggal_efektif`
+  MODIFY `id_tanggal_efektif` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `tindakan`
