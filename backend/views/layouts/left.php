@@ -65,6 +65,7 @@
                     ['label' => 'Akumulasi Point', 'icon' => 'file-code-o', 'url' => ['/akumulasi-point']],
                     ['label' => 'Aturan', 'icon' => 'file-code-o', 'url' => ['/aturan']],
                     ['label' => 'Penghargaan', 'icon' => 'file-code-o', 'url' => ['/penghargaan']],
+                    ['label' => 'Tanggal Efektif', 'icon' => 'file-code-o', 'url' => ['/tanggal-efektif']],
                     ['label' => 'Prestasi', 'icon' => 'file-code-o', 'url' => ['/prestasi']],
                     ['label' => 'Pelanggaran', 'icon' => 'file-code-o', 'url' => ['/pelanggaran']],
 
