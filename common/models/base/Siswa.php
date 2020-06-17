@@ -101,7 +101,7 @@ class Siswa extends \yii\db\ActiveRecord
             'jenis_kelamin_siswa' => 'Jenis Kelamin',
             'alamat_rumah_siswa' => 'Alamat Rumah',
             'alamat_domisili_siswa' => 'Alamat Domisili',
-            'no_hp_siswa' => 'No Hp',
+            'no_hp_siswa' => 'No HP',
             'foto_siswa' => 'Foto',
         ];
     }
