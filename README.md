@@ -43,4 +43,8 @@ return $config;
 
 - [ ] Dependend dropdown at absensi.
 - [ ] Upload image at Siswa, Pegawai, and Wali Murid
+- [ ] Detail Point [ Update Otomatis ]
+- [ ] Akumulasi Point [ Action Reset Per semester ]
+- [ ] Surat Peringatan
+- [ ] Advanced Search
 - [ ] Etc
