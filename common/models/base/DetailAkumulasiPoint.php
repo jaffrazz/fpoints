@@ -62,11 +62,11 @@ class DetailAkumulasiPoint extends \yii\db\ActiveRecord
     {
         return [
             'id_detail_akumulasi_point' => 'Id Detail Akumulasi Point',
-            'id_siswa' => 'Id Siswa',
-            'id_akumulasi_point' => 'Id Akumulasi Point',
+            'id_siswa' => 'Siswa',
+            'id_akumulasi_point' => 'Akumulasi Point',
             'point_pelanggaran' => 'Point Pelanggaran',
             'point_penghargaan' => 'Point Penghargaan',
-            'id_sanksi' => 'Id Sanksi',
+            'id_sanksi' => 'Sanksi',
         ];
     }
     

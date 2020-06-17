@@ -64,8 +64,8 @@ class Penghargaan extends \yii\db\ActiveRecord
         return [
             'id_penghargaan' => 'Id Penghargaan',
             'id_kategori_penghargaan' => 'Kategori Penghargaan',
-            'uraian_penghargaan' => 'Uraian Penghargaan',
-            'point_penghargaan' => 'Point Penghargaan',
+            'uraian_penghargaan' => 'Uraian',
+            'point_penghargaan' => 'Point',
             'pasal' => 'Pasal',
         ];
     }

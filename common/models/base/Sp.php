@@ -57,9 +57,9 @@ class Sp extends \yii\db\ActiveRecord
     {
         return [
             'id_sp' => 'Id Sp',
-            'id_siswa' => 'Id Siswa',
-            'tanggal_sp' => 'Tanggal Sp',
-            'jml_point_pelanggaran' => 'Jml Point Pelanggaran',
+            'id_siswa' => 'Siswa',
+            'tanggal_sp' => 'Tanggal SP',
+            'jml_point_pelanggaran' => 'Jumlah Point',
         ];
     }
     

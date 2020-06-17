@@ -76,7 +76,7 @@ class Pegawai extends \yii\db\ActiveRecord
             'nama_pegawai' => 'Nama',
             'alamat_pegawai' => 'Alamat',
             'jenis_kelamin_pegawai' => 'Jenis Kelamin',
-            'no_hp_pegawai' => 'No Hp',
+            'no_hp_pegawai' => 'No HP',
             'status_kepegawaian' => 'Status Kepegawaian',
             'jabatan_pegawai' => 'Jabatan',
             'foto_pegawai' => 'Foto',

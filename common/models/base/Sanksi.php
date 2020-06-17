@@ -59,8 +59,8 @@ class Sanksi extends \yii\db\ActiveRecord
         return [
             'id_sanksi' => 'Id Sanksi',
             'uraian' => 'Uraian',
-            'minimum_point' => 'Minimum Point',
-            'maximum_point' => 'Maximum Point',
+            'minimum_point' => 'Point Minimal',
+            'maximum_point' => 'Point Maksimal',
         ];
     }
     

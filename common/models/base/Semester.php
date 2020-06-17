@@ -57,8 +57,8 @@ class Semester extends \yii\db\ActiveRecord
         return [
             'id_semester' => 'Id Semester',
             'semester' => 'Semester',
-            'awal_bulan_semester' => 'Awal Bulan Semester',
-            'akhir_bulan_semester' => 'Akhir Bulan Semester',
+            'awal_bulan_semester' => 'Awal Bulan',
+            'akhir_bulan_semester' => 'Akhir Bulan',
         ];
     }
     
