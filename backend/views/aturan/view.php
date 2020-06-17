@@ -46,8 +46,8 @@ $this->params['breadcrumbs'][] = $this->title;
                             [
                                 'attribute' => 'history_of_the_month',
                                 'label' => 'Riwayat Pelanggaran Bulan Ini',
-                                'value' => function() use($totalBulanIni) {
-                                    return $totalBulanIni . " Kali";
+                                'value' => function() use($totalInThisMonth) {
+                                    return $totalInThisMonth . " Kali";
                                 }
                             ],
                         ];
@@ -80,7 +80,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         //'type' => GridView::TYPE_PRIMARY,
                                         'heading' => '<span class="glyphicon glyphicon-book"></span> ' . Html::encode('5 Pelanggaran Terbaru'),
                                     ],
-                                    // 'export' => true,
+                                    'export' => false,
                                     'columns' => $gridColumnPelanggaran,
                                 ]);
                             }

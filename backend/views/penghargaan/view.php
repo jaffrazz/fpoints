@@ -49,6 +49,12 @@ $this->params['breadcrumbs'][] = $this->title;
                             'pasal',
                             'point_penghargaan',
                             'uraian_penghargaan:ntext',
+                            [
+                                'attribute' => 'jumlah_peraih_bulan_ini',
+                                'value' => function() use($totalInThisMonth){
+                                    return $totalInThisMonth. " Kali";
+                                }
+                            ],
                         ];
                         echo DetailView::widget([
                             'model' => $model,
@@ -61,6 +67,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             if ($providerPrestasi->totalCount) {
                                 $gridColumnPrestasi = [
                                     ['class' => 'yii\grid\SerialColumn'],
+                                    'tanggal',
                                     [
                                         'attribute' => 'siswa.id_siswa',
                                         'label' => 'Siswa',
@@ -68,16 +75,21 @@ $this->params['breadcrumbs'][] = $this->title;
                                             return $model->siswa->nama_siswa;
                                         }
                                     ],
+                                    [
+                                        'attribute' => 'siswa.id_kelas',
+                                        'label' => 'Kelas',
+                                        'value' => function($model){
+                                            return $model->siswa->onKelasSiswa->kelas->namaKelas->nama_kelas;
+                                        }
+                                    ],
                                     ['attribute' => 'id_penghargaan', 'visible' => false],
-                                    'tanggal',
                                 ];
                                 echo Gridview::widget([
                                     'dataProvider' => $providerPrestasi,
                                     'pjax' => true,
                                     'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container-prestasi']],
                                     'panel' => [
-                                        //'type' => GridView::TYPE_PRIMARY,
-                                        'heading' => '<span class="glyphicon glyphicon-book"></span> ' . Html::encode('Peraih Prestasi'),
+                                        'heading' => '<span class="glyphicon glyphicon-book"></span> ' . Html::encode('5 Peraih Prestasi Terbaru'),
                                     ],
                                     'export' => false,
                                     'columns' => $gridColumnPrestasi,

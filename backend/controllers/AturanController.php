@@ -71,14 +71,14 @@ class AturanController extends Controller
             'allModels' => $new5
         ]);
 
-        $totalBulanIni = $this->getPelanggaran($id)
+        $totalInThisMonth = $this->getPelanggaran($id)
             ->AndWhere('month(tanggal) = month(now())')
             ->count();
         
         return $this->render('view', [
             'model' => $this->findModel($id),
             'providerPelanggaran' => $providerPelanggaran,
-            'totalBulanIni' => $totalBulanIni
+            'totalInThisMonth' => $totalInThisMonth
         ]);
     }
 

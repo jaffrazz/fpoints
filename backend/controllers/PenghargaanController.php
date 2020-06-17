@@ -62,12 +62,18 @@ class PenghargaanController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
+        $new5 = \common\models\Prestasi::find()
+            ->where(['id_penghargaan' => $id])->orderBy(['tanggal' => SORT_DESC])->limit(5)->all();
         $providerPrestasi = new \yii\data\ArrayDataProvider([
-            'allModels' => $model->prestasis,
+            'allModels' => $new5,
         ]);
+
+        $totalInThisMonth = \common\models\Prestasi::find()
+            ->where(['id_penghargaan' => $id])->AndWhere('month(tanggal) = month(now())')->count();
         return $this->render('view', [
             'model' => $this->findModel($id),
             'providerPrestasi' => $providerPrestasi,
+            'totalInThisMonth' => $totalInThisMonth,
         ]);
     }
 
