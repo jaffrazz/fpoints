@@ -17,9 +17,9 @@ class Absensi extends BaseAbsensi
     {
         return array_replace_recursive(parent::rules(),
 	    [
-            [['id_status_absensi'], 'required'],
-            [['id_status_absensi'], 'integer'],
-            [['tanggal'], 'safe']
+            [['id_siswa', 'id_status_absensi', 'id_tanggal_efektif'], 'required'],
+            [['id_siswa', 'id_status_absensi', 'id_tanggal_efektif'], 'integer'],
+            [['keterangan'], 'string']
         ]);
     }
 	
