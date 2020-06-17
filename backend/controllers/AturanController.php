@@ -62,12 +62,23 @@ class AturanController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
+
+        $new5 = $this->getPelanggaran($id)
+            ->orderBy(['tanggal' => SORT_DESC])
+            ->limit('5')
+            ->all();
         $providerPelanggaran = new \yii\data\ArrayDataProvider([
-            'allModels' => $model->pelanggarans,
+            'allModels' => $new5
         ]);
+
+        $totalBulanIni = $this->getPelanggaran($id)
+            ->AndWhere('month(tanggal) = month(now())')
+            ->count();
+        
         return $this->render('view', [
             'model' => $this->findModel($id),
             'providerPelanggaran' => $providerPelanggaran,
+            'totalBulanIni' => $totalBulanIni
         ]);
     }
 
@@ -168,5 +179,12 @@ class AturanController extends Controller
         $pasal = $char.$number;
         
         return json_encode(['pasal' => $pasal]);
+    }
+
+    function getPelanggaran($id){
+        return \common\models\Pelanggaran::find()
+            ->where([
+                'id_aturan' => $id,
+            ]);
     }
 }

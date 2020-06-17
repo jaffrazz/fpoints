@@ -29,7 +29,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     ?>
                 </div>
                 <div class="box-body">
-                    <!-- <div class="row"> -->
                     <?php
                         $gridColumn = [
                             ['attribute' => 'id_aturan', 'visible' => false],
@@ -44,12 +43,20 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'attribute' => 'tindakan.tindakan',
                                 'label' => 'Tindakan',
                             ],
+                            [
+                                'attribute' => 'history_of_the_month',
+                                'label' => 'Riwayat Pelanggaran Bulan Ini',
+                                'value' => function() use($totalBulanIni) {
+                                    return $totalBulanIni . " Kali";
+                                }
+                            ],
                         ];
                         echo DetailView::widget([
                             'model' => $model,
                             'attributes' => $gridColumn,
                         ]);
                         ?>
+                        
                     <div class="pt-3">
                         <?php
                             if ($providerPelanggaran->totalCount) {
@@ -57,7 +64,10 @@ $this->params['breadcrumbs'][] = $this->title;
                                     ['class' => 'yii\grid\SerialColumn'],
                                     [
                                         'attribute' => 'siswa.id_siswa',
-                                        'label' => 'Id Siswa',
+                                        'label' => 'Siswa',
+                                        'value' => function($model){
+                                            return $model->siswa->nama_siswa;
+                                        }
                                     ],
                                     ['attribute' => 'id_aturan', 'visible' => false],
                                     'tanggal',
@@ -68,9 +78,9 @@ $this->params['breadcrumbs'][] = $this->title;
                                     'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container-pelanggaran']],
                                     'panel' => [
                                         //'type' => GridView::TYPE_PRIMARY,
-                                        'heading' => '<span class="glyphicon glyphicon-book"></span> ' . Html::encode('Pelanggaran'),
+                                        'heading' => '<span class="glyphicon glyphicon-book"></span> ' . Html::encode('5 Pelanggaran Terbaru'),
                                     ],
-                                    'export' => false,
+                                    // 'export' => true,
                                     'columns' => $gridColumnPelanggaran,
                                 ]);
                             }
