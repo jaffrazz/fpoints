@@ -58,12 +58,12 @@ return $config;
     - [ ] Absensi [ Tanggal Efektif ]
     - [ ] Pelanggaran [ Add kelas - for depend dropdown, Point - Number ]
     - [ ] Prestasi [ Add Kelas - for depend dropdown]
-    - [ ] Aturan [ point - input number ]
-    - [ ]
+    - [x] Aturan [ point - input number ]
+    - [ ] 
 - [ ] Roles
 - [ ] APIs Android
 - [ ] View Show Detail
-    - [ ] Aturan, Penghargaan [ Add total history, and history in month ]
+    - [x] Aturan, Penghargaan [ Add total history, and history in month ]
     - [ ] Agama jumlah siswa [ set to only active student ]
 - [ ] Pair Unique at Prestasi, Pelanggaran, Absensi , Etc
 - [x] Model label
