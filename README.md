@@ -49,7 +49,7 @@ return $config;
 - [ ] Detail Point [ Update Otomatis ]
 - [ ] Akumulasi Point [ Action Reset Per semester ]
 - [ ] Surat Peringatan
-- [ ] Advanced Search
+- [x] Advanced Search
     - [x] Date Search Error 
     - [x] Kelas [ kelas ] search
 - [ ] Jurusan View
@@ -58,7 +58,7 @@ return $config;
     - [ ] Absensi [ Tanggal Efektif ]
     - [ ] Pelanggaran [ Add kelas - for depend dropdown, Point - Number ]
     - [ ] Prestasi [ Add Kelas - for depend dropdown]
-    - 
+    - [ ]
 - [ ] Roles
 - [ ] APIs Android
 - [ ] Pair Unique at Prestasi, Pelanggaran, Absensi , Etc
@@ -68,7 +68,7 @@ return $config;
 - [ ] CRUD 
     - [ ] Akumulasi Point
     - [ ] Detail Point (R)
-    - [ ] Sanksi
+    - [x] Sanksi
     - [ ] SP
     - [ ] User
 - [ ] Etc
