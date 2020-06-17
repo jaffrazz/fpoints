@@ -55,9 +55,16 @@ use common\models\HariTidakEfektif;
             return $dataProvider;
         }
 
+        
+        if (!empty($this->tanggal_tidak_efektif)) {
+            $tanggal_tidak_efektif = date('Y-m-d', strtotime($this->tanggal_tidak_efektif));
+        }else{
+            $tanggal_tidak_efektif = null;
+        }
+
         $query->andFilterWhere([
             'id_hari_tidak_efektif' => $this->id_hari_tidak_efektif,
-            'tanggal_tidak_efektif' => $this->tanggal_tidak_efektif,
+            'tanggal_tidak_efektif' => $tanggal_tidak_efektif,
         ]);
 
         $query->andFilterWhere(['like', 'keterangan_tidak_efektif', $this->keterangan_tidak_efektif]);

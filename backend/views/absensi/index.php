@@ -22,16 +22,9 @@ $this->registerJs($search);
         <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-header">
-
-                    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
                     <p>
                         <?=Html::a('Create Absensi', ['create'], ['class' => 'btn btn-success'])?>
-                        <?=Html::a('Advance Search', '#', ['class' => 'btn btn-info search-button'])?>
                     </p>
-                    <div class="search-form" style="display:none">
-                        <?=$this->render('_search', ['model' => $searchModel]);?>
-                    </div>
                 </div>
                 <div class="box-body">
                     <?php

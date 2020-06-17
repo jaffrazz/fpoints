@@ -23,13 +23,13 @@ use yii\widgets\ActiveForm;
         'ajaxConversion' => true,
         'options' => [
             'pluginOptions' => [
-                'placeholder' => 'Choose Tanggal Tidak Efektif',
+                'placeholder' => 'Pilih Tanggal Tidak Efektif',
                 'autoclose' => true
             ]
         ],
     ]); ?>
 
-    <?= $form->field($model, 'keterangan_tidak_efektif')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'keterangan_tidak_efektif')->textarea(['rows' => 3]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

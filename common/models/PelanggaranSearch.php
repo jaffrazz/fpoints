@@ -55,11 +55,17 @@ use common\models\Pelanggaran;
             return $dataProvider;
         }
 
+        if(!empty($this->tanggal)){
+            $tanggal = date('Y-m-d',strtotime($this->tanggal));
+        }else{
+            $tanggal = null;
+        }
+
         $query->andFilterWhere([
             'id_pelanggaran' => $this->id_pelanggaran,
             'id_siswa' => $this->id_siswa,
             'id_aturan' => $this->id_aturan,
-            'tanggal' => $this->tanggal,
+            'tanggal' => $tanggal,
         ]);
 
         return $dataProvider;

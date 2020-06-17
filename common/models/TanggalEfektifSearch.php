@@ -57,13 +57,15 @@ use common\models\TanggalEfektif;
         }
 
         if (!empty($this->tanggal_efektif)) {
-            $this->tanggal_efektif = date('Y-m-d', strtotime($this->tanggal_efektif));
+            $tanggal_efektif = date('Y-m-d', strtotime($this->tanggal_efektif));
+        }else{
+            $tanggal_efektif = null;
         }
 
 
         $query->andFilterWhere([
             'id_tanggal_efektif' => $this->id_tanggal_efektif,
-            'tanggal_efektif' => $this->tanggal_efektif,
+            'tanggal_efektif' => $tanggal_efektif,
         ]);
 
         return $dataProvider;

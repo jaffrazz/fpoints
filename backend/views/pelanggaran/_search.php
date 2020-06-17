@@ -17,31 +17,31 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id_pelanggaran', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
-    <?= $form->field($model, 'id_siswa')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\common\models\Siswa::find()->orderBy('id_siswa')->asArray()->all(), 'id_siswa', 'id_siswa'),
-        'options' => ['placeholder' => 'Choose Siswa'],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ]); ?>
-
-    <?= $form->field($model, 'id_aturan')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\common\models\Aturan::find()->orderBy('id_aturan')->asArray()->all(), 'id_aturan', 'id_aturan'),
-        'options' => ['placeholder' => 'Choose Aturan'],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ]); ?>
-
     <?= $form->field($model, 'tanggal')->widget(\kartik\datecontrol\DateControl::classname(), [
         'type' => \kartik\datecontrol\DateControl::FORMAT_DATE,
         'saveFormat' => 'php:Y-m-d',
         'ajaxConversion' => true,
         'options' => [
             'pluginOptions' => [
-                'placeholder' => 'Choose Tanggal',
+                'placeholder' => 'Pilih Tanggal',
                 'autoclose' => true
             ]
+        ],
+    ]); ?>
+
+    <?= $form->field($model, 'id_siswa')->widget(\kartik\widgets\Select2::classname(), [
+        'data' => \yii\helpers\ArrayHelper::map(\common\models\Siswa::find()->orderBy('id_siswa')->asArray()->all(), 'id_siswa', 'nama_siswa'),
+        'options' => ['placeholder' => 'Pilih Siswa'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]); ?>
+
+    <?= $form->field($model, 'id_aturan')->widget(\kartik\widgets\Select2::classname(), [
+        'data' => \yii\helpers\ArrayHelper::map(\common\models\Aturan::find()->orderBy('id_aturan')->asArray()->all(), 'id_aturan', 'uraian_aturan'),
+        'options' => ['placeholder' => 'Pilih Aturan'],
+        'pluginOptions' => [
+            'allowClear' => true
         ],
     ]); ?>
 

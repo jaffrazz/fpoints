@@ -36,6 +36,20 @@ $this->registerJs($search);
                         ['class' => 'yii\grid\SerialColumn'],
                         ['attribute' => 'id_pelanggaran', 'visible' => false],
                         [
+                            'attribute' => 'tanggal',
+							'format' => 'date',
+							'filterType' => GridView::FILTER_DATE,
+								'filterWidgetOptions' => [
+								'size' => 'xs',
+								'pluginOptions' => [
+									'format' => 'dd-M-yyyy',
+									'autoWidget' => true,
+									'autoclose' => true,
+									'todayHighlight' => true
+								]
+							],
+                        ],
+                        [
                             'attribute' => 'id_siswa',
                             'label' => 'Siswa',
                             'value' => function ($model) {
@@ -61,7 +75,6 @@ $this->registerJs($search);
                             ],
                             'filterInputOptions' => ['placeholder' => 'Aturan', 'id' => 'grid-pelanggaran-search-id_aturan'],
                         ],
-                        'tanggal',
                         [
                             'class' => 'yii\grid\ActionColumn',
                             'template' => '{update} {delete}'

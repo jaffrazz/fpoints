@@ -19,15 +19,15 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id_jurusan')->widget(\kartik\widgets\Select2::classname(), [
         'data' => \yii\helpers\ArrayHelper::map(\common\models\Jurusan::find()->orderBy('id_jurusan')->asArray()->all(), 'id_jurusan', 'jurusan'),
-        'options' => ['placeholder' => 'Choose Jurusan'],
+        'options' => ['placeholder' => 'Pilih Jurusan'],
         'pluginOptions' => [
             'allowClear' => true
         ],
     ]); ?>
 
     <?= $form->field($model, 'id_wali_kelas')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\common\models\WaliKelas::find()->orderBy('id_wali_kelas')->asArray()->all(), 'id_wali_kelas', 'id_wali_kelas'),
-        'options' => ['placeholder' => 'Choose Wali kelas'],
+        'data' => \yii\helpers\ArrayHelper::map(\common\models\WaliKelas::find()->joinWith('pegawai')->orderBy('id_wali_kelas')->asArray()->all(), 'id_wali_kelas', 'pegawai.nama_pegawai'),
+        'options' => ['placeholder' => 'Pilih Wali kelas'],
         'pluginOptions' => [
             'allowClear' => true
         ],
