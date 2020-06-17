@@ -52,9 +52,9 @@ return $config;
 - [ ] Pair Unique at Prestasi, Pelanggaran, Absensi , Etc
 - [x] Model label
 - [ ] CRUD 
- - [ ] Akumulasi Point
- - [ ] Detail Point (R)
- - [ ] Sanksi
- - [ ] SP
- - [ ] User
+    - [ ] Akumulasi Point
+    - [ ] Detail Point (R)
+    - [ ] Sanksi
+    - [ ] SP
+    - [ ] User
 - [ ] Etc
