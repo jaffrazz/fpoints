@@ -47,9 +47,18 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ['class' => 'yii\grid\SerialColumn'],
                                 ['attribute' => 'id_kelas', 'visible' => false],
                                 ['attribute' => 'id_jurusan', 'visible' => false],
-                                ['attribute' => 'id_wali_kelas', 'visible' => false],
-                                'kelas',
-                                'grade',
+                                [
+                                    'attribute' => 'kelas',
+                                    'value' => function($model){
+                                        return $model->namaKelas->nama_kelas;
+                                    }
+                                ],
+                                [
+                                    'attribute' => 'id_wali_kelas',
+                                    'value' => function($model){
+                                        return $model->waliKelas->pegawai->nama_pegawai;
+                                    }
+                                ],
                             ];
                             echo Gridview::widget([
                                 'dataProvider' => $providerKelas,
