@@ -48,4 +48,5 @@ return $config;
 - [ ] Surat Peringatan
 - [ ] Advanced Search
 - [ ] Pair Unique at Prestasi, Pelanggaran, Absensi , Etc
+- [ ] Model label
 - [ ] Etc
