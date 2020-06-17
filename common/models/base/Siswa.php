@@ -5,6 +5,7 @@ namespace common\models\base;
 use Yii;
 use borales\extensions\phoneInput\PhoneInputValidator;
 
+
 /**
  * This is the base model class for table "siswa".
  *
@@ -21,16 +22,13 @@ use borales\extensions\phoneInput\PhoneInputValidator;
  * @property string $no_hp_siswa
  * @property string $foto_siswa
  *
- * @property \common\models\Absensi[] $absensis
- * @property \common\models\StatusAbsensi[] $statusAbsensis
- * @property \common\models\AkumulasiPoint[] $akumulasiPoints
- * @property \common\models\Sanksi[] $sanksis
+ * @property \common\models\DetailAbsensi[] $detailAbsensis
+ * @property \common\models\DetailAkumulasiPoint[] $detailAkumulasiPoints
+ * @property \common\models\DetailPoint $detailPoint
  * @property \common\models\OnKelasSiswa $onKelasSiswa
  * @property \common\models\Kelas[] $kelas
  * @property \common\models\Pelanggaran[] $pelanggarans
- * @property \common\models\Aturan[] $aturans
  * @property \common\models\Prestasi[] $prestasis
- * @property \common\models\Penghargaan[] $penghargaans
  * @property \common\models\Agama $agama
  * @property \common\models\WaliMurid $idWaliMur
  * @property \common\models\Sp[] $sps
@@ -47,16 +45,13 @@ class Siswa extends \yii\db\ActiveRecord
     public function relationNames()
     {
         return [
-            'absensis',
-            'statusAbsensis',
-            'akumulasiPoints',
-            'sanksis',
+            'detailAbsensis',
+            'detailAkumulasiPoints',
+            'detailPoint',
             'onKelasSiswa',
             'kelas',
             'pelanggarans',
-            'aturans',
             'prestasis',
-            'penghargaans',
             'agama',
             'idWaliMur',
             'sps'
@@ -96,7 +91,7 @@ class Siswa extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id_siswa' => 'Id',
+            'id_siswa' => 'Id Siswa',
             'id_wali_murid' => 'Wali Murid',
             'id_agama' => 'Agama',
             'nis' => 'NIS',
@@ -114,33 +109,25 @@ class Siswa extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAbsensis()
+    public function getDetailAbsensis()
     {
-        return $this->hasMany(\common\models\Absensi::className(), ['id_siswa' => 'id_siswa']);
+        return $this->hasMany(\common\models\DetailAbsensi::className(), ['id_siswa' => 'id_siswa']);
     }
         
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getStatusAbsensis()
+    public function getDetailAkumulasiPoints()
     {
-        return $this->hasMany(\common\models\StatusAbsensi::className(), ['id_status_absensi' => 'id_status_absensi'])->viaTable('absensi', ['id_siswa' => 'id_siswa']);
+        return $this->hasMany(\common\models\DetailAkumulasiPoint::className(), ['id_siswa' => 'id_siswa']);
     }
         
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAkumulasiPoints()
+    public function getDetailPoint()
     {
-        return $this->hasMany(\common\models\AkumulasiPoint::className(), ['id_siswa' => 'id_siswa']);
-    }
-        
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getSanksis()
-    {
-        return $this->hasMany(\common\models\Sanksi::className(), ['id_sanksi' => 'id_sanksi'])->viaTable('akumulasi_point', ['id_siswa' => 'id_siswa']);
+        return $this->hasOne(\common\models\DetailPoint::className(), ['id_siswa' => 'id_siswa']);
     }
         
     /**
@@ -170,25 +157,9 @@ class Siswa extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getAturans()
-    {
-        return $this->hasMany(\common\models\Aturan::className(), ['id_aturan' => 'id_aturan'])->viaTable('pelanggaran', ['id_siswa' => 'id_siswa']);
-    }
-        
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getPrestasis()
     {
         return $this->hasMany(\common\models\Prestasi::className(), ['id_siswa' => 'id_siswa']);
-    }
-        
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getPenghargaans()
-    {
-        return $this->hasMany(\common\models\Penghargaan::className(), ['id_penghargaan' => 'id_penghargaan'])->viaTable('prestasi', ['id_siswa' => 'id_siswa']);
     }
         
     /**
