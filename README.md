@@ -41,9 +41,10 @@ return $config;
 
 ## TODOs List
 
-- [ ] Depend dropdown at absensi.
+- [ ] Dependent dropdown.
     - [ ] Pelanggaran Filter
     - [ ] Prestasi Filter
+    - [ ] Absensi
 - [ ] Upload image at Siswa, Pegawai, and Wali Murid
 - [ ] Detail Point [ Update Otomatis ]
 - [ ] Akumulasi Point [ Action Reset Per semester ]
