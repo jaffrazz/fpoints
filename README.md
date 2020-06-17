@@ -47,4 +47,5 @@ return $config;
 - [ ] Akumulasi Point [ Action Reset Per semester ]
 - [ ] Surat Peringatan
 - [ ] Advanced Search
+- [ ] Pair Unique at Prestasi, Pelanggaran, Absensi , Etc
 - [ ] Etc
