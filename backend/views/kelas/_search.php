@@ -6,6 +6,14 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model common\models\KelasSearch */
 /* @var $form yii\widgets\ActiveForm */
+
+$grade = [
+    'x' => 'X',
+    'xi' => 'XI',
+    'xii' => 'XII',
+    'xiii' => 'XIII'
+];
+
 ?>
 
 <div class="form-kelas-search">
@@ -25,17 +33,29 @@ use yii\widgets\ActiveForm;
         ],
     ]); ?>
 
-    <?= $form->field($model, 'id_wali_kelas')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\common\models\WaliKelas::find()->joinWith('pegawai')->orderBy('id_wali_kelas')->asArray()->all(), 'id_wali_kelas', 'pegawai.nama_pegawai'),
-        'options' => ['placeholder' => 'Pilih Wali kelas'],
+    <?= $form->field($model, 'grade')->DropdownList($grade,[
+        'prompt' => 'Pilih Grade'
+    ]) ?>
+
+    <?= $form->field($model, 'kelas')->textInput(['maxlength' => true, 'placeholder' => 'Kelas']) ?>
+
+
+    <?= $form->field($model, 'id_tahun_ajaran')->widget(\kartik\widgets\Select2::classname(), [
+        'data' => \yii\helpers\ArrayHelper::map(\common\models\TahunAjaran::find()->orderBy('tahun_ajaran')->asArray()->all(), 'id_tahun_ajaran', 'tahun_ajaran'),
+        'options' => ['placeholder' => 'Pilih Tahun Ajaran'],
         'pluginOptions' => [
             'allowClear' => true
         ],
     ]); ?>
 
-    <?= $form->field($model, 'kelas')->textInput(['maxlength' => true, 'placeholder' => 'Kelas']) ?>
+    <?php /* echo $form->field($model, 'id_wali_kelas')->widget(\kartik\widgets\Select2::classname(), [
+        'data' => \yii\helpers\ArrayHelper::map(\common\models\WaliKelas::find()->joinWith('pegawai')->orderBy('id_wali_kelas')->asArray()->all(), 'id_wali_kelas', 'pegawai.nama_pegawai'),
+        'options' => ['placeholder' => 'Pilih Wali kelas'],
+        'pluginOptions' => [
+            'allowClear' => true
+        ],
+    ]); */ ?>
 
-    <?= $form->field($model, 'grade')->textInput(['maxlength' => true, 'placeholder' => 'Grade']) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

@@ -24,11 +24,7 @@ $this->registerJs($search);
                 <div class="box-header">
                     <p>
                         <?=Html::a('Create Hari Tidak Efektif', ['create'], ['class' => 'btn btn-success'])?>
-                        <?=Html::a('Advance Search', '#', ['class' => 'btn btn-info search-button'])?>
                     </p>
-                    <div class="search-form" style="display:none">
-                        <?=$this->render('_search', ['model' => $searchModel]);?>
-                    </div>
                 </div>
                 <div class="box-body">
                     <?php

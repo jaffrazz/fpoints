@@ -39,6 +39,11 @@ $this->registerJs($search);
                         ['class' => 'yii\grid\SerialColumn'],
                         ['attribute' => 'id_prestasi', 'visible' => false],
                         [
+                            'attribute' => 'tanggal',
+                            'format' => 'date',
+                            'filter' => false,
+                        ],
+                        [
                             'attribute' => 'id_siswa',
                             'label' => 'Siswa',
                             'value' => function ($model) {
@@ -64,7 +69,6 @@ $this->registerJs($search);
                             ],
                             'filterInputOptions' => ['placeholder' => 'Penghargaan', 'id' => 'grid-prestasi-search-id_penghargaan'],
                         ],
-                        'tanggal',
                         [
                             'class' => 'yii\grid\ActionColumn',
                             'template' => '{update} {delete}',

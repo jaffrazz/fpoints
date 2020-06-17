@@ -15,11 +15,23 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
+    <?= $form->field($model, 'tanggal')->widget(\kartik\datecontrol\DateControl::classname(), [
+        'type' => \kartik\datecontrol\DateControl::FORMAT_DATE,
+        'saveFormat' => 'php:Y-m-d',
+        'ajaxConversion' => true,
+        'options' => [
+            'pluginOptions' => [
+                'placeholder' => 'Pilih Tanggal',
+                'autoclose' => true
+            ]
+        ],
+    ]); ?>
+
     <?= $form->field($model, 'id_prestasi', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
     <?= $form->field($model, 'id_siswa')->widget(\kartik\widgets\Select2::classname(), [
         'data' => \yii\helpers\ArrayHelper::map(\common\models\Siswa::find()->orderBy('id_siswa')->asArray()->all(), 'id_siswa', 'id_siswa'),
-        'options' => ['placeholder' => 'Choose Siswa'],
+        'options' => ['placeholder' => 'Pilih Siswa'],
         'pluginOptions' => [
             'allowClear' => true
         ],
@@ -27,21 +39,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id_penghargaan')->widget(\kartik\widgets\Select2::classname(), [
         'data' => \yii\helpers\ArrayHelper::map(\common\models\Penghargaan::find()->orderBy('id_penghargaan')->asArray()->all(), 'id_penghargaan', 'id_penghargaan'),
-        'options' => ['placeholder' => 'Choose Penghargaan'],
+        'options' => ['placeholder' => 'Pilih Penghargaan'],
         'pluginOptions' => [
             'allowClear' => true
-        ],
-    ]); ?>
-
-    <?= $form->field($model, 'tanggal')->widget(\kartik\datecontrol\DateControl::classname(), [
-        'type' => \kartik\datecontrol\DateControl::FORMAT_DATE,
-        'saveFormat' => 'php:Y-m-d',
-        'ajaxConversion' => true,
-        'options' => [
-            'pluginOptions' => [
-                'placeholder' => 'Choose Tanggal',
-                'autoclose' => true
-            ]
         ],
     ]); ?>
 

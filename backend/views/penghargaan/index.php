@@ -45,7 +45,10 @@ $this->registerJs($search);
                                 'filterInputOptions' => ['placeholder' => 'Kategori penghargaan', 'id' => 'grid-penghargaan-search-id_kategori_penghargaan'],
                             ],
                             'pasal',
-                            'point_penghargaan',
+                            [
+                                'attribute' => 'point_penghargaan',
+                                'filterType' => Gridview::FILTER_NUMBER
+                            ],
                             'uraian_penghargaan:ntext',
                             [
                                 'class' => 'yii\grid\ActionColumn',

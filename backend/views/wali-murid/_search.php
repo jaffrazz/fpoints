@@ -15,8 +15,6 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id_wali_murid', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
-
     <?= $form->field($model, 'nama_wali_murid')->textInput(['maxlength' => true, 'placeholder' => 'Nama']) ?>
 
     <?= $form->field($model, 'tempat_lahir_wali_murid')->textInput(['maxlength' => true, 'placeholder' => 'Tempat Lahir']) ?>

@@ -20,6 +20,7 @@ use common\models\Kelas;
     {
         return [
             [['id_kelas','id_wali_kelas', 'nama_kelas', 'id_tahun_ajaran'], 'integer'],
+            [['kelas','grade'],'safe']
         ];
     }
 
@@ -61,6 +62,8 @@ use common\models\Kelas;
             'id_wali_kelas' => $this->id_wali_kelas,
             'id_tahun_ajaran' => $this->id_tahun_ajaran,
             'nama_kelas.id_kelas' => $this->nama_kelas,
+            'kelas' => $this->kelas,
+            'grade' => $this->grade,
         ]);
 
         return $dataProvider;

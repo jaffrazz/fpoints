@@ -37,17 +37,8 @@ $this->registerJs($search);
                         ['attribute' => 'id_pelanggaran', 'visible' => false],
                         [
                             'attribute' => 'tanggal',
-							'format' => 'date',
-							'filterType' => GridView::FILTER_DATE,
-								'filterWidgetOptions' => [
-								'size' => 'xs',
-								'pluginOptions' => [
-									'format' => 'dd-M-yyyy',
-									'autoWidget' => true,
-									'autoclose' => true,
-									'todayHighlight' => true
-								]
-							],
+                            'format' => 'date',
+                            'filter' => false
                         ],
                         [
                             'attribute' => 'id_siswa',

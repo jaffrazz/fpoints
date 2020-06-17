@@ -12,6 +12,7 @@ use common\models\Prestasi;
  */
  class PrestasiSearch extends Prestasi
 {
+    public $tanggal_filter;
     /**
      * @inheritdoc
      */
@@ -19,7 +20,7 @@ use common\models\Prestasi;
     {
         return [
             [['id_prestasi', 'id_siswa', 'id_penghargaan'], 'integer'],
-            [['tanggal'], 'safe'],
+            [['tanggal','tanggal_filter'], 'safe'],
         ];
     }
 
@@ -55,11 +56,17 @@ use common\models\Prestasi;
             return $dataProvider;
         }
 
+        if(!empty($this->tanggal)){
+            $tanggal = date('Y-m-d',strtotime($this->tanggal));
+        }else{
+            $tanggal = null;
+        }
+
         $query->andFilterWhere([
             'id_prestasi' => $this->id_prestasi,
             'id_siswa' => $this->id_siswa,
             'id_penghargaan' => $this->id_penghargaan,
-            'tanggal' => $this->tanggal,
+            'tanggal' => $tanggal,
         ]);
 
         return $dataProvider;

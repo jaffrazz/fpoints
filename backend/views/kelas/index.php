@@ -49,19 +49,6 @@ $this->registerJs($search);
                                 'filterInputOptions' => ['placeholder' => 'Jurusan', 'id' => 'grid-kelas-search-nama_kelas'],
                             ],
                             [
-                                'attribute' => 'id_wali_kelas',
-                                'label' => 'Wali Kelas',
-                                'value' => function ($model) {
-                                    if ($model->waliKelas) {return $model->waliKelas->pegawai->nama_pegawai;} else {return null;}
-                                },
-                                'filterType' => GridView::FILTER_SELECT2,
-                                'filter' => \yii\helpers\ArrayHelper::map(\common\models\WaliKelas::find()->joinWith('pegawai')->asArray()->all(), 'id_wali_kelas', 'pegawai.nama_pegawai'),
-                                'filterWidgetOptions' => [
-                                    'pluginOptions' => ['allowClear' => true],
-                                ],
-                                'filterInputOptions' => ['placeholder' => 'Wali kelas', 'id' => 'grid-kelas-search-id_wali_kelas'],
-                            ],
-                            [
                                 'attribute' => 'id_tahun_ajaran',
                                 'label' => 'Tahun Ajaran',
                                 'value' => function ($model) {
@@ -73,6 +60,19 @@ $this->registerJs($search);
                                     'pluginOptions' => ['allowClear' => true],
                                 ],
                                 'filterInputOptions' => ['placeholder' => 'Wali kelas', 'id' => 'grid-kelas-search-id_tahun_ajaran'],
+                            ],
+                            [
+                                'attribute' => 'id_wali_kelas',
+                                'label' => 'Wali Kelas',
+                                'value' => function ($model) {
+                                    if ($model->waliKelas) {return $model->waliKelas->pegawai->nama_pegawai;} else {return null;}
+                                },
+                                'filterType' => GridView::FILTER_SELECT2,
+                                'filter' => \yii\helpers\ArrayHelper::map(\common\models\WaliKelas::find()->joinWith('pegawai')->asArray()->all(), 'id_wali_kelas', 'pegawai.nama_pegawai'),
+                                'filterWidgetOptions' => [
+                                    'pluginOptions' => ['allowClear' => true],
+                                ],
+                                'filterInputOptions' => ['placeholder' => 'Wali kelas', 'id' => 'grid-kelas-search-id_wali_kelas'],
                             ],
                             [
                                 'class' => 'yii\grid\ActionColumn',
