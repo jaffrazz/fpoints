@@ -17,17 +17,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id_absensi', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
-    <?= $form->field($model, 'id_siswa')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\common\models\Siswa::find()->orderBy('id_siswa')->asArray()->all(), 'id_siswa', 'id_siswa'),
-        'options' => ['placeholder' => 'Choose Siswa'],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ]); ?>
-
-    <?= $form->field($model, 'id_status_absensi')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\common\models\StatusAbsensi::find()->orderBy('id_status_absensi')->asArray()->all(), 'id_status_absensi', 'id_status_absensi'),
-        'options' => ['placeholder' => 'Choose Status absensi'],
+    <?= $form->field($model, 'id_kelas')->widget(\kartik\widgets\Select2::classname(), [
+        'data' => \yii\helpers\ArrayHelper::map(\common\models\Kelas::find()->orderBy('id_kelas')->asArray()->all(), 'id_kelas', 'kelas'),
+        'options' => ['placeholder' => 'Choose Kelas'],
         'pluginOptions' => [
             'allowClear' => true
         ],
@@ -40,8 +32,6 @@ use yii\widgets\ActiveForm;
             'allowClear' => true
         ],
     ]); ?>
-
-    <?= $form->field($model, 'keterangan')->textarea(['rows' => 6]) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

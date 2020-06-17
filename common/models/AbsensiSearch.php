@@ -18,8 +18,7 @@ use common\models\Absensi;
     public function rules()
     {
         return [
-            [['id_absensi', 'id_siswa', 'id_status_absensi', 'id_tanggal_efektif'], 'integer'],
-            [['keterangan'], 'safe'],
+            [['id_absensi', 'id_kelas', 'id_tanggal_efektif'], 'integer'],
         ];
     }
 
@@ -57,12 +56,9 @@ use common\models\Absensi;
 
         $query->andFilterWhere([
             'id_absensi' => $this->id_absensi,
-            'id_siswa' => $this->id_siswa,
-            'id_status_absensi' => $this->id_status_absensi,
+            'id_kelas' => $this->id_kelas,
             'id_tanggal_efektif' => $this->id_tanggal_efektif,
         ]);
-
-        $query->andFilterWhere(['like', 'keterangan', $this->keterangan]);
 
         return $dataProvider;
     }

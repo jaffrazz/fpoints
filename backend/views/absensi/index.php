@@ -22,6 +22,9 @@ $this->registerJs($search);
         <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-header">
+
+                    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+
                     <p>
                         <?=Html::a('Create Absensi', ['create'], ['class' => 'btn btn-success'])?>
                         <?=Html::a('Advance Search', '#', ['class' => 'btn btn-info search-button'])?>
@@ -36,30 +39,17 @@ $this->registerJs($search);
                         ['class' => 'yii\grid\SerialColumn'],
                         ['attribute' => 'id_absensi', 'visible' => false],
                         [
-                            'attribute' => 'id_siswa',
-                            'label' => 'Siswa',
+                            'attribute' => 'id_kelas',
+                            'label' => 'Kelas',
                             'value' => function ($model) {
-                                return $model->siswa->nama_siswa;
+                                return $model->kelas->namaKelas->nama_kelas;
                             },
                             'filterType' => GridView::FILTER_SELECT2,
-                            'filter' => \yii\helpers\ArrayHelper::map(\common\models\Siswa::find()->asArray()->all(), 'id_siswa', 'nama_siswa'),
+                            'filter' => \yii\helpers\ArrayHelper::map(\common\models\Kelas::find()->joinWith('namaKelas')->asArray()->all(), 'id_kelas', 'namaKelas.nama_kelas'),
                             'filterWidgetOptions' => [
                                 'pluginOptions' => ['allowClear' => true],
                             ],
-                            'filterInputOptions' => ['placeholder' => 'Siswa', 'id' => 'grid-absensi-search-id_siswa'],
-                        ],
-                        [
-                            'attribute' => 'id_status_absensi',
-                            'label' => 'Status Absensi',
-                            'value' => function ($model) {
-                                return $model->statusAbsensi->id_status_absensi;
-                            },
-                            'filterType' => GridView::FILTER_SELECT2,
-                            'filter' => \yii\helpers\ArrayHelper::map(\common\models\StatusAbsensi::find()->asArray()->all(), 'id_status_absensi', 'id_status_absensi'),
-                            'filterWidgetOptions' => [
-                                'pluginOptions' => ['allowClear' => true],
-                            ],
-                            'filterInputOptions' => ['placeholder' => 'Status absensi', 'id' => 'grid-absensi-search-id_status_absensi'],
+                            'filterInputOptions' => ['placeholder' => 'Kelas', 'id' => 'grid-absensi-search-id_kelas'],
                         ],
                         [
                             'attribute' => 'id_tanggal_efektif',
@@ -74,7 +64,6 @@ $this->registerJs($search);
                             ],
                             'filterInputOptions' => ['placeholder' => 'Tanggal efektif', 'id' => 'grid-absensi-search-id_tanggal_efektif'],
                         ],
-                        // 'keterangan:ntext',
                         [
                             'class' => 'yii\grid\ActionColumn',
                         ],

@@ -7,6 +7,15 @@ use yii\widgets\ActiveForm;
 /* @var $model common\models\Absensi */
 /* @var $form yii\widgets\ActiveForm */
 
+\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
+    'viewParams' => [
+        'class' => 'DetailAbsensi', 
+        'relID' => 'detail-absensi', 
+        'value' => \yii\helpers\Json::encode($model->detailAbsensis),
+        'isNewRecord' => ($model->isNewRecord) ? 1 : 0
+    ]
+]);
+
 ?>
 
 <div class="absensi-form">
@@ -17,32 +26,49 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id_absensi', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
-    <?= $form->field($model, 'id_siswa')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\common\models\Siswa::find()->orderBy('id_siswa')->asArray()->all(), 'id_siswa', 'id_siswa'),
-        'options' => ['placeholder' => 'Choose Siswa'],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ]); ?>
-
-    <?= $form->field($model, 'id_status_absensi')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\common\models\StatusAbsensi::find()->orderBy('id_status_absensi')->asArray()->all(), 'id_status_absensi', 'id_status_absensi'),
-        'options' => ['placeholder' => 'Choose Status absensi'],
+    <?= $form->field($model, 'id_kelas')->widget(\kartik\widgets\Select2::classname(), [
+        'data' => \yii\helpers\ArrayHelper::map(\common\models\Kelas::find()->joinWith('namaKelas')->orderBy('id_kelas')->asArray()->all(), 'id_kelas', 'namaKelas.nama_kelas'),
+        'options' => ['placeholder' => 'Pilih Kelas'],
         'pluginOptions' => [
             'allowClear' => true
         ],
     ]); ?>
 
     <?= $form->field($model, 'id_tanggal_efektif')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\common\models\TanggalEfektif::find()->orderBy('id_tanggal_efektif')->asArray()->all(), 'id_tanggal_efektif', 'tanggal_efektif'),
-        'options' => ['placeholder' => 'Choose Tanggal efektif'],
+        'data' => \yii\helpers\ArrayHelper::map(
+            \common\models\TanggalEfektif::find()
+                ->orderBy('id_tanggal_efektif')
+                ->Where('month(tanggal_efektif) = month(now())')
+                ->asArray()
+                ->all(),
+            'id_tanggal_efektif', 
+            'tanggal_efektif'),
+        'options' => ['placeholder' => 'Pilih Tanggal efektif'],
         'pluginOptions' => [
             'allowClear' => true
         ],
     ]); ?>
 
-    <?= $form->field($model, 'keterangan')->textarea(['rows' => 6]) ?>
-
+    <?php
+    $forms = [
+        [
+            'label' => '<i class="glyphicon glyphicon-book"></i> ' . Html::encode('DetailAbsensi'),
+            'content' => $this->render('_formDetailAbsensi', [
+                'row' => \yii\helpers\ArrayHelper::toArray($model->detailAbsensis),
+            ]),
+        ],
+    ];
+    echo kartik\tabs\TabsX::widget([
+        'items' => $forms,
+        'position' => kartik\tabs\TabsX::POS_ABOVE,
+        'encodeLabels' => false,
+        'pluginOptions' => [
+            'bordered' => false,
+            'sideways' => false,
+            'enableCache' => true,
+        ],
+    ]);
+    ?>
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
         <?= Html::a(Yii::t('app', 'Cancel'), Yii::$app->request->referrer , ['class'=> 'btn btn-danger']) ?>

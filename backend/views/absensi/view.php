@@ -1,12 +1,22 @@
 <?php
 
+use kartik\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Absensi */
 
-$this->title = $model->id_absensi;
+$title = $model->tanggalEfektif->tanggal_efektif . ": ". $model->kelas->namaKelas->nama_kelas;
+$title = explode(' ', $title);
+
+if (count($title) > 4) {
+    $title = implode(' ', array_slice($title, 0, 3)) . "...";
+} else {
+    $title = implode(' ', $title);
+}
+
+$this->title = $title;
 $this->params['breadcrumbs'][] = ['label' => 'Absensi', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -33,18 +43,19 @@ $this->params['breadcrumbs'][] = $this->title;
                     $gridColumn = [
                         ['attribute' => 'id_absensi', 'visible' => false],
                         [
-                            'attribute' => 'siswa.id_siswa',
-                            'label' => 'Id Siswa',
-                        ],
-                        [
-                            'attribute' => 'statusAbsensi.id_status_absensi',
-                            'label' => 'Id Status Absensi',
+                            'attribute' => 'kelas.kelas',
+                            'label' => 'Kelas',
+                            'value' => function($model){
+                                return $model->kelas->namaKelas->nama_kelas;
+                            }
                         ],
                         [
                             'attribute' => 'tanggalEfektif.tanggal_efektif',
-                            'label' => 'Id Tanggal Efektif',
+                            'label' => 'Tanggal Efektif',
+                            'value' => function($model){
+                                return $model->tanggalEfektif->tanggal_efektif;
+                            }
                         ],
-                        'keterangan:ntext',
                     ];
                     echo DetailView::widget([
                         'model' => $model,
@@ -52,49 +63,44 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]);
                     ?>
                     <!-- </div> -->
+
                     <div class="pt-3">
-                        <h3><b>Siswa<?=' ' . Html::encode($this->title)?></b></h3>
+                        <?php
+                        if ($providerDetailAbsensi->totalCount) {
+                            $gridColumnDetailAbsensi = [
+                                ['class' => 'yii\grid\SerialColumn'],
+                                ['attribute' => 'id_absensi', 'visible' => false],
+                                [
+                                    'attribute' => 'siswa.id_siswa',
+                                    'label' => 'Siswa',
+                                    'value' => function($model) {
+                                        return $model->siswa->nama_siswa;
+                                    }
+                                ],
+                                [
+                                    'attribute' => 'statusAbsensi.id_status_absensi',
+                                    'label' => 'Status Absensi',
+                                    'value' => function($model) {
+                                        return $model->statusAbsensi->keterangan_status_absensi;
+                                    }
+                                ],
+                                'keterangan:ntext',
+                            ];
+                            echo Gridview::widget([
+                                'dataProvider' => $providerDetailAbsensi,
+                                'pjax' => true,
+                                'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container-detail-absensi']],
+                                'panel' => [
+                                    //'type' => GridView::TYPE_PRIMARY,
+                                    'heading' => '<span class="glyphicon glyphicon-book"></span> ' . Html::encode('Detail Absensi'),
+                                ],
+                                'export' => false,
+                                'columns' => $gridColumnDetailAbsensi,
+                            ]);
+                        }
+                        ?>
+
                     </div>
-                    <?php
-                    $gridColumnSiswa = [
-                        'id_wali_murid',
-                        'id_agama',
-                        'nis',
-                        'nama_siswa',
-                        'tempat_lahir_siswa',
-                        'tanggal_lahir_siswa',
-                        'jenis_kelamin_siswa',
-                        'alamat_rumah_siswa',
-                        'alamat_domisili_siswa',
-                        'no_hp_siswa',
-                        'foto_siswa',
-                    ];
-                    echo DetailView::widget([
-                        'model' => $model->siswa,
-                        'attributes' => $gridColumnSiswa]);
-                    ?>
-                    <div class="pt-3">
-                        <h3><b>StatusAbsensi<?=' ' . Html::encode($this->title)?></b></h3>
-                    </div>
-                    <?php
-                    $gridColumnStatusAbsensi = [
-                        'keterangan_status_absensi',
-                    ];
-                    echo DetailView::widget([
-                        'model' => $model->statusAbsensi,
-                        'attributes' => $gridColumnStatusAbsensi]);
-                    ?>
-                    <div class="pt-3">
-                        <h3><b>TanggalEfektif<?=' ' . Html::encode($this->title)?></b></h3>
-                    </div>
-                    <?php
-                    $gridColumnTanggalEfektif = [
-                        'tanggal_efektif',
-                    ];
-                    echo DetailView::widget([
-                        'model' => $model->tanggalEfektif,
-                        'attributes' => $gridColumnTanggalEfektif]);
-                    ?>
                 </div>
             </div>
         </div>

@@ -28,7 +28,7 @@ class AbsensiController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
+                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'add-detail-absensi'],
                         'roles' => ['@']
                     ],
                     [
@@ -62,8 +62,12 @@ class AbsensiController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
+        $providerDetailAbsensi = new \yii\data\ArrayDataProvider([
+            'allModels' => $model->detailAbsensis,
+        ]);
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'providerDetailAbsensi' => $providerDetailAbsensi,
         ]);
     }
 
@@ -141,6 +145,26 @@ class AbsensiController extends Controller
     {
         if (($model = Absensi::findOne($id)) !== null) {
             return $model;
+        } else {
+            throw new NotFoundHttpException('The requested page does not exist.');
+        }
+    }
+    
+    /**
+    * Action to load a tabular form grid
+    * for DetailAbsensi
+    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
+    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
+    *
+    * @return mixed
+    */
+    public function actionAddDetailAbsensi()
+    {
+        if (Yii::$app->request->isAjax) {
+            $row = Yii::$app->request->post('DetailAbsensi');
+            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('_action') == 'load' && empty($row)) || Yii::$app->request->post('_action') == 'add')
+                $row[] = [];
+            return $this->renderAjax('_formDetailAbsensi', ['row' => $row]);
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
