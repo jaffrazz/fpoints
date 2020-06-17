@@ -40,7 +40,13 @@ class Absensi extends \yii\db\ActiveRecord
     {
         return [
             [['id_kelas', 'id_tanggal_efektif'], 'required'],
-            [['id_kelas', 'id_tanggal_efektif'], 'integer']
+            [['id_kelas', 'id_tanggal_efektif'], 'integer'],
+            [
+                'id_kelas', 
+                'unique', 
+                'targetAttribute' => ['id_kelas', 'id_tanggal_efektif'],
+                'message' => 'Kelas ini telah diabsen pada tanggal tersebut.'
+            ],
         ];
     }
 

@@ -44,7 +44,12 @@ class DetailAbsensi extends \yii\db\ActiveRecord
             [['id_absensi', 'id_siswa', 'id_status_absensi'], 'required'],
             [['id_absensi', 'id_siswa', 'id_status_absensi'], 'integer'],
             [['keterangan'], 'string'],
-            [['id_absensi','id_siswa'], 'unique', 'targetAttribute' => ['id_absensi','id_siswa']]
+            [
+                ['id_siswa'], 
+                'unique', 
+                'targetAttribute' => ['id_absensi','id_siswa'],
+                'message' => 'Data siswa ini telah ada, terjadi duplikasi'
+            ],
         ];
     }
 
