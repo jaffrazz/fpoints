@@ -7,6 +7,7 @@ use Yii;
 /**
  * This is the base model class for table "akumulasi_point".
  *
+ * @property integer $id_akumulasi_point
  * @property integer $id_siswa
  * @property integer $id_sanksi
  * @property integer $total_point_pelanggaran
@@ -65,6 +66,7 @@ class AkumulasiPoint extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
+            'id_akumulasi_point' => 'Id Akumulasi Point',
             'id_siswa' => 'Siswa',
             'id_sanksi' => 'Sanksi',
             'total_point_pelanggaran' => 'Total Point Pelanggaran',
