@@ -61,6 +61,8 @@ return $config;
     - [ ]
 - [ ] Roles
 - [ ] APIs Android
+- [ ] View Show Detail
+    - [ ] Agama jumlah siswa [ set to only active student ]
 - [ ] Pair Unique at Prestasi, Pelanggaran, Absensi , Etc
 - [x] Model label
 - [ ] Structure Updated
