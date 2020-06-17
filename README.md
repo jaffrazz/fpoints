@@ -42,23 +42,28 @@ return $config;
 ## TODOs List
 
 - [ ] Depend dropdown at absensi.
+    - [ ] Pelanggaran Filter
+    - [ ] Prestasi Filter
 - [ ] Upload image at Siswa, Pegawai, and Wali Murid
 - [ ] Detail Point [ Update Otomatis ]
 - [ ] Akumulasi Point [ Action Reset Per semester ]
 - [ ] Surat Peringatan
 - [ ] Advanced Search
-    - [ ] Date Search Error 
-    - [ ] Kelas [ kelas ] search
-    - [ ] Pelanggaran [ Next... ]
+    - [x] Date Search Error 
+    - [x] Kelas [ kelas ] search
 - [ ] Jurusan View
 - [ ] Delete Tanggal Efektif [ maybe ]
 - [ ] Filters
     - [ ] Absensi [ Tanggal Efektif ]
+    - [ ] Pelanggaran [ Add kelas - for depend dropdown, Point - Number ]
+    - [ ] Prestasi [ Add Kelas - for depend dropdown]
     - 
 - [ ] Roles
 - [ ] APIs Android
 - [ ] Pair Unique at Prestasi, Pelanggaran, Absensi , Etc
 - [x] Model label
+- [ ] Structure Updated
+    - [ ] Add Active Status at Kelas
 - [ ] CRUD 
     - [ ] Akumulasi Point
     - [ ] Detail Point (R)
