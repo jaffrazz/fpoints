@@ -47,6 +47,14 @@ return $config;
 - [ ] Akumulasi Point [ Action Reset Per semester ]
 - [ ] Surat Peringatan
 - [ ] Advanced Search
+    - [ ] Date Search Error 
+    - [ ] Kelas [ kelas ] search
+    - [ ] Pelanggaran [ Next... ]
+- [ ] Jurusan View
+- [ ] Delete Tanggal Efektif [ maybe ]
+- [ ] Filters
+    - [ ] Absensi [ Tanggal Efektif ]
+    - 
 - [ ] Roles
 - [ ] APIs Android
 - [ ] Pair Unique at Prestasi, Pelanggaran, Absensi , Etc
