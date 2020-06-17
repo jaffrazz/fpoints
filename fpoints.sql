@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 16, 2020 at 10:14 AM
+-- Generation Time: Jun 17, 2020 at 11:09 AM
 -- Server version: 10.1.44-MariaDB-0ubuntu0.18.04.1
 -- PHP Version: 7.2.26-1+ubuntu18.04.1+deb.sury.org+1
 
@@ -32,7 +32,8 @@ CREATE TABLE `absensi` (
   `id_absensi` int(11) NOT NULL,
   `id_siswa` bigint(20) NOT NULL,
   `id_status_absensi` int(11) NOT NULL,
-  `id_tanggal_efektif` int(11) NOT NULL
+  `id_tanggal_efektif` int(11) NOT NULL,
+  `keterangan` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -510,7 +511,6 @@ CREATE TABLE `status_absensi` (
 INSERT INTO `status_absensi` (`id_status_absensi`, `keterangan_status_absensi`) VALUES
 (1, 'Alpha'),
 (2, 'Mbolos'),
-(3, 'Hadir'),
 (4, 'Sakit'),
 (5, 'Izin');
 
