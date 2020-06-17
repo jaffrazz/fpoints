@@ -50,7 +50,7 @@ return $config;
 - [ ] Roles
 - [ ] APIs Android
 - [ ] Pair Unique at Prestasi, Pelanggaran, Absensi , Etc
-- [ ] Model label
+- [x] Model label
 - [ ] CRUD 
  - [ ] Akumulasi Point
  - [ ] Detail Point (R)
