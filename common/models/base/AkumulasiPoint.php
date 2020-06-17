@@ -8,18 +8,12 @@ use Yii;
  * This is the base model class for table "akumulasi_point".
  *
  * @property integer $id_akumulasi_point
- * @property integer $id_siswa
- * @property integer $id_sanksi
- * @property integer $total_point_pelanggaran
- * @property integer $total_point_prestasi
- * @property string $tanggal
  * @property integer $id_tahun_ajaran
  * @property integer $id_semester
  *
- * @property \common\models\Siswa $siswa
- * @property \common\models\Sanksi $sanksi
  * @property \common\models\TahunAjaran $tahunAjaran
  * @property \common\models\Semester $semester
+ * @property \common\models\DetailAkumulasiPoint[] $detailAkumulasiPoints
  */
 class AkumulasiPoint extends \yii\db\ActiveRecord
 {
@@ -33,10 +27,9 @@ class AkumulasiPoint extends \yii\db\ActiveRecord
     public function relationNames()
     {
         return [
-            'siswa',
-            'sanksi',
             'tahunAjaran',
-            'semester'
+            'semester',
+            'detailAkumulasiPoints'
         ];
     }
 
@@ -46,9 +39,14 @@ class AkumulasiPoint extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_siswa', 'id_sanksi', 'total_point_pelanggaran', 'total_point_prestasi', 'tanggal', 'id_tahun_ajaran', 'id_semester'], 'required'],
-            [['id_siswa', 'id_sanksi', 'total_point_pelanggaran', 'total_point_prestasi', 'id_tahun_ajaran', 'id_semester'], 'integer'],
-            [['tanggal'], 'safe']
+            [['id_tahun_ajaran', 'id_semester'], 'required'],
+            [['id_tahun_ajaran', 'id_semester'], 'integer'],
+            [
+                ['id_semester'],
+                'unique',
+                'targetAttribute' => ['id_tahun_ajaran','id_semester'],
+                'message' => 'Data untuk semester ini telah diakumulasikan'
+            ],
         ];
     }
 
@@ -67,32 +65,11 @@ class AkumulasiPoint extends \yii\db\ActiveRecord
     {
         return [
             'id_akumulasi_point' => 'Id Akumulasi Point',
-            'id_siswa' => 'Siswa',
-            'id_sanksi' => 'Sanksi',
-            'total_point_pelanggaran' => 'Total Point Pelanggaran',
-            'total_point_prestasi' => 'Total Point Prestasi',
-            'tanggal' => 'Tanggal',
             'id_tahun_ajaran' => 'Tahun Ajaran',
             'id_semester' => 'Semester',
         ];
     }
     
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getSiswa()
-    {
-        return $this->hasOne(\common\models\Siswa::className(), ['id_siswa' => 'id_siswa']);
-    }
-        
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getSanksi()
-    {
-        return $this->hasOne(\common\models\Sanksi::className(), ['id_sanksi' => 'id_sanksi']);
-    }
-        
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -107,6 +84,14 @@ class AkumulasiPoint extends \yii\db\ActiveRecord
     public function getSemester()
     {
         return $this->hasOne(\common\models\Semester::className(), ['id_semester' => 'id_semester']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDetailAkumulasiPoints()
+    {
+        return $this->hasMany(\common\models\DetailAkumulasiPoint::className(), ['id_akumulasi_point' => 'id_akumulasi_point']);
     }
     
 
