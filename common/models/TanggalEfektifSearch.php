@@ -45,6 +45,7 @@ use common\models\TanggalEfektif;
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'sort'=> ['defaultOrder' => ['tanggal_efektif' => SORT_DESC]],
         ]);
 
         $this->load($params);
