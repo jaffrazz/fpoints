@@ -8,14 +8,12 @@ use Yii;
  * This is the base model class for table "absensi".
  *
  * @property integer $id_absensi
- * @property integer $id_siswa
- * @property integer $id_status_absensi
+ * @property integer $id_kelas
  * @property integer $id_tanggal_efektif
- * @property string $keterangan
  *
- * @property \common\models\Siswa $siswa
- * @property \common\models\StatusAbsensi $statusAbsensi
+ * @property \common\models\Kelas $kelas
  * @property \common\models\TanggalEfektif $tanggalEfektif
+ * @property \common\models\DetailAbsensi[] $detailAbsensis
  */
 class Absensi extends \yii\db\ActiveRecord
 {
@@ -29,9 +27,9 @@ class Absensi extends \yii\db\ActiveRecord
     public function relationNames()
     {
         return [
-            'siswa',
-            'statusAbsensi',
-            'tanggalEfektif'
+            'kelas',
+            'tanggalEfektif',
+            'detailAbsensis'
         ];
     }
 
@@ -41,9 +39,8 @@ class Absensi extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_siswa', 'id_status_absensi', 'id_tanggal_efektif'], 'required'],
-            [['id_siswa', 'id_status_absensi', 'id_tanggal_efektif'], 'integer'],
-            [['keterangan'], 'string']
+            [['id_kelas', 'id_tanggal_efektif'], 'required'],
+            [['id_kelas', 'id_tanggal_efektif'], 'integer']
         ];
     }
 
@@ -62,27 +59,17 @@ class Absensi extends \yii\db\ActiveRecord
     {
         return [
             'id_absensi' => 'Id Absensi',
-            'id_siswa' => 'Siswa',
-            'id_status_absensi' => 'Status Absensi',
+            'id_kelas' => 'Kelas',
             'id_tanggal_efektif' => 'Tanggal Efektif',
-            'keterangan' => 'Keterangan',
         ];
     }
     
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getSiswa()
+    public function getKelas()
     {
-        return $this->hasOne(\common\models\Siswa::className(), ['id_siswa' => 'id_siswa']);
-    }
-        
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getStatusAbsensi()
-    {
-        return $this->hasOne(\common\models\StatusAbsensi::className(), ['id_status_absensi' => 'id_status_absensi']);
+        return $this->hasOne(\common\models\Kelas::className(), ['id_kelas' => 'id_kelas']);
     }
         
     /**
@@ -91,6 +78,14 @@ class Absensi extends \yii\db\ActiveRecord
     public function getTanggalEfektif()
     {
         return $this->hasOne(\common\models\TanggalEfektif::className(), ['id_tanggal_efektif' => 'id_tanggal_efektif']);
+    }
+        
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getDetailAbsensis()
+    {
+        return $this->hasMany(\common\models\DetailAbsensi::className(), ['id_absensi' => 'id_absensi']);
     }
     
 
