@@ -65,7 +65,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                         'attribute' => 'siswa.id_siswa',
                                         'label' => 'Siswa',
                                         'value' => function($model){
-                                            return $model->siswa->nam_siswa;
+                                            return $model->siswa->nama_siswa;
                                         }
                                     ],
                                     ['attribute' => 'id_penghargaan', 'visible' => false],
