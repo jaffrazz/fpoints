@@ -49,8 +49,11 @@ $this->registerJs($search);
                             'filterInputOptions' => ['placeholder' => 'Kategori aturan', 'id' => 'grid-aturan-search-id_kategori'],
                         ],
                         'pasal',
+                        [
+                            'attribute' => 'point_aturan',
+                            'filterType' => Gridview::FILTER_NUMBER
+                        ],
                         'uraian_aturan:ntext',
-                        'point_aturan',
                         [
                             'class' => 'yii\grid\ActionColumn',
                         ],
