@@ -38,3 +38,9 @@ return $config;
 
 ```
 
+
+## Todo List
+
+- [ ] Dependend dropdown at absensi.
+- [ ] Upload image at Siswa, Pegawai, and Wali Murid
+- [ ] Etc
