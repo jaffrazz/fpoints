@@ -29,7 +29,7 @@ class SiswaController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'add-absensi', 'add-akumulasi-point', 'add-pelanggaran', 'add-prestasi', 'add-sp'],
+                        'actions' => ['index', 'view', 'create', 'update', 'delete'],
                         'roles' => ['@']
                     ],
                     [
@@ -63,11 +63,11 @@ class SiswaController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
-        $providerAbsensi = new \yii\data\ArrayDataProvider([
-            'allModels' => $model->absensis,
+        $providerDetailAbsensi = new \yii\data\ArrayDataProvider([
+            'allModels' => $model->detailAbsensis,
         ]);
-        $providerAkumulasiPoint = new \yii\data\ArrayDataProvider([
-            'allModels' => $model->akumulasiPoints,
+        $providerDetailAkumulasiPoint = new \yii\data\ArrayDataProvider([
+            'allModels' => $model->detailAkumulasiPoints,
         ]);
         $providerPelanggaran = new \yii\data\ArrayDataProvider([
             'allModels' => $model->pelanggarans,
@@ -80,8 +80,8 @@ class SiswaController extends Controller
         ]);
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'providerAbsensi' => $providerAbsensi,
-            'providerAkumulasiPoint' => $providerAkumulasiPoint,
+            'providerDetailAbsensi' => $providerDetailAbsensi,
+            'providerDetailAkumulasiPoint' => $providerDetailAkumulasiPoint,
             'providerPelanggaran' => $providerPelanggaran,
             'providerPrestasi' => $providerPrestasi,
             'providerSp' => $providerSp,
@@ -198,106 +198,6 @@ class SiswaController extends Controller
     {
         if (($model = Siswa::findOne($id)) !== null) {
             return $model;
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
-    
-    /**
-    * Action to load a tabular form grid
-    * for Absensi
-    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-    *
-    * @return mixed
-    */
-    public function actionAddAbsensi()
-    {
-        if (Yii::$app->request->isAjax) {
-            $row = Yii::$app->request->post('Absensi');
-            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('_action') == 'load' && empty($row)) || Yii::$app->request->post('_action') == 'add')
-                $row[] = [];
-            return $this->renderAjax('_formAbsensi', ['row' => $row]);
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
-    
-    /**
-    * Action to load a tabular form grid
-    * for AkumulasiPoint
-    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-    *
-    * @return mixed
-    */
-    public function actionAddAkumulasiPoint()
-    {
-        if (Yii::$app->request->isAjax) {
-            $row = Yii::$app->request->post('AkumulasiPoint');
-            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('_action') == 'load' && empty($row)) || Yii::$app->request->post('_action') == 'add')
-                $row[] = [];
-            return $this->renderAjax('_formAkumulasiPoint', ['row' => $row]);
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
-    
-    /**
-    * Action to load a tabular form grid
-    * for Pelanggaran
-    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-    *
-    * @return mixed
-    */
-    public function actionAddPelanggaran()
-    {
-        if (Yii::$app->request->isAjax) {
-            $row = Yii::$app->request->post('Pelanggaran');
-            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('_action') == 'load' && empty($row)) || Yii::$app->request->post('_action') == 'add')
-                $row[] = [];
-            return $this->renderAjax('_formPelanggaran', ['row' => $row]);
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
-    
-    /**
-    * Action to load a tabular form grid
-    * for Prestasi
-    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-    *
-    * @return mixed
-    */
-    public function actionAddPrestasi()
-    {
-        if (Yii::$app->request->isAjax) {
-            $row = Yii::$app->request->post('Prestasi');
-            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('_action') == 'load' && empty($row)) || Yii::$app->request->post('_action') == 'add')
-                $row[] = [];
-            return $this->renderAjax('_formPrestasi', ['row' => $row]);
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
-    
-    /**
-    * Action to load a tabular form grid
-    * for Sp
-    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-    *
-    * @return mixed
-    */
-    public function actionAddSp()
-    {
-        if (Yii::$app->request->isAjax) {
-            $row = Yii::$app->request->post('Sp');
-            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('_action') == 'load' && empty($row)) || Yii::$app->request->post('_action') == 'add')
-                $row[] = [];
-            return $this->renderAjax('_formSp', ['row' => $row]);
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
