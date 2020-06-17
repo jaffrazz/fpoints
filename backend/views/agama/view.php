@@ -32,108 +32,24 @@ $this->params['breadcrumbs'][] = $this->title;
                     $gridColumn = [
                         ['attribute' => 'id_agama', 'visible' => false],
                         'agama',
-                            ];
-                            echo DetailView::widget([
-                                'model' => $model,
-                                'attributes' => $gridColumn
-                            ]);
-                        ?>
-
-                    <div class="pt-3">
-                        <?php
-                        if($providerPegawai->totalCount){
-                            $gridColumnPegawai = [
-                                ['class' => 'yii\grid\SerialColumn'],
-                                ['attribute' => 'id_pegawai', 'visible' => false],
-                                ['attribute' => 'id_agama', 'visible' => false],
-                                'nama_pegawai',
-                                'alamat_pegawai:ntext',
-                                'jenis_kelamin_pegawai',
-                                'no_hp_pegawai',
-                                'status_kepegawaian',
-                                'jabatan_pegawai',
-                                'foto_pegawai',
-                            ];
-                            echo Gridview::widget([
-                                'dataProvider' => $providerPegawai,
-                                'pjax' => true,
-                                'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container-pegawai']],
-                                'panel' => [
-                                    //'type' => GridView::TYPE_PRIMARY,
-                                    'heading' => '<span class="glyphicon glyphicon-book"></span> ' . Html::encode('Pegawai'),
-                                ],
-                                'export' => false,
-                                'columns' => $gridColumnPegawai
-                            ]);
-                        }
-                        ?>
-
-                    </div>
-
-                    <div class="pt-3">
-                        <?php
-                        if($providerSiswa->totalCount){
-                            $gridColumnSiswa = [
-                                ['class' => 'yii\grid\SerialColumn'],
-                                ['attribute' => 'id_siswa', 'visible' => false],
-                                ['attribute' => 'id_wali_murid', 'visible' => false],
-                                ['attribute' => 'id_agama', 'visible' => false],
-                                'nis',
-                                'nama_siswa',
-                                'tempat_lahir_siswa',
-                                'tanggal_lahir_siswa',
-                                'jenis_kelamin_siswa',
-                                'alamat_rumah_siswa:ntext',
-                                'alamat_domisili_siswa:ntext',
-                                'no_hp_siswa',
-                                'foto_siswa',
-                            ];
-                            echo Gridview::widget([
-                                'dataProvider' => $providerSiswa,
-                                'pjax' => true,
-                                'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container-siswa']],
-                                'panel' => [
-                                    //'type' => GridView::TYPE_PRIMARY,
-                                    'heading' => '<span class="glyphicon glyphicon-book"></span> ' . Html::encode('Siswa'),
-                                ],
-                                'export' => false,
-                                'columns' => $gridColumnSiswa
-                            ]);
-                        }
-                        ?>
-
-                    </div>
-
-                    <div class="pt-3">
-                        <?php
-                        if($providerWaliMurid->totalCount){
-                            $gridColumnWaliMurid = [
-                                ['class' => 'yii\grid\SerialColumn'],
-                                ['attribute' => 'id_wali_murid', 'visible' => false],
-                                ['attribute' => 'id_pekerjaan', 'visible' => false],
-                                ['attribute' => 'id_agama', 'visible' => false],
-                                ['attribute' => 'nama_wali_murid', 'visible' => false],
-                                ['attribute' => 'tempat_lahir_wali_murid', 'visible' => false],
-                                ['attribute' => 'tanggal_lahir_wali_murid', 'visible' => false],
-                                ['attribute' => 'jenis_kelamin_wali_murid', 'visible' => false],
-                                ['attribute' => 'alamat_rumah_wali_murid', 'visible' => false],
-                                ['attribute' => 'no_hp_wali_murid', 'visible' => false],
-                            ];
-                            echo Gridview::widget([
-                                'dataProvider' => $providerWaliMurid,
-                                'pjax' => true,
-                                'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container-wali-murid']],
-                                'panel' => [
-                                    //'type' => GridView::TYPE_PRIMARY,
-                                    'heading' => '<span class="glyphicon glyphicon-book"></span> ' . Html::encode('Wali Murid'),
-                                ],
-                                'export' => false,
-                                'columns' => $gridColumnWaliMurid
-                            ]);
-                        }
-                        ?>
-
-                    </div>
+                        [
+                            'attribute' => 'jumlah_pegawai',
+                            'value' => function() use ($providerPegawai) {
+                                return $providerPegawai->totalCount . " Orang";
+                            }
+                        ],
+                        [
+                            'attribute' => 'jumlah_siswa',
+                            'value' => function() use ($providerSiswa) {
+                                return $providerSiswa->totalCount . " Orang";
+                            }
+                        ]
+                    ];
+                    echo DetailView::widget([
+                        'model' => $model,
+                        'attributes' => $gridColumn
+                    ]);
+                    ?>    
                 </div>
             </div>
         </div>
