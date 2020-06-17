@@ -47,6 +47,14 @@ return $config;
 - [ ] Akumulasi Point [ Action Reset Per semester ]
 - [ ] Surat Peringatan
 - [ ] Advanced Search
+- [ ] Roles
+- [ ] APIs Android
 - [ ] Pair Unique at Prestasi, Pelanggaran, Absensi , Etc
 - [ ] Model label
+- [ ] CRUD 
+ * Akumulasi Point
+ * Detail Point (R)
+ * Sanksi
+ * SP
+ * User
 - [ ] Etc
