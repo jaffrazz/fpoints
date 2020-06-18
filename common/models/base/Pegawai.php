@@ -3,7 +3,6 @@
 namespace common\models\base;
 
 use Yii;
-use borales\extensions\phoneInput\PhoneInputValidator;
 /**
  * This is the base model class for table "pegawai".
  *
@@ -53,7 +52,6 @@ class Pegawai extends \yii\db\ActiveRecord
             [['no_hp_pegawai'], 'string', 'max' => 15],
             [['status_kepegawaian'], 'string', 'max' => 50],
             [['foto_pegawai'], 'string', 'max' => 255],
-            [['no_hp_pegawai'], PhoneInputValidator::className() ]
         ];
     }
 

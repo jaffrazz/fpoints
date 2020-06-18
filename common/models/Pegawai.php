@@ -11,6 +11,11 @@ use borales\extensions\phoneInput\PhoneInputValidator;
 class Pegawai extends BasePegawai
 {
     /**
+     * This ist temp variable to upload photo
+     */
+    public $photo;
+
+    /**
      * @inheritdoc
      */
     public function rules()
@@ -24,7 +29,8 @@ class Pegawai extends BasePegawai
             [['no_hp_pegawai'], 'string', 'max' => 15],
             [['status_kepegawaian'], 'string', 'max' => 50],
             [['foto_pegawai'], 'string', 'max' => 255],
-            [['no_hp_pegawai'],  PhoneInputValidator::className()]
+            [['no_hp_pegawai'],  PhoneInputValidator::className()],
+            [['photo'],'file', 'skipOnEmpty' => true, 'extensions'=>'jpg,jpeg,gif,png,jpeg', 'maxSize' => 1024*1024*3],
         ]);
     }
 	
