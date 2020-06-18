@@ -12,9 +12,13 @@ use Yii;
  * @property integer $id_wali_kelas
  * @property string $kelas
  * @property string $grade
+ * @property integer $id_tahun_ajaran
+ * @property integer $status
  *
+ * @property \common\models\Absensi[] $absensis
  * @property \common\models\Jurusan $jurusan
  * @property \common\models\WaliKelas $waliKelas
+ * @property \common\models\TahunAjaran $tahunAjaran
  * @property \common\models\NamaKelas $namaKelas
  * @property \common\models\OnKelasSiswa[] $onKelasSiswas
  * @property \common\models\Siswa[] $siswas
@@ -31,12 +35,13 @@ class Kelas extends \yii\db\ActiveRecord
     public function relationNames()
     {
         return [
+            'absensis',
             'jurusan',
             'waliKelas',
+            'tahunAjaran',
             'namaKelas',
             'onKelasSiswas',
-            'siswas',
-            'tahunAjaran',
+            'siswas'
         ];
     }
 
@@ -47,8 +52,9 @@ class Kelas extends \yii\db\ActiveRecord
     {
         return [
             [['id_jurusan', 'id_wali_kelas', 'id_tahun_ajaran'], 'integer'],
+            [['id_tahun_ajaran', 'status', 'id_wali_kelas', 'kelas', 'grade'], 'required'],
             [['kelas', 'grade'], 'string', 'max' => 3],
-            [['id_wali_kelas'], 'unique']
+            [['status'], 'string', 'max' => 1],
         ];
     }
 
@@ -72,9 +78,18 @@ class Kelas extends \yii\db\ActiveRecord
             'kelas' => 'Kelas',
             'grade' => 'Grade',
             'id_tahun_ajaran' => 'Tahun Ajaran',
+            'status' => 'Status',
         ];
     }
     
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAbsensis()
+    {
+        return $this->hasMany(\common\models\Absensi::className(), ['id_kelas' => 'id_kelas']);
+    }
+        
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -94,17 +109,17 @@ class Kelas extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getNamaKelas()
+    public function getTahunAjaran()
     {
-        return $this->hasOne(\common\models\NamaKelas::className(), ['id_kelas' => 'id_kelas']);
+        return $this->hasOne(\common\models\TahunAjaran::className(), ['id_tahun_ajaran' => 'id_tahun_ajaran']);
     }
         
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getTahunAjaran()
+    public function getNamaKelas()
     {
-        return $this->hasOne(\common\models\TahunAjaran::className(), ['id_tahun_ajaran' => 'id_tahun_ajaran']);
+        return $this->hasOne(\common\models\NamaKelas::className(), ['id_kelas' => 'id_kelas']);
     }
         
     /**

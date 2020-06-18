@@ -18,8 +18,10 @@ class Kelas extends BaseKelas
         return array_replace_recursive(parent::rules(),
 	    [
             [['id_jurusan', 'id_wali_kelas', 'id_tahun_ajaran'], 'integer'],
+            [['id_tahun_ajaran', 'status', 'id_wali_kelas', 'kelas', 'grade'], 'required'],
             [['kelas', 'grade'], 'string', 'max' => 3],
-            [['id_wali_kelas'], 'unique']
+            [['status'], 'string', 'max' => 1],
+
         ]);
     }
 	
