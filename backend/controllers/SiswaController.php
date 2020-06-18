@@ -66,18 +66,30 @@ class SiswaController extends Controller
         $model = $this->findModel($id);
         $providerDetailAbsensi = new \yii\data\ArrayDataProvider([
             'allModels' => $model->detailAbsensis,
+            'sort' => [
+                'attributes' => ['absensi.tanggal_efektif']
+            ]
         ]);
         $providerDetailAkumulasiPoint = new \yii\data\ArrayDataProvider([
             'allModels' => $model->detailAkumulasiPoints,
         ]);
         $providerPelanggaran = new \yii\data\ArrayDataProvider([
             'allModels' => $model->pelanggarans,
+            'sort' => [
+                'attributes' => ['tanggal']
+            ]
         ]);
         $providerPrestasi = new \yii\data\ArrayDataProvider([
             'allModels' => $model->prestasis,
+            'sort' => [
+                'attributes' => ['tanggal']
+            ]
         ]);
         $providerSp = new \yii\data\ArrayDataProvider([
             'allModels' => $model->sps,
+            'sort' => [
+                'attributes' => ['tanggal']
+            ]
         ]);
         return $this->render('view', [
             'model' => $this->findModel($id),

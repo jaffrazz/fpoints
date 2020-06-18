@@ -3,6 +3,7 @@
 use kartik\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Siswa */
@@ -29,7 +30,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     ?>
                 </div>
                 <div class="box-body">
-                    <!-- <div class="row"> -->
+                    <img src="<?= Url::to('@web/uploaded/profile/'. $model->foto_siswa) ?>" 
+                        alt="Profile-<?= $model->id_siswa ?>"
+                        class="img img-responsive img-thumbnail"
+                        style="max-width: 250px; margin: 20px auto; display: block;">
                     <?php
                     $gridColumn = [
                         ['attribute' => 'id_siswa', 'visible' => false],
@@ -60,12 +64,6 @@ $this->params['breadcrumbs'][] = $this->title;
                             }
                         ],
                         'no_hp_siswa',
-                        [
-                            'attribute' => 'waliMurid.id_wali_murid',
-                            'label' => 'Wali Murid',
-                            'value' => function ($model) {return $model->idWaliMur->nama_wali_murid;},
-                        ],
-                        'foto_siswa',
                     ];
                     echo DetailView::widget([
                         'model' => $model,
@@ -122,7 +120,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ['class' => 'yii\grid\SerialColumn'],
                             ['attribute' => 'id_siswa', 'visible' => false],
                             [
-                                'attribute' => 'absensi.tanggal',
+                                'attribute' => 'absensi.tanggal_efektif',
                                 'label' => 'Tanggal',
                                 'value' => function($model){
                                     return $model->absensi->tanggal_efektif;
@@ -207,6 +205,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         $gridColumnPelanggaran = [
                             ['class' => 'yii\grid\SerialColumn'],
                             ['attribute' => 'id_siswa', 'visible' => false],
+                            'tanggal',
                             [
                                 'attribute' => 'aturan.id_aturan',
                                 'label' => 'Aturan',
@@ -214,7 +213,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                     return $model->aturan->uraian_aturan;
                                 }
                             ],
-                            'tanggal',
                         ];
                         echo Gridview::widget([
                             'dataProvider' => $providerPelanggaran,
@@ -237,6 +235,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         $gridColumnPrestasi = [
                             ['class' => 'yii\grid\SerialColumn'],
                             ['attribute' => 'id_siswa', 'visible' => false],
+                            'tanggal',
                             [
                                 'attribute' => 'penghargaan.id_penghargaan',
                                 'label' => 'Penghargaan',
@@ -244,7 +243,6 @@ $this->params['breadcrumbs'][] = $this->title;
                                     return $model->penghargaan->uraian_penghargaan;
                                 }
                             ],
-                            'tanggal',
                         ];
                         echo Gridview::widget([
                             'dataProvider' => $providerPrestasi,
@@ -267,10 +265,10 @@ $this->params['breadcrumbs'][] = $this->title;
                             <?php
                             $gridColumnSp = [
                                 ['class' => 'yii\grid\SerialColumn'],
-                                'id_sp',
+                                // 'id_sp',
+                                'tanggal_sp',
                                 ['attribute' => 'id_siswa', 'visible' => false],
                                 'sp_ke',
-                                'tanggal_sp',
                                 'jml_point_pelanggaran',
                             ];
                             echo Gridview::widget([
