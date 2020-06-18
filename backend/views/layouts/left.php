@@ -84,7 +84,7 @@
                     ],
                     ['label' => 'Absensi', 'icon' => 'file-code-o', 'url' => ['/absensi']],
                     ['label' => 'Akumulasi Point', 'icon' => 'file-code-o', 'url' => ['/akumulasi-point']],
-                    ['label' => 'Tanggal Efektif', 'icon' => 'file-code-o', 'url' => ['/tanggal-efektif']],
+                    // ['label' => 'Tanggal Efektif', 'icon' => 'file-code-o', 'url' => ['/tanggal-efektif']],
 
                     ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
                     ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
