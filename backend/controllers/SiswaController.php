@@ -113,7 +113,7 @@ class SiswaController extends Controller
 
         if ($model->loadAll(Yii::$app->request->post())) {            
             $trans = Yii::$app->db->beginTransaction();
-
+            
             try {
                 $suffix = 'Siswa_' . $model->id_siswa;
                 // handling error 
@@ -127,12 +127,17 @@ class SiswaController extends Controller
 
                     $trans->rollBack();
                     Yii::$app->session->setFlash('error', $errors);
-                    return $this->redirect(['index']);
+                    
+                    return $this->render('create', [
+                        'model' => $model,
+                        'modelOnKelas' => $modelOnKelas,
+                    ]);
                 }
 
                 $modelOnKelas->loadAll(Yii::$app->request->post());
                 $modelOnKelas->id_siswa = $model->id_siswa;
                 $modelOnKelas->save();
+
                 
                 $trans->commit();
                 Yii::$app->session->setFlash('success', "Siswa berhasil ditambahkan.");
@@ -141,8 +146,12 @@ class SiswaController extends Controller
             } catch (\Exception $e) {
                 $trans->rollBack();
 
-                Yii::$app->session->setFlash('error', "Errorr, cant perform this action correctly.");
-                return $this->redirect(['index']);
+                Yii::$app->session->setFlash('error', "Error, cant perform this action correctly.");
+                
+                return $this->render('create', [
+                    'model' => $model,
+                    'modelOnKelas' => $modelOnKelas,
+                ]);
             }
 
         } else {
@@ -213,13 +222,21 @@ class SiswaController extends Controller
     {
         $trans = Yii::$app->db->beginTransaction();
         try {
-            $this->findModel($id)->delete();
+            $model = $this->findModel($id);
+            $modelOnKelas = $model->onKelasSiswa;
+            $path = \yii\helpers\Url::to('@webroot/uploaded/profile/'. $model->foto_siswa);
+            $modelOnKelas->delete();
+            $model->deleteWithRelated();
 
+            if($path != ""){
+                if( file_exists($path) ) unlink($path);
+            }
+            
             $trans->commit();
             Yii::$app->session->setFlash('success', "Siswa berhasil dihapus.");
         } catch (\Exception $e) {
             $trans->rollBack();
-            Yii::$app->session->setFlash('error', 'Error, cant perform this action correctly.');
+            Yii::$app->session->setFlash('error', "Error, cant perform this action correctly.:$e");
         }
 
         return $this->redirect(['index']);
