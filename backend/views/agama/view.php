@@ -34,14 +34,14 @@ $this->params['breadcrumbs'][] = $this->title;
                         'agama',
                         [
                             'attribute' => 'jumlah_pegawai',
-                            'value' => function() use ($providerPegawai) {
-                                return $providerPegawai->totalCount . " Orang";
+                            'value' => function() use ($cntPegawai) {
+                                return $cntPegawai . " Orang";
                             }
                         ],
                         [
                             'attribute' => 'jumlah_siswa',
-                            'value' => function() use ($providerSiswa) {
-                                return $providerSiswa->totalCount . " Orang";
+                            'value' => function() use ($cntSiswa) {
+                                return $cntSiswa . " Orang";
                             }
                         ]
                     ];

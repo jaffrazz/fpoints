@@ -62,20 +62,23 @@ class AgamaController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
-        $providerPegawai = new \yii\data\ArrayDataProvider([
-            'allModels' => $model->pegawais,
-        ]);
-        $providerSiswa = new \yii\data\ArrayDataProvider([
-            'allModels' => $model->siswas,
-        ]);
-        $providerWaliMurid = new \yii\data\ArrayDataProvider([
-            'allModels' => $model->waliMurs,
-        ]);
+        $cntSiswa = \common\models\Siswa::find()
+            ->joinWith(['onKelasSiswa'])
+            ->where(['in', 'on_kelas_siswa.id_kelas',
+                \common\models\Kelas::find()
+                    ->where(['status' => 1])
+                    ->select('id_kelas')
+            ])
+            ->AndWhere(['id_agama' => $model->id_agama])
+            ->count();
+        $cntPegawai = \common\models\Pegawai::find()
+            ->AndWhere(['id_agama' => $model->id_agama])
+            ->count();
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'providerPegawai' => $providerPegawai,
-            'providerSiswa' => $providerSiswa,
-            'providerWaliMurid' => $providerWaliMurid,
+            'cntSiswa' => $cntSiswa,
+            'cntPegawai' => $cntPegawai,
+            
         ]);
     }
 
