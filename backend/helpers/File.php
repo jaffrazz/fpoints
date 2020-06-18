@@ -26,7 +26,7 @@ class File {
          * with validator
          */
         if (!$model->validate()) {
-            $ret['failed'] = 'Failed to validate input.';
+            $ret['failed'][] = $model->errors;
         }
 
         /**
@@ -64,7 +64,7 @@ class File {
          * database
          */
         if ( !$model->save() ) {
-            array_push($ret['failed'], 'Failed to Update pegawai.');
+            $ret['failed'][] = 'Failed to Update pegawai.';
         }
         /**
          * Failed store file
@@ -74,7 +74,7 @@ class File {
             if (file_exists($path)) {
                 unlink($path);
             }
-            array_push($ret['failed'], 'Failed to Update pegawai.');
+            $ret['failed'][] = 'Failed to save image pegawai.';
         }
 
         /**
