@@ -11,7 +11,7 @@ $grade = [
     'x' => 'X',
     'xi' => 'XI',
     'xii' => 'XII',
-    'xiii' => 'XIII'
+    'xiii' => 'XIII',
 ];
 
 ?>
@@ -47,14 +47,6 @@ $grade = [
             'allowClear' => true
         ],
     ]); ?>
-
-    <?php /* echo $form->field($model, 'id_wali_kelas')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\common\models\WaliKelas::find()->joinWith('pegawai')->orderBy('id_wali_kelas')->asArray()->all(), 'id_wali_kelas', 'pegawai.nama_pegawai'),
-        'options' => ['placeholder' => 'Pilih Wali kelas'],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ]); */ ?>
 
 
     <div class="form-group">

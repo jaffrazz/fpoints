@@ -12,15 +12,14 @@ use common\models\Kelas;
  */
  class KelasSearch extends Kelas
 {
-    public $nama_kelas;
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id_kelas','id_wali_kelas', 'nama_kelas', 'id_tahun_ajaran'], 'integer'],
-            [['kelas','grade'],'safe']
+            [['id_kelas', 'id_jurusan', 'id_wali_kelas', 'id_tahun_ajaran'], 'integer'],
+            [['kelas', 'grade', 'status'], 'safe'],
         ];
     }
 
@@ -42,7 +41,7 @@ use common\models\Kelas;
      */
     public function search($params)
     {
-        $query = Kelas::find()->joinWith('namaKelas');
+        $query = Kelas::find();
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -55,16 +54,17 @@ use common\models\Kelas;
             // $query->where('0=1');
             return $dataProvider;
         }
-        
-        
-        
+
         $query->andFilterWhere([
+            'id_kelas' => $this->id_kelas,
+            'id_jurusan' => $this->id_jurusan,
             'id_wali_kelas' => $this->id_wali_kelas,
             'id_tahun_ajaran' => $this->id_tahun_ajaran,
-            'nama_kelas.id_kelas' => $this->nama_kelas,
-            'kelas' => $this->kelas,
-            'grade' => $this->grade,
         ]);
+
+        $query->andFilterWhere(['like', 'kelas', $this->kelas])
+            ->andFilterWhere(['like', 'grade', $this->grade])
+            ->andFilterWhere(['like', 'status', $this->status]);
 
         return $dataProvider;
     }

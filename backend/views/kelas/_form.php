@@ -34,8 +34,21 @@ use yii\widgets\ActiveForm;
     ]); ?>
 
     <?= $form->field($model, 'id_wali_kelas')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\common\models\WaliKelas::find()->joinWith('pegawai')->orderBy('id_wali_kelas')->asArray()->all(), 'id_wali_kelas', 'pegawai.nama_pegawai'),
-        'options' => ['placeholder' => 'Pilih Wali Kelas'],
+        'data' => \yii\helpers\ArrayHelper::map(
+            \common\models\WaliKelas::find()
+                ->joinWith('pegawai')
+                ->where(['not in','pegawai.id_pegawai',
+                    \common\models\WaliKelas::find()
+                        ->joinWith(['kelas'])
+                        ->where(['kelas.status' => 1])
+                        ->select('id_pegawai')
+                ])
+                ->orderBy('id_wali_kelas')
+                ->asArray()
+                ->all(), 
+            'id_wali_kelas', 
+            'pegawai.nama_pegawai'),
+        'options' => ['placeholder' => 'Pilih Wali kelas'],
         'pluginOptions' => [
             'allowClear' => true
         ],
@@ -47,11 +60,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id_tahun_ajaran')->widget(\kartik\widgets\Select2::classname(), [
         'data' => \yii\helpers\ArrayHelper::map(\common\models\TahunAjaran::find()->orderBy('id_tahun_ajaran')->asArray()->all(), 'id_tahun_ajaran', 'tahun_ajaran'),
-        'options' => ['placeholder' => 'Pilih Tahun Ajaran'],
+        'options' => ['placeholder' => 'Pilih Tahun ajaran'],
         'pluginOptions' => [
             'allowClear' => true
         ],
     ]); ?>
+
+    <?= $form->field($model, 'status')->checkbox() ?>
 
     <?php
     $forms = [

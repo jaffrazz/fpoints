@@ -75,6 +75,12 @@ $this->registerJs($search);
                                 'filterInputOptions' => ['placeholder' => 'Wali kelas', 'id' => 'grid-kelas-search-id_wali_kelas'],
                             ],
                             [
+                                'attribute' => 'status',
+                                'value' => function($model){
+                                    return ($model->status == 0) ? 'Non Active' : 'Active';
+                                }
+                            ],
+                            [
                                 'class' => 'yii\grid\ActionColumn',
                             ],
                         ];

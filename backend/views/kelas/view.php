@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\Kelas */
 
-$this->title = $model->namaKelas->nama_kelas;
+$this->title = $model->kelas;
 $this->params['breadcrumbs'][] = ['label' => 'Kelas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -20,15 +20,16 @@ $this->params['breadcrumbs'][] = $this->title;
 
                     <?=Html::a('Update', ['update', 'id' => $model->id_kelas], ['class' => 'btn btn-primary'])?>
                     <?=Html::a('Delete', ['delete', 'id' => $model->id_kelas], [
-                            'class' => 'btn btn-danger',
-                            'data' => [
-                                'confirm' => 'Are you sure you want to delete this item?',
-                                'method' => 'post',
-                            ],
-                        ])
-                        ?>
+                        'class' => 'btn btn-danger',
+                        'data' => [
+                            'confirm' => 'Are you sure you want to delete this item?',
+                            'method' => 'post',
+                        ],
+                    ])
+                    ?>
                 </div>
                 <div class="box-body">
+                    <!-- <div class="row"> -->
                     <?php
                     $gridColumn = [
                         ['attribute' => 'id_kelas', 'visible' => false],
@@ -47,7 +48,14 @@ $this->params['breadcrumbs'][] = $this->title;
                             }
                         ],
                         [
-                            'attribute' => 'id_tahun_ajaran',
+                            'attribute' => 'status',
+                            'label' => 'Status',
+                            'value' => function($model){
+                                return ($model->status == 0) ? 'Non Active' : 'Active' ;
+                            }
+                        ],
+                        [
+                            'attribute' => 'tahunAjaran.tahun_ajaran',
                             'label' => 'Tahun Ajaran',
                             'value' => function($model){
                                 return $model->tahunAjaran->tahun_ajaran;
@@ -59,7 +67,32 @@ $this->params['breadcrumbs'][] = $this->title;
                         'attributes' => $gridColumn,
                     ]);
                     ?>
+                    <!-- </div> -->
 
+                    <div class="pt-3">
+                        <?php
+                        if ($providerAbsensi->totalCount) {
+                            $gridColumnAbsensi = [
+                                ['class' => 'yii\grid\SerialColumn'],
+                                'id_absensi',
+                                ['attribute' => 'id_kelas', 'visible' => false],
+                                'tanggal_efektif',
+                            ];
+                            echo Gridview::widget([
+                                'dataProvider' => $providerAbsensi,
+                                'pjax' => true,
+                                'pjaxSettings' => ['options' => ['id' => 'kv-pjax-container-absensi']],
+                                'panel' => [
+                                    //'type' => GridView::TYPE_PRIMARY,
+                                    'heading' => '<span class="glyphicon glyphicon-book"></span> ' . Html::encode('Absensi'),
+                                ],
+                                'export' => false,
+                                'columns' => $gridColumnAbsensi,
+                            ]);
+                        }
+                        ?>
+
+                    </div>
                     <div class="pt-3">
                         <?php
                         if ($providerOnKelasSiswa->totalCount) {

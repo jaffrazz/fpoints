@@ -2,13 +2,14 @@
 
 namespace backend\controllers;
 
+use Yii;
 use common\models\Kelas;
 use common\models\KelasSearch;
 use common\models\NamaKelas;
-use Yii;
-use yii\filters\VerbFilter;
+
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
+use yii\filters\VerbFilter;
 
 /**
  * KelasController implements the CRUD actions for Kelas model.
@@ -30,13 +31,13 @@ class KelasController extends Controller
                     [
                         'allow' => true,
                         'actions' => ['index', 'view', 'create', 'update', 'delete', 'add-on-kelas-siswa'],
-                        'roles' => ['@'],
+                        'roles' => ['@']
                     ],
                     [
-                        'allow' => false,
-                    ],
-                ],
-            ],
+                        'allow' => false
+                    ]
+                ]
+            ]
         ];
     }
 
@@ -63,11 +64,15 @@ class KelasController extends Controller
     public function actionView($id)
     {
         $model = $this->findModel($id);
+        $providerAbsensi = new \yii\data\ArrayDataProvider([
+            'allModels' => $model->absensis,
+        ]);
         $providerOnKelasSiswa = new \yii\data\ArrayDataProvider([
             'allModels' => $model->onKelasSiswas,
         ]);
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'providerAbsensi' => $providerAbsensi,
             'providerOnKelasSiswa' => $providerOnKelasSiswa,
         ]);
     }
@@ -81,9 +86,28 @@ class KelasController extends Controller
     {
         $model = new Kelas();
 
-        if ($model->loadAll(Yii::$app->request->post())) {
+        if ( $model->loadAll( Yii::$app->request->post() ) ) {
             $trans = Yii::$app->db->beginTransaction();
             try {
+                $check = Kelas::find()
+                    ->AndWhere([
+                        'id_jurusan' => $model->id_jurusan,
+                        'grade' => $model->grade,
+                        'kelas' => $model->kelas,
+                        'status' => 1
+                    ])
+                    ->count();
+                /**
+                 * Check duplicate 
+                 * active class
+                 */
+                if( $check ) {
+                    Yii::$app->session->setFlash('error','Class is active, please non-active class before create new.');
+                    return $this->render('create', [
+                        'model' => $model,
+                    ]);
+                }
+                // if( ! )
                 $model->saveAll();
                 $this->namaKelas($model, 'create');
 
@@ -118,6 +142,26 @@ class KelasController extends Controller
         if ($model->loadAll(Yii::$app->request->post())) {
             $trans = Yii::$app->db->beginTransaction();
             try {
+                $check = Kelas::find()
+                    ->where(['!=','id_kelas',$model->id_kelas])
+                    ->AndWhere([
+                        'id_jurusan' => $model->id_jurusan,
+                        'grade' => $model->grade,
+                        'kelas' => $model->kelas,
+                        'status' => 1
+                    ])
+                    ->count();
+                /**
+                 * Check duplicate 
+                 * active class
+                 */
+                if( $check ){
+                    Yii::$app->session->setFlash('error','Error, class same with another active class.');
+                    return $this->render('update', [
+                        'model' => $model,
+                    ]);
+
+                }
                 $model->saveAll();
                 $this->namaKelas($model, 'update');
 
@@ -160,9 +204,11 @@ class KelasController extends Controller
             $trans->rollBack();
             Yii::$app->session->setFlash('error','Error, cant perform this action correctly');
         }
+
         return $this->redirect(['index']);
     }
 
+    
     /**
      * Finds the Kelas model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -180,21 +226,19 @@ class KelasController extends Controller
     }
 
     /**
-     * Action to load a tabular form grid
-     * for OnKelasSiswa
-     * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-     * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-     *
-     * @return mixed
-     */
+    * Action to load a tabular form grid
+    * for OnKelasSiswa
+    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
+    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
+    *
+    * @return mixed
+    */
     public function actionAddOnKelasSiswa()
     {
         if (Yii::$app->request->isAjax) {
             $row = Yii::$app->request->post('OnKelasSiswa');
-            if ((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('_action') == 'load' && empty($row)) || Yii::$app->request->post('_action') == 'add') {
+            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('_action') == 'load' && empty($row)) || Yii::$app->request->post('_action') == 'add')
                 $row[] = [];
-            }
-
             return $this->renderAjax('_formOnKelasSiswa', ['row' => $row]);
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
