@@ -8,8 +8,7 @@ use Yii;
 use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\web\UploadedFile;
-use yii\helpers\Url;
+use backend\helpers\File;
 
 /**
  * PegawaiController implements the CRUD actions for Pegawai model.
@@ -97,9 +96,9 @@ class PegawaiController extends Controller
 
         if ($model->loadAll(Yii::$app->request->post())) {
             $trans = Yii::$app->db->beginTransaction();
-            $suffix = 'Pegawai' . $model->id_pegawai;
+            $suffix = 'Pegawai_' . $model->id_pegawai;
 
-            $check = $this->UploadFile($model, 'photo', 'foto_pegawai', $suffix);
+            $check = File::Upload($model, 'photo', 'foto_pegawai', $suffix);
 
             if (isset($check['failed'])) {
                 $errors = implode('<br>', $check['failed']);
@@ -138,7 +137,7 @@ class PegawaiController extends Controller
             $trans = Yii::$app->db->beginTransaction();
             $suffix = 'Pegawai_'. $model->id_pegawai;
 
-            $check = $this->UploadFile($model,'photo','foto_pegawai',$suffix);
+            $check = File::Upload($model,'photo','foto_pegawai',$suffix);
 
             if ( isset( $check['failed'] ) ) {
                 $errors = implode('<br>', $check['failed']);
@@ -213,84 +212,5 @@ class PegawaiController extends Controller
             \common\models\Jabatan::find()->orderBy('id_jabatan')->asArray()->all(),
             'id_jabatan',
             'jabatan');
-    }
-
-    public function UploadFile($model, $new, $old, $suffix)
-    {
-        $model[$new] = UploadedFile::getInstance($model, $new);
-        
-        $ret = [];
-
-        /**
-         * Check input
-         * with validator
-         */
-        if (!$model->validate()) {
-            $ret['failed'] = 'Failed to validate input.';
-        }
-
-        /**
-         * If file not
-         * found
-         */
-        if( $model[$new] == null){
-            return $ret;
-        }
-
-        /**
-         * Check Old Image exist
-         * or not
-         */
-        if ($model[$old] != '') {
-            $oldFile = Url::to('@webroot/uploaded/profile/' . $model[$old]);
-            $ret['oldPath'] = $oldFile;
-        }
-        /**
-         * Generate new file name
-         */
-        $model[$old] = $suffix;
-        $model[$old] .= '_' . time() . '.';
-        $model[$old] .= $model[$new]->extension;
-        $path = Url::to('@webroot/uploaded/profile/' . $model[$old]);
-
-        /**
-         * store path & old path
-         * to ret
-         */
-        $ret['path'] = $path;
-
-        /**
-         * Failed save model to
-         * database
-         */
-        if ( !$model->save() ) {
-            array_push($ret['failed'], 'Failed to Update pegawai.');
-        }
-        /**
-         * Failed store file
-         * localStorage
-         */
-        if ( isset( $ret['failed'] ) || !$model[$new]->saveAs($path)) {
-            if (file_exists($path)) {
-                unlink($path);
-            }
-            array_push($ret['failed'], 'Failed to Update pegawai.');
-        }
-
-        /**
-         * Destory old file
-         * action not failed and
-         * old file exist
-         */
-        if ( !isset( $ret['failed'] ) && isset( $oldFile ) ) {
-            if (file_exists($oldFile)) {
-                unlink($oldFile);
-            }
-        }
-        // var_dump($ret);
-        // die();
-
-
-        return $ret;
     }
 }
