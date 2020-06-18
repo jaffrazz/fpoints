@@ -97,7 +97,7 @@ class HariTidakEfektifController extends Controller
         $model = $this->findModel($id);
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', "Hari tidak efektif berhasil diubah.");
+Yii::$app->session->setFlash('success', "Hari tidak efektif berhasil diubah.");
             return $this->redirect(['view', 'id' => $model->id_hari_tidak_efektif]);
         } else {
             return $this->render('update', [
@@ -117,7 +117,7 @@ class HariTidakEfektifController extends Controller
 
         $trans = Yii::$app->db->beginTransaction();
         try {
-            $this->findModel($id)->deleteWithRelated();
+            $this->findModel($id)->delete();
             $trans->commit();
             Yii::$app->session->setFlash('success', "Hari tidak efektif berhasil dihapus.");
         } catch (\Exception $e) {

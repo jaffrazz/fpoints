@@ -4,10 +4,18 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\HariTidakEfektif */
+$title = $model->keterangan_tidak_efektif;
+$title = explode(' ',$title);
 
-$this->title = 'Update Hari Tidak Efektif: ' . ' ' . $model->tanggal_tidak_efektif;
+if(count($title) > 5){
+    $title = implode(' ',array_slice($title,0,4)). '...';
+}else{
+    $title = implode(' ',$title);
+}
+
+$this->title = 'Update Hari Tidak Efektif: ' . ' ' . $title;
 $this->params['breadcrumbs'][] = ['label' => 'Hari Tidak Efektif', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id_hari_tidak_efektif, 'url' => ['view', 'id' => $model->id_hari_tidak_efektif]];
+$this->params['breadcrumbs'][] = ['label' => $title, 'url' => ['view', 'id' => $model->id_hari_tidak_efektif]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="hari-tidak-efektif-update">

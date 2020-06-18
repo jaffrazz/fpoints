@@ -19,7 +19,7 @@ use common\models\HariTidakEfektif;
     {
         return [
             [['id_hari_tidak_efektif'], 'integer'],
-            [['tanggal_tidak_efektif', 'keterangan_tidak_efektif'], 'safe'],
+            [['tanggal_awal', 'tanggal_akhir', 'keterangan_tidak_efektif'], 'safe'],
         ];
     }
 
@@ -55,17 +55,28 @@ use common\models\HariTidakEfektif;
             return $dataProvider;
         }
 
-        
-        if (!empty($this->tanggal_tidak_efektif)) {
-            $tanggal_tidak_efektif = date('Y-m-d', strtotime($this->tanggal_tidak_efektif));
+
+        if (!empty($this->tanggal_awal)) {
+            $tanggal_awal = date('Y-m-d', strtotime($this->tanggal_awal));
         }else{
-            $tanggal_tidak_efektif = null;
+            $tanggal_awal = null;
         }
+        
+        if (!empty($this->tanggal_akhir)) {
+            $tanggal_akhir = date('Y-m-d', strtotime($this->tanggal_akhir));
+        }else{
+            $tanggal_akhir = null;
+        }
+
 
         $query->andFilterWhere([
             'id_hari_tidak_efektif' => $this->id_hari_tidak_efektif,
-            'tanggal_tidak_efektif' => $tanggal_tidak_efektif,
+            // 'tanggal_awal' => $this->tanggal_awal,
+            // 'tanggal_akhir' => $this->tanggal_akhir,
         ]);
+
+        $query->andFilterWhere(['between','tanggal_awal', $tanggal_awal,$tanggal_akhir])
+                ->orFilterWhere(['between','tanggal_akhir', $tanggal_awal,$tanggal_akhir]);
 
         $query->andFilterWhere(['like', 'keterangan_tidak_efektif', $this->keterangan_tidak_efektif]);
 

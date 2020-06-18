@@ -24,7 +24,11 @@ $this->registerJs($search);
                 <div class="box-header">
                     <p>
                         <?=Html::a('Create Hari Tidak Efektif', ['create'], ['class' => 'btn btn-success'])?>
+                        <?=Html::a('Advance Search', '#', ['class' => 'btn btn-info search-button'])?>
                     </p>
+                    <div class="search-form" style="display:none">
+                        <?=$this->render('_search', ['model' => $searchModel]);?>
+                    </div>
                 </div>
                 <div class="box-body">
                     <?php
@@ -32,18 +36,16 @@ $this->registerJs($search);
                         ['class' => 'yii\grid\SerialColumn'],
                         ['attribute' => 'id_hari_tidak_efektif', 'visible' => false],
                         [
-                            'attribute' => 'tanggal_tidak_efektif',
+                            'attribute' => 'tanggal_awal',
 							'format' => 'date',
-							'filterType' => GridView::FILTER_DATE,
-								'filterWidgetOptions' => [
-								'size' => 'xs',
-								'pluginOptions' => [
-									'format' => 'dd-M-yyyy',
-									'autoWidget' => true,
-									'autoclose' => true,
-									'todayHighlight' => true
-								]
-							],
+                            'filter' => false,
+                        ],
+                        [
+                            'attribute' => 'tanggal_akhir',
+                            'filter' => false,
+                            'value' => function($model){
+                                return ($model->tanggal_akhir != null) ? $model->tanggal_akhir : "-";
+                            }
                         ],
                         'keterangan_tidak_efektif:ntext',
                         [
@@ -61,7 +63,6 @@ $this->registerJs($search);
                             //'type' => GridView::TYPE_PRIMARY,
                             'heading' => '<span class="glyphicon glyphicon-book"></span>  ' . Html::encode($this->title),
                         ],
-                        'export' => false,
                         // your toolbar can include the additional full export menu
                         'toolbar' => [
                             '{export}',
@@ -76,9 +77,6 @@ $this->registerJs($search);
                                     'itemsBefore' => [
                                         '<li class="dropdown-header">Export All Data</li>',
                                     ],
-                                ],
-                                'exportConfig' => [
-                                    ExportMenu::FORMAT_PDF => false,
                                 ],
                             ]),
                         ],
