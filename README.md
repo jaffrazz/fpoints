@@ -42,6 +42,7 @@ return $config;
 ## TODOs List
 
 - [ ] Hide input date autocomplete
+- [ ] Generate NIP automatic
 - [ ] Dependent dropdown.
     - [ ] Pelanggaran Filter
     - [ ] Prestasi Filter
@@ -61,18 +62,18 @@ return $config;
 - [ ] View Show Detail
     - [x] Jurusan
     - [x] Aturan, Penghargaan [ Add total history, and history in month ]
-    - [ ] Agama jumlah siswa [ set to only active student ]
+    - [x] Agama jumlah siswa [ set to only active student ]
 - [ ] Pair Unique at Prestasi, Pelanggaran, Absensi , Etc
     - [x] Tanggal Tidak Efektif
-    - [ ] Kelas
+    - [x] Kelas
 - [ ] Input Select2
-    - [ ] Wali Kelas [ pegawai - only pegawai havent active class ]
+    - [x] Wali Kelas [ pegawai - only pegawai havent active class ]
 - [x] Model label
 - [ ] Structure Updated
     - [x] Add ( start_date, end_date ) to hari tidak efektif
     - [x] Delete Tanggal Efektif
-    - [ ] Add Active Status at Kelas
-        - [ ] Pegawai View
+    - [x] Add Active Status at Kelas
+        - [x] Pegawai View
 - [ ] CRUD 
     - [x] Sanksi
     - [ ] Akumulasi Point [ Action Reset detail point Per semester ]
