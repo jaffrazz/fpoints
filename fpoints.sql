@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 18, 2020 at 07:07 AM
+-- Generation Time: Jun 18, 2020 at 08:37 AM
 -- Server version: 10.1.44-MariaDB-0ubuntu0.18.04.1
 -- PHP Version: 7.2.26-1+ubuntu18.04.1+deb.sury.org+1
 
@@ -31,16 +31,16 @@ SET time_zone = "+00:00";
 CREATE TABLE `absensi` (
   `id_absensi` int(11) NOT NULL,
   `id_kelas` int(11) NOT NULL,
-  `id_tanggal_efektif` int(11) NOT NULL
+  `tanggal_efektif` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `absensi`
 --
 
-INSERT INTO `absensi` (`id_absensi`, `id_kelas`, `id_tanggal_efektif`) VALUES
-(1, 19, 1),
-(2, 19, 3);
+INSERT INTO `absensi` (`id_absensi`, `id_kelas`, `tanggal_efektif`) VALUES
+(1, 19, '2020-06-01'),
+(2, 19, '2020-06-02');
 
 -- --------------------------------------------------------
 
@@ -186,7 +186,8 @@ INSERT INTO `hari_efektif` (`id_hari_efektif`, `nama_hari_efektif`, `status_hari
 
 CREATE TABLE `hari_tidak_efektif` (
   `id_hari_tidak_efektif` int(11) NOT NULL,
-  `tanggal_tidak_efektif` date DEFAULT NULL,
+  `tanggal_awal` date NOT NULL,
+  `tanggal_akhir` date DEFAULT NULL,
   `keterangan_tidak_efektif` text
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -194,9 +195,11 @@ CREATE TABLE `hari_tidak_efektif` (
 -- Dumping data for table `hari_tidak_efektif`
 --
 
-INSERT INTO `hari_tidak_efektif` (`id_hari_tidak_efektif`, `tanggal_tidak_efektif`, `keterangan_tidak_efektif`) VALUES
-(3, '2020-06-01', 'an only install one of: mpdf/mpdf[v8.0.6, v7.1.8].\r\n    - Installation request for mpdf/mpdf (locked at v7.1.8) -> satisfiable by mpdf/mpdf[v7.1.8].'),
-(4, '2020-06-02', 'an only install one of: mpdf/mpdf[v8.0.6, v7.1.8].\r\n    - Installation request for mpdf/mpdf (locked at v7.1.8) -> satisfiable by mpdf/mpdf[v7.1.8].');
+INSERT INTO `hari_tidak_efektif` (`id_hari_tidak_efektif`, `tanggal_awal`, `tanggal_akhir`, `keterangan_tidak_efektif`) VALUES
+(3, '2020-06-01', NULL, 'an only install one of: mpdf/mpdf[v8.0.6, v7.1.8].\r\n    - Installation request for mpdf/mpdf (locked at v7.1.8) -> satisfiable by mpdf/mpdf[v7.1.8].'),
+(4, '2020-06-02', NULL, 'an only install one of: mpdf/mpdf[v8.0.6, v7.1.8].\r\n    - Installation request for mpdf/mpdf (locked at v7.1.8) -> satisfiable by mpdf/mpdf[v7.1.8].'),
+(5, '2020-06-16', '2020-07-16', 'Liburan Semester 1'),
+(6, '2020-06-01', NULL, '-');
 
 -- --------------------------------------------------------
 
@@ -590,27 +593,6 @@ INSERT INTO `tahun_ajaran` (`id_tahun_ajaran`, `tahun_ajaran`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tanggal_efektif`
---
-
-CREATE TABLE `tanggal_efektif` (
-  `id_tanggal_efektif` int(11) NOT NULL,
-  `tanggal_efektif` date NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `tanggal_efektif`
---
-
-INSERT INTO `tanggal_efektif` (`id_tanggal_efektif`, `tanggal_efektif`) VALUES
-(1, '2020-06-01'),
-(3, '2020-06-02'),
-(4, '2020-06-03'),
-(5, '2020-06-04');
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `tindakan`
 --
 
@@ -705,7 +687,6 @@ INSERT INTO `wali_murid` (`id_wali_murid`, `id_pekerjaan`, `id_agama`, `nama_wal
 --
 ALTER TABLE `absensi`
   ADD PRIMARY KEY (`id_absensi`),
-  ADD KEY `FK_ABSENSI3` (`id_tanggal_efektif`),
   ADD KEY `FK_ABSENSI` (`id_kelas`);
 
 --
@@ -900,13 +881,6 @@ ALTER TABLE `tahun_ajaran`
   ADD UNIQUE KEY `tahun_ajaran` (`tahun_ajaran`);
 
 --
--- Indexes for table `tanggal_efektif`
---
-ALTER TABLE `tanggal_efektif`
-  ADD PRIMARY KEY (`id_tanggal_efektif`),
-  ADD UNIQUE KEY `tanggal_efektif` (`tanggal_efektif`);
-
---
 -- Indexes for table `tindakan`
 --
 ALTER TABLE `tindakan`
@@ -985,7 +959,7 @@ ALTER TABLE `hari_efektif`
 -- AUTO_INCREMENT for table `hari_tidak_efektif`
 --
 ALTER TABLE `hari_tidak_efektif`
-  MODIFY `id_hari_tidak_efektif` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_hari_tidak_efektif` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `jabatan`
@@ -1084,12 +1058,6 @@ ALTER TABLE `tahun_ajaran`
   MODIFY `id_tahun_ajaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
--- AUTO_INCREMENT for table `tanggal_efektif`
---
-ALTER TABLE `tanggal_efektif`
-  MODIFY `id_tanggal_efektif` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-
---
 -- AUTO_INCREMENT for table `tindakan`
 --
 ALTER TABLE `tindakan`
@@ -1121,8 +1089,7 @@ ALTER TABLE `wali_murid`
 -- Constraints for table `absensi`
 --
 ALTER TABLE `absensi`
-  ADD CONSTRAINT `FK_ABSENSI` FOREIGN KEY (`id_kelas`) REFERENCES `kelas` (`id_kelas`),
-  ADD CONSTRAINT `FK_ABSENSI3` FOREIGN KEY (`id_tanggal_efektif`) REFERENCES `tanggal_efektif` (`id_tanggal_efektif`);
+  ADD CONSTRAINT `FK_ABSENSI` FOREIGN KEY (`id_kelas`) REFERENCES `kelas` (`id_kelas`);
 
 --
 -- Constraints for table `akumulasi_point`
