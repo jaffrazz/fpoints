@@ -2,12 +2,14 @@
 
 namespace backend\controllers;
 
-use Yii;
 use common\models\Pegawai;
 use common\models\PegawaiSearch;
+use Yii;
+use yii\filters\VerbFilter;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
-use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
+use yii\helpers\Url;
 
 /**
  * PegawaiController implements the CRUD actions for Pegawai model.
@@ -15,9 +17,9 @@ use yii\filters\VerbFilter;
 class PegawaiController extends Controller
 {
     public $status_kepegawaian = [
-        'Pegawai Tetap' => 'Pegawai Tetap', 
-        'Pegawai Tidak Tetap' => 'Pegawai Tidak Tetap', 
-        'Magang' => 'Magang'
+        'Pegawai Tetap' => 'Pegawai Tetap',
+        'Pegawai Tidak Tetap' => 'Pegawai Tidak Tetap',
+        'Magang' => 'Magang',
     ];
 
     public function behaviors()
@@ -35,13 +37,13 @@ class PegawaiController extends Controller
                     [
                         'allow' => true,
                         'actions' => ['index', 'view', 'create', 'update', 'delete'],
-                        'roles' => ['@']
+                        'roles' => ['@'],
                     ],
                     [
-                        'allow' => false
-                    ]
-                ]
-            ]
+                        'allow' => false,
+                    ],
+                ],
+            ],
         ];
     }
 
@@ -93,7 +95,21 @@ class PegawaiController extends Controller
         $agama = $this->getDropdownAgama();
         $jabatan = $this->getDropdownJabatan();
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->save()) {
+        if ($model->loadAll(Yii::$app->request->post())) {
+            $trans = Yii::$app->db->beginTransaction();
+            $suffix = 'Pegawai' . $model->id_pegawai;
+
+            $check = $this->UploadFile($model, 'photo', 'foto_pegawai', $suffix);
+
+            if (isset($check['failed'])) {
+                $errors = implode('<br>', $check['failed']);
+
+                $trans->rollBack();
+                Yii::$app->session->setFlash('error', $errors);
+                return $this->redirect(['index']);
+            }
+
+            $trans->commit();
             Yii::$app->session->setFlash('success', "Pegawai berhasil ditambahkan.");
             return $this->redirect(['view', 'id' => $model->id_pegawai]);
         } else {
@@ -118,7 +134,21 @@ class PegawaiController extends Controller
         $agama = $this->getDropdownAgama();
         $jabatan = $this->getDropdownJabatan();
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->save()) {
+        if ($model->loadAll(Yii::$app->request->post())) {
+            $trans = Yii::$app->db->beginTransaction();
+            $suffix = 'Pegawai'. $model->id_pegawai;
+
+            $check = $this->UploadFile($model,'photo','foto_pegawai',$suffix);
+
+            if ( isset( $check['failed'] ) ) {
+                $errors = implode('<br>', $check['failed']);
+
+                $trans->rollBack();
+                Yii::$app->session->setFlash('error', $errors);
+                return $this->redirect(['index']);
+            }
+
+            $trans->commit();
             Yii::$app->session->setFlash('success', "Pegawai berhasil diubah.");
             return $this->redirect(['view', 'id' => $model->id_pegawai]);
         } else {
@@ -153,7 +183,6 @@ class PegawaiController extends Controller
         return $this->redirect(['index']);
     }
 
-    
     /**
      * Finds the Pegawai model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -169,17 +198,99 @@ class PegawaiController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-    
-    public function getDropdownAgama(){
+
+    public function getDropdownAgama()
+    {
         return \yii\helpers\ArrayHelper::map(
-            \common\models\Agama::find()->orderBy('id_agama')->asArray()->all(), 
-            'id_agama', 
+            \common\models\Agama::find()->orderBy('id_agama')->asArray()->all(),
+            'id_agama',
             'agama');
     }
-    public function getDropdownJabatan(){
+
+    public function getDropdownJabatan()
+    {
         return \yii\helpers\ArrayHelper::map(
-            \common\models\Jabatan::find()->orderBy('id_jabatan')->asArray()->all(), 
-            'id_jabatan', 
+            \common\models\Jabatan::find()->orderBy('id_jabatan')->asArray()->all(),
+            'id_jabatan',
             'jabatan');
+    }
+
+    public function UploadFile($model, $new, $old, $suffix)
+    {
+        $model[$new] = UploadedFile::getInstance($model, $new);
+        
+        $ret = [];
+
+        /**
+         * Check input
+         * with validator
+         */
+        if (!$model->validate()) {
+            $ret['failed'] = 'Failed to validate input.';
+        }
+
+        /**
+         * If file not
+         * found
+         */
+        if( $model[$new] == null){
+            return $ret;
+        }
+
+        /**
+         * Check Old Image exist
+         * or not
+         */
+        if ($model[$old] != '') {
+            $oldFile = Url::to('@webroot/uploaded/profile/' . $model[$old]);
+            $ret['oldPath'] = $oldFile;
+        }
+        /**
+         * Generate new file name
+         */
+        $model[$old] = $suffix;
+        $model[$old] .= '_' . time() . '.';
+        $model[$old] .= $model[$new]->extension;
+        $path = Url::to('@webroot/uploaded/profile/' . $model[$old]);
+
+        /**
+         * store path & old path
+         * to ret
+         */
+        $ret['path'] = $path;
+
+        /**
+         * Failed save model to
+         * database
+         */
+        if ( !$model->save() ) {
+            array_push($ret['failed'], 'Failed to Update pegawai.');
+        }
+        /**
+         * Failed store file
+         * localStorage
+         */
+        if ( isset( $ret['failed'] ) && !$model[$new]->saveAs($path)) {
+            if (file_exists($path)) {
+                unlink($path);
+            }
+            array_push($ret['failed'], 'Failed to Update pegawai.');
+        }
+
+        /**
+         * Destory old file
+         * action not failed and
+         * old file exist
+         */
+        if ( !isset( $ret['failed'] ) && isset( $oldFile ) ) {
+            if (file_exists($oldFile)) {
+                unlink($oldFile);
+            }
+        }
+        // var_dump($ret);
+        // die();
+
+
+        return $ret;
     }
 }
