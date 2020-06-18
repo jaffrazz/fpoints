@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 18, 2020 at 09:06 AM
+-- Generation Time: Jun 18, 2020 at 12:10 PM
 -- Server version: 10.1.44-MariaDB-0ubuntu0.18.04.1
 -- PHP Version: 7.2.26-1+ubuntu18.04.1+deb.sury.org+1
 
@@ -352,8 +352,8 @@ CREATE TABLE `on_kelas_siswa` (
 --
 
 INSERT INTO `on_kelas_siswa` (`id_kelas`, `id_siswa`) VALUES
-(19, 2),
-(19, 6);
+(19, 6),
+(20, 2);
 
 -- --------------------------------------------------------
 
@@ -378,7 +378,7 @@ CREATE TABLE `pegawai` (
 --
 
 INSERT INTO `pegawai` (`id_pegawai`, `id_agama`, `nama_pegawai`, `alamat_pegawai`, `jenis_kelamin_pegawai`, `no_hp_pegawai`, `status_kepegawaian`, `jabatan_pegawai`, `foto_pegawai`) VALUES
-(1, 1, 'admin', 'admin', 'L', '+6281234567890', 'Pegawai Tetap', 1, ''),
+(1, 1, 'admin', 'admin', 'L', '+6281234567890', 'Pegawai Tetap', 1, 'Pegawai_1_1592455315.png'),
 (2, 1, 'Defri Indra Mahardika', 'Ds. Pulung Kec. Pulung', 'L', '+6285604845437', 'Tetap', 1, '');
 
 -- --------------------------------------------------------
@@ -533,7 +533,7 @@ CREATE TABLE `siswa` (
 --
 
 INSERT INTO `siswa` (`id_siswa`, `id_wali_murid`, `id_agama`, `nis`, `nama_siswa`, `tempat_lahir_siswa`, `tanggal_lahir_siswa`, `jenis_kelamin_siswa`, `alamat_rumah_siswa`, `alamat_domisili_siswa`, `no_hp_siswa`, `foto_siswa`) VALUES
-(2, 1, 1, '1123463434534', 'Vlania Putri Deviantara', 'Ponorogo', '2002-05-19', 'P', '$trans->commit();', '$trans->commit();', '+6285604845437', ''),
+(2, 1, 1, '1123463434534', 'Vlania Putri Deviantara', 'Ponorogo', '2002-05-19', 'P', '$trans->commit();', '$trans->commit();', '+6285604845437', 'Siswa_2_1592456716.png'),
 (6, 1, 1, '1123463434534', 'Vlania Putri Deviantara II', 'Ponorogo', '2002-05-19', 'L', '-', '-', '+6285604845437', '-');
 
 -- --------------------------------------------------------
