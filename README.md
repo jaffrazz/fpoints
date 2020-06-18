@@ -1,7 +1,7 @@
 # Note
 
 * file ```backend/main-local.php```
-```
+```php
 <?php
 
 $config = [
