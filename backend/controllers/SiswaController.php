@@ -116,6 +116,9 @@ class SiswaController extends Controller
 
             try {
                 $suffix = 'Siswa_' . $model->id_siswa;
+                // handling error 
+                // save with saveAs
+                $model->save();
 
                 $check = File::Upload($model, 'photo', 'foto_siswa', $suffix);
 
@@ -129,7 +132,6 @@ class SiswaController extends Controller
 
                 $modelOnKelas->loadAll(Yii::$app->request->post());
                 $modelOnKelas->id_siswa = $model->id_siswa;
-                
                 $modelOnKelas->save();
                 
                 $trans->commit();
@@ -180,7 +182,7 @@ class SiswaController extends Controller
 
                 $modelOnKelas->loadAll(Yii::$app->request->post());
                 $modelOnKelas->id_siswa = $model->id_siswa;
-                
+                $model->save();
                 $modelOnKelas->save();
 
                 $trans->commit();
