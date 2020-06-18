@@ -46,13 +46,13 @@ return $config;
     - [ ] Pelanggaran Filter
     - [ ] Prestasi Filter
     - [ ] Absensi
-- [ ] Upload image at Siswa, Pegawai, and Wali Murid
+- [x] Upload image at Siswa, and Pegawai
 - [x] Advanced Search
     - [x] Date Search Error 
     - [x] Kelas [ kelas ] search
 - [ ] Filters
     - [x] Aturan [ point - input number ]
-    - [ ] Absensi [ Tanggal Efektif ]
+    - [x] Absensi [ Tanggal Efektif ]
     - [ ] Pelanggaran [ Add kelas - for depend dropdown, Point - Number ]
     - [ ] Prestasi [ Add Kelas - for depend dropdown]
     - [ ] -
