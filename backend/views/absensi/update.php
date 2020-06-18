@@ -4,8 +4,8 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Absensi */
-$title = $model->tanggalEfektif->tanggal_efektif . ": " . $model->kelas->namaKelas->nama_kelas;
-$title = explode(' ',$title);
+$title = $model->tanggal_efektif . ": " . $model->kelas->namaKelas->nama_kelas;
+$title = explode(' ', $title);
 
 if (count($title) > 4) {
     $title = implode(' ', array_slice($title, 0, 3)) . "...";

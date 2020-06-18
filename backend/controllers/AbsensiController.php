@@ -81,8 +81,6 @@ class AbsensiController extends Controller
         $model = new Absensi();
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            Yii::$app->session->setFlash('success', 'Absensi berhasil ditambahkan.');
-
             return $this->redirect(['view', 'id' => $model->id_absensi]);
         } else {
             return $this->render('create', [
@@ -102,8 +100,6 @@ class AbsensiController extends Controller
         $model = $this->findModel($id);
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
-            Yii::$app->session->setFlash('success', 'Absensi berhasil diubah.');
-
             return $this->redirect(['view', 'id' => $model->id_absensi]);
         } else {
             return $this->render('update', [
@@ -120,15 +116,7 @@ class AbsensiController extends Controller
      */
     public function actionDelete($id)
     {
-        $trans = Yii::$app->db->beginTransaction();
-        try {
-            $this->findModel($id)->deleteWithRelated();
-            $trans->commit();
-            Yii::$app->session->setFlash('success','Absensi berhasil dihapus.');
-        }catch(\Exception $e){
-            $trans->rollBack();
-            Yii::$app->session->setFlash('error', 'Error, cant perform this action correctly.');
-        }
+        $this->findModel($id)->deleteWithRelated();
 
         return $this->redirect(['index']);
     }

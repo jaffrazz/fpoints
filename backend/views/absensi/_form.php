@@ -34,18 +34,15 @@ use yii\widgets\ActiveForm;
         ],
     ]); ?>
 
-    <?= $form->field($model, 'id_tanggal_efektif')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(
-            \common\models\TanggalEfektif::find()
-                ->orderBy('id_tanggal_efektif')
-                ->Where('month(tanggal_efektif) = month(now())')
-                ->asArray()
-                ->all(),
-            'id_tanggal_efektif', 
-            'tanggal_efektif'),
-        'options' => ['placeholder' => 'Pilih Tanggal efektif'],
-        'pluginOptions' => [
-            'allowClear' => true
+    <?= $form->field($model, 'tanggal_efektif')->widget(\kartik\datecontrol\DateControl::classname(), [
+        'type' => \kartik\datecontrol\DateControl::FORMAT_DATE,
+        'saveFormat' => 'php:Y-m-d',
+        'ajaxConversion' => true,
+        'options' => [
+            'pluginOptions' => [
+                'placeholder' => 'Choose Tanggal Efektif',
+                'autoclose' => true
+            ]
         ],
     ]); ?>
 
@@ -63,9 +60,9 @@ use yii\widgets\ActiveForm;
         'position' => kartik\tabs\TabsX::POS_ABOVE,
         'encodeLabels' => false,
         'pluginOptions' => [
-            'bordered' => false,
-            'sideways' => false,
-            'enableCache' => true,
+            'bordered' => true,
+            'sideways' => true,
+            'enableCache' => false,
         ],
     ]);
     ?>

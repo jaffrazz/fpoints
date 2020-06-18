@@ -11,8 +11,8 @@ use yii\helpers\Html;
 $this->title = 'Absensi';
 $this->params['breadcrumbs'][] = $this->title;
 $search = "$('.search-button').click(function(){
-	$('.search-form').toggle(1000);
-	return false;
+    $('.search-form').toggle(1000);
+    return false;
 });";
 $this->registerJs($search);
 ?>
@@ -22,9 +22,16 @@ $this->registerJs($search);
         <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-header">
+
+                    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+
                     <p>
                         <?=Html::a('Create Absensi', ['create'], ['class' => 'btn btn-success'])?>
+                        <?=Html::a('Advance Search', '#', ['class' => 'btn btn-info search-button'])?>
                     </p>
+                    <div class="search-form" style="display:none">
+                        <?=$this->render('_search', ['model' => $searchModel]);?>
+                    </div>
                 </div>
                 <div class="box-body">
                     <?php
@@ -36,6 +43,7 @@ $this->registerJs($search);
                             'label' => 'Kelas',
                             'value' => function ($model) {
                                 return $model->kelas->namaKelas->nama_kelas;
+
                             },
                             'filterType' => GridView::FILTER_SELECT2,
                             'filter' => \yii\helpers\ArrayHelper::map(\common\models\Kelas::find()->joinWith('namaKelas')->asArray()->all(), 'id_kelas', 'namaKelas.nama_kelas'),
@@ -45,17 +53,8 @@ $this->registerJs($search);
                             'filterInputOptions' => ['placeholder' => 'Kelas', 'id' => 'grid-absensi-search-id_kelas'],
                         ],
                         [
-                            'attribute' => 'id_tanggal_efektif',
-                            'label' => 'Tanggal Efektif',
-                            'value' => function ($model) {
-                                return $model->tanggalEfektif->tanggal_efektif;
-                            },
-                            'filterType' => GridView::FILTER_SELECT2,
-                            'filter' => \yii\helpers\ArrayHelper::map(\common\models\TanggalEfektif::find()->asArray()->all(), 'id_tanggal_efektif', 'tanggal_efektif'),
-                            'filterWidgetOptions' => [
-                                'pluginOptions' => ['allowClear' => true],
-                            ],
-                            'filterInputOptions' => ['placeholder' => 'Tanggal efektif', 'id' => 'grid-absensi-search-id_tanggal_efektif'],
+                            'attribute' => 'tanggal_efektif',
+                            'filter' => false
                         ],
                         [
                             'class' => 'yii\grid\ActionColumn',

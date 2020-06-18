@@ -18,7 +18,8 @@ use common\models\Absensi;
     public function rules()
     {
         return [
-            [['id_absensi', 'id_kelas', 'id_tanggal_efektif'], 'integer'],
+            [['id_absensi', 'id_kelas'], 'integer'],
+            [['tanggal_efektif'], 'safe'],
         ];
     }
 
@@ -57,7 +58,7 @@ use common\models\Absensi;
         $query->andFilterWhere([
             'id_absensi' => $this->id_absensi,
             'id_kelas' => $this->id_kelas,
-            'id_tanggal_efektif' => $this->id_tanggal_efektif,
+            'tanggal_efektif' => $this->tanggal_efektif,
         ]);
 
         return $dataProvider;

@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\Absensi */
 
-$title = $model->tanggalEfektif->tanggal_efektif . ": ". $model->kelas->namaKelas->nama_kelas;
+$title = $model->tanggal_efektif . ": " . $model->kelas->namaKelas->nama_kelas;
 $title = explode(' ', $title);
 
 if (count($title) > 4) {
@@ -38,7 +38,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     ?>
                 </div>
                 <div class="box-body">
-                    <!-- <div class="row"> -->
                     <?php
                     $gridColumn = [
                         ['attribute' => 'id_absensi', 'visible' => false],
@@ -49,21 +48,13 @@ $this->params['breadcrumbs'][] = $this->title;
                                 return $model->kelas->namaKelas->nama_kelas;
                             }
                         ],
-                        [
-                            'attribute' => 'tanggalEfektif.tanggal_efektif',
-                            'label' => 'Tanggal Efektif',
-                            'value' => function($model){
-                                return $model->tanggalEfektif->tanggal_efektif;
-                            }
-                        ],
+                        ['attribute' => 'tanggal_efektif', 'label' => 'Tanggal'],
                     ];
                     echo DetailView::widget([
                         'model' => $model,
                         'attributes' => $gridColumn,
                     ]);
                     ?>
-                    <!-- </div> -->
-
                     <div class="pt-3">
                         <?php
                         if ($providerDetailAbsensi->totalCount) {

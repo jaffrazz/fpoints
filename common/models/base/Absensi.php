@@ -9,10 +9,9 @@ use Yii;
  *
  * @property integer $id_absensi
  * @property integer $id_kelas
- * @property integer $id_tanggal_efektif
+ * @property string $tanggal_efektif
  *
  * @property \common\models\Kelas $kelas
- * @property \common\models\TanggalEfektif $tanggalEfektif
  * @property \common\models\DetailAbsensi[] $detailAbsensis
  */
 class Absensi extends \yii\db\ActiveRecord
@@ -28,7 +27,6 @@ class Absensi extends \yii\db\ActiveRecord
     {
         return [
             'kelas',
-            'tanggalEfektif',
             'detailAbsensis'
         ];
     }
@@ -39,14 +37,9 @@ class Absensi extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_kelas', 'id_tanggal_efektif'], 'required'],
-            [['id_kelas', 'id_tanggal_efektif'], 'integer'],
-            [
-                'id_kelas', 
-                'unique', 
-                'targetAttribute' => ['id_kelas', 'id_tanggal_efektif'],
-                'message' => 'Kelas ini telah diabsen pada tanggal tersebut.'
-            ],
+            [['id_kelas', 'tanggal_efektif'], 'required'],
+            [['id_kelas'], 'integer'],
+            [['tanggal_efektif'], 'safe'],
         ];
     }
 
@@ -66,7 +59,7 @@ class Absensi extends \yii\db\ActiveRecord
         return [
             'id_absensi' => 'Id Absensi',
             'id_kelas' => 'Kelas',
-            'id_tanggal_efektif' => 'Tanggal Efektif',
+            'tanggal_efektif' => 'Tanggal Efektif',
         ];
     }
     
@@ -76,14 +69,6 @@ class Absensi extends \yii\db\ActiveRecord
     public function getKelas()
     {
         return $this->hasOne(\common\models\Kelas::className(), ['id_kelas' => 'id_kelas']);
-    }
-        
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getTanggalEfektif()
-    {
-        return $this->hasOne(\common\models\TanggalEfektif::className(), ['id_tanggal_efektif' => 'id_tanggal_efektif']);
     }
         
     /**

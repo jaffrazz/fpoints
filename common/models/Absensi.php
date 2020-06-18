@@ -17,8 +17,15 @@ class Absensi extends BaseAbsensi
     {
         return array_replace_recursive(parent::rules(),
 	    [
-            [['id_kelas', 'id_tanggal_efektif'], 'required'],
-            [['id_kelas', 'id_tanggal_efektif'], 'integer']
+            [['id_kelas', 'tanggal_efektif'], 'required'],
+            [['id_kelas'], 'integer'],
+            [['tanggal_efektif'], 'safe'],
+            [
+                'id_kelas', 
+                'unique', 
+                'targetAttribute' => ['id_kelas', 'tanggal_efektif'],
+                'message' => 'Kelas ini telah diabsen pada tanggal tersebut.'
+            ],
         ]);
     }
 	
