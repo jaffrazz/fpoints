@@ -15,6 +15,14 @@ use yii\widgets\ActiveForm;
         'isNewRecord' => ($model->isNewRecord) ? 1 : 0
     ]
 ]);
+
+$grade = [
+    'X' => 'X',
+    'XI' => 'XI',
+    'XII' => 'XII',
+    'XIII' => 'XIII',
+];
+
 ?>
 
 <div class="kelas-form">
@@ -24,6 +32,10 @@ use yii\widgets\ActiveForm;
     <?= $form->errorSummary($model); ?>
 
     <?= $form->field($model, 'id_kelas', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+
+    <?= $form->field($model, 'grade')->DropdownList($grade, ['prompt' => 'Pilih Grade']) ?>
+
+    <?= $form->field($model, 'kelas')->textInput(['maxlength' => true, 'placeholder' => 'Kelas']) ?>
 
     <?= $form->field($model, 'id_jurusan')->widget(\kartik\widgets\Select2::classname(), [
         'data' => \yii\helpers\ArrayHelper::map(\common\models\Jurusan::find()->orderBy('id_jurusan')->asArray()->all(), 'id_jurusan', 'jurusan'),
@@ -53,10 +65,6 @@ use yii\widgets\ActiveForm;
             'allowClear' => true
         ],
     ]); ?>
-
-    <?= $form->field($model, 'kelas')->textInput(['maxlength' => true, 'placeholder' => 'Kelas']) ?>
-
-    <?= $form->field($model, 'grade')->textInput(['maxlength' => true, 'placeholder' => 'Grade']) ?>
 
     <?= $form->field($model, 'id_tahun_ajaran')->widget(\kartik\widgets\Select2::classname(), [
         'data' => \yii\helpers\ArrayHelper::map(\common\models\TahunAjaran::find()->orderBy('id_tahun_ajaran')->asArray()->all(), 'id_tahun_ajaran', 'tahun_ajaran'),
