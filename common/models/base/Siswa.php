@@ -3,7 +3,6 @@
 namespace common\models\base;
 
 use Yii;
-use borales\extensions\phoneInput\PhoneInputValidator;
 
 
 /**
@@ -73,7 +72,6 @@ class Siswa extends \yii\db\ActiveRecord
             [['tempat_lahir_siswa'], 'string', 'max' => 40],
             [['no_hp_siswa'], 'string', 'max' => 15],
             [['foto_siswa'], 'string', 'max' => 255],
-            [['no_hp_siswa'], PhoneInputValidator::className()],
         ];
     }
 

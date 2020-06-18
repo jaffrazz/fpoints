@@ -3,56 +3,18 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use borales\extensions\phoneInput\PhoneInput;
+use kartik\widgets\FileInput;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Siswa */
 /* @var $form yii\widgets\ActiveForm */
 
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
-    'viewParams' => [
-        'class' => 'Absensi', 
-        'relID' => 'absensi', 
-        'value' => \yii\helpers\Json::encode($model->absensis),
-        'isNewRecord' => ($model->isNewRecord) ? 1 : 0
-    ]
-]);
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
-    'viewParams' => [
-        'class' => 'AkumulasiPoint', 
-        'relID' => 'akumulasi-point', 
-        'value' => \yii\helpers\Json::encode($model->akumulasiPoints),
-        'isNewRecord' => ($model->isNewRecord) ? 1 : 0
-    ]
-]);
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
-    'viewParams' => [
-        'class' => 'Pelanggaran', 
-        'relID' => 'pelanggaran', 
-        'value' => \yii\helpers\Json::encode($model->pelanggarans),
-        'isNewRecord' => ($model->isNewRecord) ? 1 : 0
-    ]
-]);
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
-    'viewParams' => [
-        'class' => 'Prestasi', 
-        'relID' => 'prestasi', 
-        'value' => \yii\helpers\Json::encode($model->prestasis),
-        'isNewRecord' => ($model->isNewRecord) ? 1 : 0
-    ]
-]);
-\mootensai\components\JsBlock::widget(['viewFile' => '_script', 'pos'=> \yii\web\View::POS_END, 
-    'viewParams' => [
-        'class' => 'Sp', 
-        'relID' => 'sp', 
-        'value' => \yii\helpers\Json::encode($model->sps),
-        'isNewRecord' => ($model->isNewRecord) ? 1 : 0
-    ]
-]);
 ?>
-
 <div class="siswa-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(
+        ['options' => ['enctype' => 'multipart/form-data']]
+    ); ?>
 
     <?= $form->errorSummary($model); ?>
 
@@ -115,7 +77,9 @@ use borales\extensions\phoneInput\PhoneInput;
         ],
     ]); ?>
 
-    <?= $form->field($model, 'foto_siswa')->textInput(['maxlength' => true, 'placeholder' => 'Foto']) ?>
+    <?= $form->field($model, 'photo')->widget(FileInput::classname(), [
+            'options' => ['accept' => 'image/*'],
+        ]); ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

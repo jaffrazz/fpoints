@@ -53,6 +53,12 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                         'alamat_rumah_siswa:ntext',
                         'alamat_domisili_siswa:ntext',
+                        [
+                            'attribute' => 'kelas',
+                            'value' => function($model){
+                                return $model->onKelasSiswa->kelas->namaKelas->nama_kelas;
+                            }
+                        ],
                         'no_hp_siswa',
                         [
                             'attribute' => 'waliMurid.id_wali_murid',
@@ -119,7 +125,7 @@ $this->params['breadcrumbs'][] = $this->title;
                                 'attribute' => 'absensi.tanggal',
                                 'label' => 'Tanggal',
                                 'value' => function($model){
-                                    return $model->absensi->tanggalEfektif->tanggal_efektif;
+                                    return $model->absensi->tanggal_efektif;
                                 }
                             ],
                             [

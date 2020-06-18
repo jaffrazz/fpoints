@@ -6,6 +6,7 @@ use Yii;
 use common\models\Siswa;
 use common\models\SiswaSearch;
 use common\models\OnKelasSiswa;
+use backend\helpers\File;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -102,11 +103,23 @@ class SiswaController extends Controller
             $trans = Yii::$app->db->beginTransaction();
 
             try {
-                $model->save();
+                $suffix = 'Siswa_' . $model->id_siswa;
+
+                $check = File::Upload($model, 'photo', 'foto_siswa', $suffix);
+
+                if (isset($check['failed'])) {
+                    $errors = implode('<br>', $check['failed']);
+
+                    $trans->rollBack();
+                    Yii::$app->session->setFlash('error', $errors);
+                    return $this->redirect(['index']);
+                }
+
                 $modelOnKelas->loadAll(Yii::$app->request->post());
                 $modelOnKelas->id_siswa = $model->id_siswa;
-
+                
                 $modelOnKelas->save();
+                
                 $trans->commit();
                 Yii::$app->session->setFlash('success', "Siswa berhasil ditambahkan.");
 
@@ -141,11 +154,23 @@ class SiswaController extends Controller
             $trans = Yii::$app->db->beginTransaction();
 
             try {
-                $model->save();
+                $suffix = 'Siswa_' . $model->id_siswa;
+
+                $check = File::Upload($model, 'photo', 'foto_siswa', $suffix);
+
+                if (isset($check['failed'])) {
+                    $errors = implode('<br>', $check['failed']);
+
+                    $trans->rollBack();
+                    Yii::$app->session->setFlash('error', $errors);
+                    return $this->redirect(['index']);
+                }
+
                 $modelOnKelas->loadAll(Yii::$app->request->post());
                 $modelOnKelas->id_siswa = $model->id_siswa;
-
+                
                 $modelOnKelas->save();
+
                 $trans->commit();
                 Yii::$app->session->setFlash('success', "Siswa berhasil diubah.");
 
@@ -153,7 +178,7 @@ class SiswaController extends Controller
             } catch (\Exception $e) {
                 $trans->rollBack();
 
-                Yii::$app->session->setFlash('error', "Errorr, cant perform this action correctly.");
+                Yii::$app->session->setFlash('error', "Error, cant perform this action correctly : $e");
                 return $this->redirect(['index']);
             }
         } else {

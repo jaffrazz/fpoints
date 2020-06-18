@@ -12,6 +12,7 @@ use borales\extensions\phoneInput\PhoneInputValidator;
  */
 class Siswa extends BaseSiswa
 {
+    public $photo;
     /**
      * @inheritdoc
      */
@@ -29,6 +30,7 @@ class Siswa extends BaseSiswa
             [['no_hp_siswa'], 'string', 'max' => 15],
             [['foto_siswa'], 'string', 'max' => 255],
             [['no_hp_siswa'], PhoneInputValidator::className()],
+            [['photo'],'file', 'skipOnEmpty' => true, 'extensions'=>'jpg,jpeg,gif,png,jpeg', 'maxSize' => 1024*1024*3],
         ]);
     }
 	
