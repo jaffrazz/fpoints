@@ -46,14 +46,9 @@ return $config;
     - [ ] Prestasi Filter
     - [ ] Absensi
 - [ ] Upload image at Siswa, Pegawai, and Wali Murid
-- [ ] Detail Point [ Update Otomatis ]
-- [ ] Akumulasi Point [ Action Reset Per semester ]
-- [ ] Surat Peringatan
 - [x] Advanced Search
     - [x] Date Search Error 
     - [x] Kelas [ kelas ] search
-- [ ] Jurusan View
-- [ ] Delete Tanggal Efektif [ maybe ]
 - [ ] Filters
     - [ ] Absensi [ Tanggal Efektif ]
     - [ ] Pelanggaran [ Add kelas - for depend dropdown, Point - Number ]
@@ -63,15 +58,21 @@ return $config;
 - [ ] Roles
 - [ ] APIs Android
 - [ ] View Show Detail
+    - [x] Jurusan
     - [x] Aturan, Penghargaan [ Add total history, and history in month ]
     - [ ] Agama jumlah siswa [ set to only active student ]
 - [ ] Pair Unique at Prestasi, Pelanggaran, Absensi , Etc
+    - [ ] Kelas
+- [ ] Input Select2
+    - [ ] Wali Kelas [ pegawai - only pegawai havent active class ]
 - [x] Model label
 - [ ] Structure Updated
     - [ ] Add Active Status at Kelas
+        - [ ] Pegawai View
+    - [ ] Delete Tanggal Efektif [ maybe ]
 - [ ] CRUD 
-    - [ ] Akumulasi Point
-    - [ ] Detail Point (R)
+    - [ ] Akumulasi Point [ Action Reset detail point Per semester ]
+    - [ ] Detail Point (R) [ Update Otomatis ]
     - [x] Sanksi
     - [ ] SP
     - [ ] User
