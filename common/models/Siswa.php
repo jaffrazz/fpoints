@@ -29,6 +29,7 @@ class Siswa extends BaseSiswa
             [['tempat_lahir_siswa'], 'string', 'max' => 40],
             [['no_hp_siswa'], 'string', 'max' => 15],
             [['foto_siswa'], 'string', 'max' => 255],
+            [['nis'], 'unique'],
             [['no_hp_siswa'], PhoneInputValidator::className()],
             [['photo'],'file', 'skipOnEmpty' => true, 'extensions'=>'jpg,jpeg,gif,png,jpeg', 'maxSize' => 1024*1024*3],
         ]);
