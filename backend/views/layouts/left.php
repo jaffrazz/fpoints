@@ -30,19 +30,39 @@
             [
                 'options' => ['class' => 'sidebar-menu tree', 'data-widget'=> 'tree'],
                 'items' => [
+
+                    [
+                        'label' => 'Kepegawaian',
+                        'icon' => 'book',
+                        'url' => '#',
+                        'items' => [
+                            ['label' => 'Jabatan', 'icon' => 'file-code-o', 'url' => ['/jabatan']],
+                            ['label' => 'Pegawai', 'icon' => 'file-code-o', 'url' => ['/pegawai']],
+                            // ['label' => 'User', 'icon' => 'file-code-o', 'url' => ['/user']],
+                        ]
+                    ],
+                    [
+                        'label' => 'Kejadian',
+                        'icon' => 'book',
+                        'url' => '#',
+                        'items' => [
+                            ['label' => 'Aturan', 'icon' => 'file-code-o', 'url' => ['/aturan']],
+                            ['label' => 'Pelanggaran', 'icon' => 'file-code-o', 'url' => ['/pelanggaran']],
+                            ['label' => 'Penghargaan', 'icon' => 'file-code-o', 'url' => ['/penghargaan']],
+                            ['label' => 'Prestasi', 'icon' => 'file-code-o', 'url' => ['/prestasi']],
+                        ]
+                    ],
                     [
                         'label' => 'Master Data', 
                         'icon' => 'book',
                         'url' => '#',
                         'items' => [
                             ['label' => 'Agama', 'icon' => 'file-code-o', 'url' => ['/agama']],
-                            ['label' => 'Jabatan', 'icon' => 'file-code-o', 'url' => ['/jabatan']],
                             ['label' => 'Jurusan', 'icon' => 'file-code-o', 'url' => ['/jurusan']],
                             ['label' => 'Hari Efektif', 'icon' => 'file-code-o', 'url' => ['/hari-efektif']],
                             ['label' => 'Hari Tidak Efektif', 'icon' => 'file-code-o', 'url' => ['/hari-tidak-efektif']],
                             ['label' => 'Kategori Aturan', 'icon' => 'file-code-o', 'url' => ['/kategori-aturan']],
                             ['label' => 'Kategori Penghargaan', 'icon' => 'file-code-o', 'url' => ['/kategori-penghargaan']],
-                            ['label' => 'Pegawai', 'icon' => 'file-code-o', 'url' => ['/pegawai']],
                             ['label' => 'Pekerjaan', 'icon' => 'file-code-o', 'url' => ['/pekerjaan']],
                             ['label' => 'Sanksi', 'icon' => 'file-code-o', 'url' => ['/sanksi']],
                             ['label' => 'Semester', 'icon' => 'file-code-o', 'url' => ['/semester']],
@@ -56,18 +76,14 @@
                         'icon' => 'book',
                         'url' => '#',
                         'items' => [
-                            ['label' => 'Wali Kelas', 'icon' => 'file-code-o', 'url' => ['/wali-kelas']],
-                            ['label' => 'Wali Murid', 'icon' => 'file-code-o', 'url' => ['/wali-murid']],
                             ['label' => 'Kelas', 'icon' => 'file-code-o', 'url' => ['/kelas']],
                             ['label' => 'Siswa', 'icon' => 'file-code-o', 'url' => ['/siswa']],
+                            ['label' => 'Wali Kelas', 'icon' => 'file-code-o', 'url' => ['/wali-kelas']],
+                            ['label' => 'Wali Murid', 'icon' => 'file-code-o', 'url' => ['/wali-murid']],
                         ]
                     ],
                     ['label' => 'Absensi', 'icon' => 'file-code-o', 'url' => ['/absensi']],
                     ['label' => 'Akumulasi Point', 'icon' => 'file-code-o', 'url' => ['/akumulasi-point']],
-                    ['label' => 'Aturan', 'icon' => 'file-code-o', 'url' => ['/aturan']],
-                    ['label' => 'Penghargaan', 'icon' => 'file-code-o', 'url' => ['/penghargaan']],
-                    ['label' => 'Prestasi', 'icon' => 'file-code-o', 'url' => ['/prestasi']],
-                    ['label' => 'Pelanggaran', 'icon' => 'file-code-o', 'url' => ['/pelanggaran']],
                     ['label' => 'Tanggal Efektif', 'icon' => 'file-code-o', 'url' => ['/tanggal-efektif']],
 
                     ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
