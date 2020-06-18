@@ -18,8 +18,8 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'id_siswa', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
     <?= $form->field($model, 'id_wali_murid')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\common\models\WaliMurid::find()->orderBy('id_wali_murid')->asArray()->all(), 'id_wali_murid', 'id_wali_murid'),
-        'options' => ['placeholder' => 'Choose Wali murid'],
+        'data' => \yii\helpers\ArrayHelper::map(\common\models\WaliMurid::find()->orderBy('id_wali_murid')->asArray()->all(), 'id_wali_murid', 'nama_wali_murid'),
+        'options' => ['placeholder' => 'Pilih Wali murid'],
         'pluginOptions' => [
             'allowClear' => true
         ],
@@ -27,7 +27,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'id_agama')->widget(\kartik\widgets\Select2::classname(), [
         'data' => \yii\helpers\ArrayHelper::map(\common\models\Agama::find()->orderBy('id_agama')->asArray()->all(), 'id_agama', 'agama'),
-        'options' => ['placeholder' => 'Choose Agama'],
+        'options' => ['placeholder' => 'Pilih Agama'],
         'pluginOptions' => [
             'allowClear' => true
         ],
@@ -45,7 +45,7 @@ use yii\widgets\ActiveForm;
         'ajaxConversion' => true,
         'options' => [
             'pluginOptions' => [
-                'placeholder' => 'Choose Tanggal Lahir Siswa',
+                'placeholder' => 'Pilih Tanggal Lahir Siswa',
                 'autoclose' => true
             ]
         ],

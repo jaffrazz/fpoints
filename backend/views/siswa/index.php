@@ -70,6 +70,7 @@ $this->registerJs($search);
                                 'filter' => \yii\helpers\ArrayHelper::map(
                                     \common\models\Kelas::find()
                                         ->joinWith('namaKelas')
+                                        ->where(['status' => 1])
                                         ->asArray()
                                         ->all(), 
                                     'id_kelas', 
