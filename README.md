@@ -41,6 +41,7 @@ return $config;
 
 ## TODOs List
 
+- [x] Siswa  [ Create ] Error
 - [ ] Hide input date autocomplete
 - [ ] Generate NIP automatic
 - [ ] Dependent dropdown.
@@ -59,18 +60,18 @@ return $config;
     - [ ] -
 - [ ] Roles
 - [ ] APIs Android
-- [ ] View Show Detail
+- [x] View Show Detail
     - [x] Jurusan
     - [x] Aturan, Penghargaan [ Add total history, and history in month ]
     - [x] Agama jumlah siswa [ set to only active student ]
-- [ ] Pair Unique at Prestasi, Pelanggaran, Absensi , Etc
+- [x] Pair Unique at Prestasi, Pelanggaran, Absensi , Etc
     - [x] Tanggal Tidak Efektif
     - [x] Kelas
     - [x] Unique siswa NIS
-- [ ] Input Select2
+- [x] Input Select2
     - [x] Wali Kelas [ pegawai - only pegawai havent active class ]
 - [x] Model label
-- [ ] Structure Updated
+- [x] Structure Updated
     - [x] Add ( start_date, end_date ) to hari tidak efektif
     - [x] Delete Tanggal Efektif
     - [x] Add Active Status at Kelas
