@@ -30,7 +30,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'id_prestasi', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
     <?= $form->field($model, 'id_siswa')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\common\models\Siswa::find()->orderBy('id_siswa')->asArray()->all(), 'id_siswa', 'id_siswa'),
+        'data' => \yii\helpers\ArrayHelper::map(\common\models\Siswa::find()->orderBy('id_siswa')->asArray()->all(), 'id_siswa', 'nama_siswa'),
         'options' => ['placeholder' => 'Pilih Siswa'],
         'pluginOptions' => [
             'allowClear' => true
@@ -38,7 +38,7 @@ use yii\widgets\ActiveForm;
     ]); ?>
 
     <?= $form->field($model, 'id_penghargaan')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\common\models\Penghargaan::find()->orderBy('id_penghargaan')->asArray()->all(), 'id_penghargaan', 'id_penghargaan'),
+        'data' => \yii\helpers\ArrayHelper::map(\common\models\Penghargaan::find()->joinWith(['kategoriPenghargaan'])->orderBy('id_penghargaan')->asArray()->all(), 'id_penghargaan', 'uraian_penghargaan', 'kategoriPenghargaan.kategori_penghargaan'),
         'options' => ['placeholder' => 'Pilih Penghargaan'],
         'pluginOptions' => [
             'allowClear' => true
@@ -51,5 +51,4 @@ use yii\widgets\ActiveForm;
     </div>
 
     <?php ActiveForm::end(); ?>
-
 </div>
