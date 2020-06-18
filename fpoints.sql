@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 17, 2020 at 03:18 PM
+-- Generation Time: Jun 18, 2020 at 07:07 AM
 -- Server version: 10.1.44-MariaDB-0ubuntu0.18.04.1
 -- PHP Version: 7.2.26-1+ubuntu18.04.1+deb.sury.org+1
 
@@ -58,7 +58,7 @@ CREATE TABLE `agama` (
 --
 
 INSERT INTO `agama` (`id_agama`, `agama`) VALUES
-(1, 'ISLAM1'),
+(1, 'ISLAM'),
 (2, 'KRISTEN'),
 (3, 'HINDU'),
 (4, 'BUDDHA'),
@@ -72,11 +72,7 @@ INSERT INTO `agama` (`id_agama`, `agama`) VALUES
 --
 
 CREATE TABLE `akumulasi_point` (
-  `id_siswa` bigint(20) NOT NULL,
-  `id_sanksi` int(11) NOT NULL,
-  `total_point_pelanggaran` int(11) NOT NULL,
-  `total_point_prestasi` int(11) NOT NULL,
-  `tanggal` date NOT NULL,
+  `id_akumulasi_point` int(11) NOT NULL,
   `id_tahun_ajaran` int(11) NOT NULL,
   `id_semester` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -128,6 +124,34 @@ INSERT INTO `detail_absensi` (`id_detail_absensi`, `id_absensi`, `id_siswa`, `id
 (2, 1, 6, 2, ''),
 (6, 2, 2, 1, '-'),
 (7, 2, 6, 2, '-');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `detail_akumulasi_point`
+--
+
+CREATE TABLE `detail_akumulasi_point` (
+  `id_detail_akumulasi_point` int(11) NOT NULL,
+  `id_siswa` bigint(20) NOT NULL,
+  `id_akumulasi_point` int(11) NOT NULL,
+  `point_pelanggaran` int(11) NOT NULL,
+  `point_penghargaan` int(11) NOT NULL,
+  `id_sanksi` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `detail_point`
+--
+
+CREATE TABLE `detail_point` (
+  `id_siswa` bigint(20) NOT NULL,
+  `point_pelanggaran` int(11) NOT NULL,
+  `point_penghargaan` int(11) NOT NULL,
+  `last_update` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -391,8 +415,8 @@ CREATE TABLE `pelanggaran` (
 --
 
 INSERT INTO `pelanggaran` (`id_pelanggaran`, `id_siswa`, `id_aturan`, `tanggal`) VALUES
-(1, 2, 4, '2020-06-01'),
-(2, 2, 4, '2020-06-01');
+(1, 2, 4, '2020-05-31'),
+(2, 2, 4, '2020-06-02');
 
 -- --------------------------------------------------------
 
@@ -694,8 +718,7 @@ ALTER TABLE `agama`
 -- Indexes for table `akumulasi_point`
 --
 ALTER TABLE `akumulasi_point`
-  ADD PRIMARY KEY (`id_siswa`,`id_sanksi`),
-  ADD KEY `FK_AKUMULASI_POINT2` (`id_sanksi`),
+  ADD PRIMARY KEY (`id_akumulasi_point`),
   ADD KEY `FK_AKUMULASI_POINT_3` (`id_tahun_ajaran`),
   ADD KEY `FK_SEMESTER_1` (`id_semester`);
 
@@ -715,6 +738,21 @@ ALTER TABLE `detail_absensi`
   ADD KEY `FK_DETAIL_ABSENSI` (`id_absensi`),
   ADD KEY `FK_DETAIL_ABSENSI3` (`id_status_absensi`),
   ADD KEY `FK_DETAIL_ABSENSI2` (`id_siswa`);
+
+--
+-- Indexes for table `detail_akumulasi_point`
+--
+ALTER TABLE `detail_akumulasi_point`
+  ADD PRIMARY KEY (`id_detail_akumulasi_point`),
+  ADD KEY `FK_DETAIL_AKUMULASI_POINT` (`id_akumulasi_point`),
+  ADD KEY `FK_DETAIL_AKUMULASI_POINT_2` (`id_sanksi`),
+  ADD KEY `FK_DETAIL_AKUMULASI_POINT_3` (`id_siswa`);
+
+--
+-- Indexes for table `detail_point`
+--
+ALTER TABLE `detail_point`
+  ADD PRIMARY KEY (`id_siswa`);
 
 --
 -- Indexes for table `hari_efektif`
@@ -914,6 +952,12 @@ ALTER TABLE `agama`
   MODIFY `id_agama` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
+-- AUTO_INCREMENT for table `akumulasi_point`
+--
+ALTER TABLE `akumulasi_point`
+  MODIFY `id_akumulasi_point` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `aturan`
 --
 ALTER TABLE `aturan`
@@ -924,6 +968,12 @@ ALTER TABLE `aturan`
 --
 ALTER TABLE `detail_absensi`
   MODIFY `id_detail_absensi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+
+--
+-- AUTO_INCREMENT for table `detail_akumulasi_point`
+--
+ALTER TABLE `detail_akumulasi_point`
+  MODIFY `id_detail_akumulasi_point` int(11) NOT NULL AUTO_INCREMENT;
 
 --
 -- AUTO_INCREMENT for table `hari_efektif`
@@ -1078,8 +1128,6 @@ ALTER TABLE `absensi`
 -- Constraints for table `akumulasi_point`
 --
 ALTER TABLE `akumulasi_point`
-  ADD CONSTRAINT `FK_AKUMULASI_POINT` FOREIGN KEY (`id_siswa`) REFERENCES `siswa` (`id_siswa`),
-  ADD CONSTRAINT `FK_AKUMULASI_POINT2` FOREIGN KEY (`id_sanksi`) REFERENCES `sanksi` (`id_sanksi`),
   ADD CONSTRAINT `FK_AKUMULASI_POINT_3` FOREIGN KEY (`id_tahun_ajaran`) REFERENCES `tahun_ajaran` (`id_tahun_ajaran`),
   ADD CONSTRAINT `FK_SEMESTER_1` FOREIGN KEY (`id_semester`) REFERENCES `semester` (`id_semester`);
 
@@ -1097,6 +1145,20 @@ ALTER TABLE `detail_absensi`
   ADD CONSTRAINT `FK_DETAIL_ABSENSI` FOREIGN KEY (`id_absensi`) REFERENCES `absensi` (`id_absensi`),
   ADD CONSTRAINT `FK_DETAIL_ABSENSI2` FOREIGN KEY (`id_siswa`) REFERENCES `siswa` (`id_siswa`),
   ADD CONSTRAINT `FK_DETAIL_ABSENSI3` FOREIGN KEY (`id_status_absensi`) REFERENCES `status_absensi` (`id_status_absensi`);
+
+--
+-- Constraints for table `detail_akumulasi_point`
+--
+ALTER TABLE `detail_akumulasi_point`
+  ADD CONSTRAINT `FK_DETAIL_AKUMULASI_POINT` FOREIGN KEY (`id_akumulasi_point`) REFERENCES `akumulasi_point` (`id_akumulasi_point`),
+  ADD CONSTRAINT `FK_DETAIL_AKUMULASI_POINT_2` FOREIGN KEY (`id_sanksi`) REFERENCES `sanksi` (`id_sanksi`),
+  ADD CONSTRAINT `FK_DETAIL_AKUMULASI_POINT_3` FOREIGN KEY (`id_siswa`) REFERENCES `siswa` (`id_siswa`);
+
+--
+-- Constraints for table `detail_point`
+--
+ALTER TABLE `detail_point`
+  ADD CONSTRAINT `FK_DETAIL_POINT` FOREIGN KEY (`id_siswa`) REFERENCES `siswa` (`id_siswa`);
 
 --
 -- Constraints for table `kelas`
