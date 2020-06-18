@@ -21,7 +21,7 @@ use kartik\widgets\FileInput;
 
     <?= $form->field($model, 'nama_pegawai')->textInput(['maxlength' => true, 'placeholder' => 'Nama Pegawai']) ?>
 
-    <?= $form->field($model, 'alamat_pegawai')->textarea(['rows' => 6]) ?>
+    <?= $form->field($model, 'alamat_pegawai')->textarea(['rows' => 3]) ?>
 
     <?= $form->field($model, 'jenis_kelamin_pegawai')->dropDownList([ 'L' => 'Laki-laki', 'P' => 'Perempuan', ], ['prompt' => 'Pilih jenis Kelamin']) ?>
 

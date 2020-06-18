@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 use kartik\grid\GridView;
+use yii\helpers\Url;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Pegawai */
@@ -29,6 +30,10 @@ $this->params['breadcrumbs'][] = $this->title;
                             ?>
                 </div>
                 <div class="box-body">
+                    <img src="<?= Url::to('@web/uploaded/profile/'. $model->foto_pegawai) ?>" 
+                        alt="Profile-<?= $model->id_pegawai ?>"
+                        class="img img-responsive img-thumbnail"
+                        style="max-width: 250px; margin: 20px auto; display: block;">
                     <?php 
                         $gridColumn = [
                             ['attribute' => 'id_pegawai', 'visible' => false],
@@ -49,8 +54,12 @@ $this->params['breadcrumbs'][] = $this->title;
                             ],
                             'no_hp_pegawai',
                             'status_kepegawaian',
-                            'jabatan_pegawai',
-                            'foto_pegawai',
+                            [
+                                'attribute' => 'jabatan_pegawai',
+                                'value' => function($model){
+                                    return $model->jabatan->jabatan;
+                                }
+                            ],
                         ];
                         echo DetailView::widget([
                             'model' => $model,
@@ -101,9 +110,15 @@ $this->params['breadcrumbs'][] = $this->title;
                                 ['attribute' => 'id_wali_kelas', 'visible' => false],
                                 ['attribute' => 'id_pegawai', 'visible' => false],
                                 [
-                                    'attribute' => 'wali_kelas',
+                                    'attribute' => 'kelas',
                                     'value' => function($model){
                                         return $model->kelas->namaKelas->nama_kelas;
+                                    }
+                                ],
+                                [
+                                    'attribute' => 'status',
+                                    'value' => function($model){
+                                        return ($model->kelas->status == 0) ? 'Non Active': 'Active';
                                     }
                                 ],
                                 [
