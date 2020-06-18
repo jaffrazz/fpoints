@@ -19,7 +19,8 @@ class HariTidakEfektif extends BaseHariTidakEfektif
 	    [
             [['tanggal_awal'], 'required'],
             [['tanggal_awal', 'tanggal_akhir'], 'safe'],
-            [['keterangan_tidak_efektif'], 'string']
+            [['keterangan_tidak_efektif'], 'string'],
+            ['tanggal_awal','unique'],
         ]);
     }
 	
