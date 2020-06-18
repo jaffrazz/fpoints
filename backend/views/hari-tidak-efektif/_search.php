@@ -15,7 +15,7 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <? /* echo $form->field($model, 'id_hari_tidak_efektif', ['template' => '{input}'])->textInput(['style' => 'display:none']); */?>
+    <?php /* echo $form->field($model, 'id_hari_tidak_efektif', ['template' => '{input}'])->textInput(['style' => 'display:none']); */?>
 
     <?= $form->field($model, 'tanggal_awal')->widget(\kartik\datecontrol\DateControl::classname(), [
         'type' => \kartik\datecontrol\DateControl::FORMAT_DATE,
