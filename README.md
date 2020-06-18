@@ -66,6 +66,7 @@ return $config;
 - [ ] Pair Unique at Prestasi, Pelanggaran, Absensi , Etc
     - [x] Tanggal Tidak Efektif
     - [x] Kelas
+    - [x] Unique siswa NIS
 - [ ] Input Select2
     - [x] Wali Kelas [ pegawai - only pegawai havent active class ]
 - [x] Model label
