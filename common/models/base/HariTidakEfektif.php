@@ -8,7 +8,8 @@ use Yii;
  * This is the base model class for table "hari_tidak_efektif".
  *
  * @property integer $id_hari_tidak_efektif
- * @property string $tanggal_tidak_efektif
+ * @property string $tanggal_awal
+ * @property string $tanggal_akhir
  * @property string $keterangan_tidak_efektif
  */
 class HariTidakEfektif extends \yii\db\ActiveRecord
@@ -32,7 +33,8 @@ class HariTidakEfektif extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['tanggal_tidak_efektif'], 'safe'],
+            [['tanggal_awal'], 'required'],
+            [['tanggal_awal', 'tanggal_akhir'], 'safe'],
             [['keterangan_tidak_efektif'], 'string']
         ];
     }
@@ -52,8 +54,9 @@ class HariTidakEfektif extends \yii\db\ActiveRecord
     {
         return [
             'id_hari_tidak_efektif' => 'Id Hari Tidak Efektif',
-            'tanggal_tidak_efektif' => 'Tanggal Tidak Efektif',
-            'keterangan_tidak_efektif' => 'Keterangan',
+            'tanggal_awal' => 'Tanggal Awal',
+            'tanggal_akhir' => 'Tanggal Akhir',
+            'keterangan_tidak_efektif' => 'Keterangan Tidak Efektif',
         ];
     }
 
