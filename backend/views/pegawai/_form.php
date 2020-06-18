@@ -4,12 +4,15 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use borales\extensions\phoneInput\PhoneInput;
 use kartik\select2\Select2;
+use kartik\widgets\FileInput;
 
 ?>
 
 <div class="pegawai-form">
 
-    <?php $form = ActiveForm::begin(); ?>
+    <?php $form = ActiveForm::begin(
+        ['options' => ['enctype' => 'multipart/form-data'] ]
+    ); ?>
 
     <?= $form->errorSummary($model); ?>
 
@@ -46,7 +49,9 @@ use kartik\select2\Select2;
             ],
         ]); ?>
 
-    <?= $form->field($model, 'foto_pegawai')->textInput(['maxlength' => true, 'placeholder' => 'Foto Pegawai']) ?>
+    <?= $form->field($model, 'photo')->widget(FileInput::classname(), [
+            'options' => ['accept' => 'image/*'],
+        ]); ?>
 
     <div class="form-group">
         <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>

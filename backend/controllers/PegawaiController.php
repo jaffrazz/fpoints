@@ -136,7 +136,7 @@ class PegawaiController extends Controller
 
         if ($model->loadAll(Yii::$app->request->post())) {
             $trans = Yii::$app->db->beginTransaction();
-            $suffix = 'Pegawai'. $model->id_pegawai;
+            $suffix = 'Pegawai_'. $model->id_pegawai;
 
             $check = $this->UploadFile($model,'photo','foto_pegawai',$suffix);
 
@@ -270,7 +270,7 @@ class PegawaiController extends Controller
          * Failed store file
          * localStorage
          */
-        if ( isset( $ret['failed'] ) && !$model[$new]->saveAs($path)) {
+        if ( isset( $ret['failed'] ) || !$model[$new]->saveAs($path)) {
             if (file_exists($path)) {
                 unlink($path);
             }
