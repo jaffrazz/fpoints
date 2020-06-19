@@ -79,7 +79,7 @@ class PrestasiController extends Controller
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             Yii::$app->session->setFlash('success', "Prestasi berhasil diubah.");
 
-            return $this->redirect(['view', 'id' => $model->id_prestasi]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -100,7 +100,7 @@ class PrestasiController extends Controller
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
             Yii::$app->session->setFlash('success', "Prestasi berhasil diubah.");
 
-            return $this->redirect(['view', 'id' => $model->id_prestasi]);
+            return $this->redirect(['index']);
         } else {
             return $this->render('update', [
                 'model' => $model,
