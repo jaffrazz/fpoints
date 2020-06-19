@@ -43,9 +43,10 @@ return $config;
 
 - [x] Siswa  [ Create ] Error
 - [ ] Hide input date autocomplete
+- [ ] Sms gateway at pelanggaran, and absensi.
 - [ ] Generate NIP automatic
 - [ ] Dependent dropdown.
-    - [ ] Pelanggaran Filter
+    - [x] Pelanggaran Filter
     - [ ] Prestasi Filter
     - [ ] Absensi
 - [x] Upload image at Siswa, and Pegawai
@@ -55,8 +56,8 @@ return $config;
 - [ ] Filters
     - [x] Aturan [ point - input number ]
     - [x] Absensi [ Tanggal Efektif ]
-    - [ ] Pelanggaran [ Add kelas - for depend dropdown, Point - Number ]
-    - [ ] Prestasi [ Add Kelas - for depend dropdown]
+    - [x] Pelanggaran [ Add kelas - for depend dropdown, Point - Number ]
+    - [x] Prestasi [ Add Kelas - for depend dropdown]
     - [ ] -
 - [ ] Roles
 - [ ] APIs Android
@@ -68,6 +69,8 @@ return $config;
     - [x] Tanggal Tidak Efektif
     - [x] Kelas
     - [x] Unique siswa NIS
+    - [ ] Prestasi
+    - [ ] Penghargaan
 - [x] Input Select2
     - [x] Wali Kelas [ pegawai - only pegawai havent active class ]
 - [x] Model label
