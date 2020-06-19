@@ -19,7 +19,13 @@ class Pelanggaran extends BasePelanggaran
 	    [
             [['id_siswa', 'id_aturan'], 'required'],
             [['id_siswa', 'id_aturan'], 'integer'],
-            [['tanggal'], 'safe']
+            [['tanggal'], 'safe'],
+            [
+                ['id_siswa','id_aturan','tanggal']
+                ,'unique',
+                'targetAttribute' => ['id_siswa','id_aturan','tanggal'],
+                'message' => 'Data yang sama telah ada didalam database.'
+            ],
         ]);
     }
 	

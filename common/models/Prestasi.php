@@ -19,7 +19,13 @@ class Prestasi extends BasePrestasi
 	    [
             [['id_siswa', 'id_penghargaan'], 'required'],
             [['id_siswa', 'id_penghargaan'], 'integer'],
-            [['tanggal'], 'safe']
+            [['tanggal'], 'safe'],
+            [
+                ['id_siswa','id_penghargaan','tanggal'],
+                'unique',
+                'targetAttribute' => ['id_siswa','id_penghargaan','tanggal'],
+                'message' => 'Data yang sama telah ada didalam database.'
+            ],
         ]);
     }
 	
