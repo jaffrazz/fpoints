@@ -30,6 +30,8 @@ echo TabularForm::widget([
             'type' => TabularForm::INPUT_WIDGET,
             'widgetClass' => \kartik\widgets\DepDrop::className(),
             'options' => [
+                    'type' => \kartik\widgets\DepDrop::TYPE_SELECT2,
+                    'select2Options' => ['pluginOptions' => ['allowClear' => true]],
                     'pluginOptions'=>[
                         'depends'=>['id_kelas'],
                         'placeholder'=>'Pilih Siswa...',
