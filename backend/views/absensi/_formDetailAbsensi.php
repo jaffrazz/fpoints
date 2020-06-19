@@ -28,10 +28,13 @@ echo TabularForm::widget([
         'id_siswa' => [
             'label' => 'Siswa',
             'type' => TabularForm::INPUT_WIDGET,
-            'widgetClass' => \kartik\widgets\Select2::className(),
+            'widgetClass' => \kartik\widgets\DepDrop::className(),
             'options' => [
-                'data' => \yii\helpers\ArrayHelper::map(\common\models\Siswa::find()->orderBy('id_siswa')->asArray()->all(), 'id_siswa', 'nama_siswa'),
-                'options' => ['placeholder' => 'Pilih Siswa'],
+                    'pluginOptions'=>[
+                        'depends'=>['id_kelas'],
+                        'placeholder'=>'Pilih Siswa...',
+                        'url'=>\yii\helpers\Url::to(['/v9/siswa'])
+                    ],
             ],
             'columnOptions' => ['width' => '200px']
         ],

@@ -16,14 +16,36 @@ use yii\widgets\ActiveForm;
 
     <?= $form->errorSummary($model); ?>
 
-    <?= $form->field($model, 'id_prestasi', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
 
-    <?= $form->field($model, 'id_siswa')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\common\models\Siswa::find()->orderBy('id_siswa')->asArray()->all(), 'id_siswa', 'nama_siswa'),
-        'options' => ['placeholder' => 'Pilih Siswa'],
+    <?= '<label class="control-label">Kelas</label>'; ?>
+    <?= \kartik\widgets\Select2::widget([
+        'name' => 'id_kelas',
+        'data' => \yii\helpers\ArrayHelper::map(
+            \common\models\Kelas::find()
+                ->joinWith(['namaKelas'])
+                ->where(['status' => 1])
+                ->orderBy('nama_kelas')
+                ->asArray()
+                ->all(), 
+            'id_kelas', 
+            'namaKelas.nama_kelas'),
+        'options' => ['id' => 'id_kelas', 'placeholder' => 'Pilih Kelas'],
         'pluginOptions' => [
             'allowClear' => true
         ],
+    ]); ?>
+
+    <?= $form->field($model, 'id_prestasi', ['template' => '{input}'])->textInput(['style' => 'display:none']); ?>
+
+    <?= $form->field($model, 'id_siswa')->widget(\kartik\widgets\DepDrop::classname(), [
+        'type' => \kartik\widgets\DepDrop::TYPE_SELECT2,
+        'select2Options' => ['pluginOptions' => ['allowClear' => true]],
+        'options'=>['id'=>'id_siswa'],
+        'pluginOptions'=>[
+            'depends'=>['id_kelas'],
+            'placeholder'=>'Pilih Siswa...',
+            'url'=>\yii\helpers\Url::to(['/v9/siswa'])
+        ]
     ]); ?>
 
     <?= $form->field($model, 'id_penghargaan')->widget(\kartik\widgets\Select2::classname(), [
