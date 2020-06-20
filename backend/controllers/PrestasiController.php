@@ -5,6 +5,7 @@ namespace backend\controllers;
 use Yii;
 use common\models\Prestasi;
 use common\models\PrestasiSearch;
+use common\models\DetailPoint;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -139,7 +140,7 @@ class PrestasiController extends Controller
     {
         $model = $this->findModel($id);
         $trans = Yii::$app->db->beginTransaction();
-        
+
         try {
             $check = $this->checkDetailPoint($model, 'delete');
             
