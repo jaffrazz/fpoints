@@ -34,5 +34,17 @@ class Siswa extends BaseSiswa
             [['photo'],'file', 'skipOnEmpty' => true, 'extensions'=>'jpg,jpeg,gif,png,jpeg', 'maxSize' => 1024*1024*3],
         ]);
     }
+
+    /**
+     * Find Siswa on Specific Kelas
+     * 
+     * @param $id   id specific kelas
+     * @return \Kelas
+     */
+    public function onKelas($id){
+        return Siswa::find()
+            ->joinWith(['onKelasSiswa'])
+            ->where(['id_kelas' => $id]);
+    }
 	
 }
