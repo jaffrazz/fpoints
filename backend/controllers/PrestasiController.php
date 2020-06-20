@@ -137,7 +137,9 @@ class PrestasiController extends Controller
      */
     public function actionDelete($id)
     {
+        $model = $this->findModel($id);
         $trans = Yii::$app->db->beginTransaction();
+        
         try {
             $check = $this->checkDetailPoint($model, 'delete');
             
@@ -147,7 +149,7 @@ class PrestasiController extends Controller
                 return $this->redirect(['index']);
             }
 
-            $this->findModel($id)->deleteWithRelated();
+            $model->deleteWithRelated();
             $trans->commit();
             Yii::$app->session->setFlash('success', "Prestasi berhasil dihapus.");
         } catch (\Exception $e) {
