@@ -3,7 +3,6 @@
 namespace common\models\base;
 
 use Yii;
-use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the base model class for table "akumulasi_point".
@@ -89,22 +88,6 @@ class AkumulasiPoint extends \yii\db\ActiveRecord
         return $this->hasMany(\common\models\DetailAkumulasiPoint::className(), ['id_akumulasi_point' => 'id_akumulasi_point']);
     }
     
-    /**
-     * @inheritdoc
-     * @return array mixed
-     */
-    public function behaviors()
-    {
-        return [
-            'timestamp' => [
-                'class' => TimestampBehavior::className(),
-                'createdAtAttribute' => 'last_update',
-                'updatedAtAttribute' => 'last_update',
-                'value' => new Expression('now()'),
-            ],
-        ];
-    }
-
 
     /**
      * @inheritdoc
