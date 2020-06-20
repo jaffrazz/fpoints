@@ -14,9 +14,9 @@ if (count($title) > 5) {
     $title = implode(' ', $title);
 }
 
-$this->title = 'Update Pelanggaran: ' . ' ' . $model->title;
+$this->title = 'Update Pelanggaran: ' . ' ' . $title;
 $this->params['breadcrumbs'][] = ['label' => 'Pelanggaran', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->title, 'url' => ['view', 'id' => $model->id_pelanggaran]];
+$this->params['breadcrumbs'][] = ['label' => $title, 'url' => ['view', 'id' => $model->id_pelanggaran]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="pelanggaran-update">
