@@ -24,5 +24,9 @@ class Kelas extends BaseKelas
 
         ]);
     }
+
+    public function findActive(){
+        return Kelas::find()->where(['status' => 1]);
+    }
 	
 }

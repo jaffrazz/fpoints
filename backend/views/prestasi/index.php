@@ -23,8 +23,6 @@ $this->registerJs($search);
             <div class="box box-primary">
                 <div class="box-header">
 
-                    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
                     <p>
                         <?=Html::a('Create Prestasi', ['create'], ['class' => 'btn btn-success'])?>
                         <?=Html::a('Advance Search', '#', ['class' => 'btn btn-info search-button'])?>
@@ -44,13 +42,26 @@ $this->registerJs($search);
                             'filter' => false,
                         ],
                         [
+                            'attribute' => 'id_kelas',
+                            'label' => 'Kelas',
+                            'value' => function ($model) {
+                                return $model->siswa->onKelasSiswa->kelas->namaKelas->nama_kelas;
+                            },
+                            'filterType' => GridView::FILTER_SELECT2,
+                            'filter' => \yii\helpers\ArrayHelper::map(\common\models\Kelas::findActive()->joinWith(['namaKelas'])->asArray()->all(), 'id_kelas', 'namaKelas.nama_kelas'),
+                            'filterWidgetOptions' => [
+                                'pluginOptions' => ['allowClear' => true],
+                            ],
+                            'filterInputOptions' => ['placeholder' => 'Kelas', 'id' => 'grid-prestasi-search-id_kelas'],
+                        ],
+                        [
                             'attribute' => 'id_siswa',
                             'label' => 'Siswa',
                             'value' => function ($model) {
                                 return $model->siswa->nama_siswa;
                             },
                             'filterType' => GridView::FILTER_SELECT2,
-                            'filter' => \yii\helpers\ArrayHelper::map(\common\models\Siswa::find()->asArray()->all(), 'id_siswa', 'nama_siswa'),
+                            'filter' => \yii\helpers\ArrayHelper::map(\common\models\Siswa::onKelas($searchModel->id_kelas)->asArray()->all(), 'id_siswa', 'nama_siswa'),
                             'filterWidgetOptions' => [
                                 'pluginOptions' => ['allowClear' => true],
                             ],
