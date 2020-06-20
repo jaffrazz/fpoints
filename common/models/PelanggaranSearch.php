@@ -12,13 +12,14 @@ use common\models\Pelanggaran;
  */
  class PelanggaranSearch extends Pelanggaran
 {
+    public $id_kelas;
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id_pelanggaran', 'id_siswa', 'id_aturan'], 'integer'],
+            [['id_pelanggaran', 'id_siswa', 'id_aturan', 'id_kelas'], 'integer'],
             [['tanggal'], 'safe'],
         ];
     }
@@ -41,7 +42,10 @@ use common\models\Pelanggaran;
      */
     public function search($params)
     {
-        $query = Pelanggaran::find();
+        $query = Pelanggaran::find()
+            ->joinWith(['siswa'])
+            ->innerJoin('on_kelas_siswa','on_kelas_siswa.id_siswa = siswa.id_siswa')
+            ->innerJoin('kelas','on_kelas_siswa.id_kelas = kelas.id_kelas');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -64,6 +68,7 @@ use common\models\Pelanggaran;
         $query->andFilterWhere([
             'id_pelanggaran' => $this->id_pelanggaran,
             'id_siswa' => $this->id_siswa,
+            'kelas.id_kelas' => $this->id_kelas,
             'id_aturan' => $this->id_aturan,
             'tanggal' => $tanggal,
         ]);

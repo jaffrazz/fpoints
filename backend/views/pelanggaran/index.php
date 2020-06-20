@@ -41,13 +41,26 @@ $this->registerJs($search);
                             'filter' => false
                         ],
                         [
+                            'attribute' => 'id_kelas',
+                            'label' => 'Kelas',
+                            'value' => function ($model) {
+                                return $model->siswa->onKelasSiswa->kelas->namaKelas->nama_kelas;
+                            },
+                            'filterType' => GridView::FILTER_SELECT2,
+                            'filter' => \yii\helpers\ArrayHelper::map(\common\models\Kelas::findActive()->joinWith(['namaKelas'])->orderBy(['nama_kelas' => SORT_ASC])->asArray()->all(), 'id_kelas', 'namaKelas.nama_kelas'),
+                            'filterWidgetOptions' => [
+                                'pluginOptions' => ['allowClear' => true],
+                            ],
+                            'filterInputOptions' => ['placeholder' => 'Kelas', 'id' => 'grid-pelanggaran-search-id_kelas'],
+                        ],
+                        [
                             'attribute' => 'id_siswa',
                             'label' => 'Siswa',
                             'value' => function ($model) {
                                 return $model->siswa->nama_siswa;
                             },
                             'filterType' => GridView::FILTER_SELECT2,
-                            'filter' => \yii\helpers\ArrayHelper::map(\common\models\Siswa::find()->asArray()->all(), 'id_siswa', 'nama_siswa'),
+                            'filter' => \yii\helpers\ArrayHelper::map(\common\models\Siswa::onKelas($searchModel->id_kelas)->orderBy(['nama_siswa' => SORT_ASC])->asArray()->all(), 'id_siswa', 'nama_siswa'),
                             'filterWidgetOptions' => [
                                 'pluginOptions' => ['allowClear' => true],
                             ],
