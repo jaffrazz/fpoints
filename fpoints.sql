@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 18, 2020 at 12:10 PM
+-- Generation Time: Jun 20, 2020 at 06:43 PM
 -- Server version: 10.1.44-MariaDB-0ubuntu0.18.04.1
 -- PHP Version: 7.2.26-1+ubuntu18.04.1+deb.sury.org+1
 
@@ -148,10 +148,18 @@ CREATE TABLE `detail_akumulasi_point` (
 
 CREATE TABLE `detail_point` (
   `id_siswa` bigint(20) NOT NULL,
-  `point_pelanggaran` int(11) NOT NULL,
-  `point_penghargaan` int(11) NOT NULL,
-  `last_update` int(11) NOT NULL
+  `point_pelanggaran` int(11) NOT NULL DEFAULT '0',
+  `point_penghargaan` int(11) NOT NULL DEFAULT '0',
+  `last_update` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `detail_point`
+--
+
+INSERT INTO `detail_point` (`id_siswa`, `point_pelanggaran`, `point_penghargaan`, `last_update`) VALUES
+(2, 0, 0, '2020-06-20'),
+(6, 20, 15, '2020-06-20');
 
 -- --------------------------------------------------------
 
@@ -287,16 +295,18 @@ CREATE TABLE `kelas` (
   `id_wali_kelas` int(11) DEFAULT NULL,
   `kelas` varchar(3) DEFAULT NULL,
   `grade` varchar(3) DEFAULT NULL,
-  `id_tahun_ajaran` int(11) NOT NULL
+  `id_tahun_ajaran` int(11) NOT NULL,
+  `status` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `kelas`
 --
 
-INSERT INTO `kelas` (`id_kelas`, `id_jurusan`, `id_wali_kelas`, `kelas`, `grade`, `id_tahun_ajaran`) VALUES
-(19, 1, 8, 'B', 'XII', 1),
-(20, 1, 9, 'A', 'XII', 1);
+INSERT INTO `kelas` (`id_kelas`, `id_jurusan`, `id_wali_kelas`, `kelas`, `grade`, `id_tahun_ajaran`, `status`) VALUES
+(19, 1, 8, 'B', 'XII', 1, 1),
+(20, 1, 9, 'A', 'XII', 1, 1),
+(21, 1, 8, 'O', 'XII', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -334,7 +344,8 @@ CREATE TABLE `nama_kelas` (
 
 INSERT INTO `nama_kelas` (`id_kelas`, `nama_kelas`) VALUES
 (19, 'XII Rekayasa Perangkat Lunak B'),
-(20, 'XII Rekayasa Perangkat Lunak A');
+(20, 'XII Rekayasa Perangkat Lunak A'),
+(21, 'XII Rekayasa Perangkat Lunak O');
 
 -- --------------------------------------------------------
 
@@ -378,7 +389,7 @@ CREATE TABLE `pegawai` (
 --
 
 INSERT INTO `pegawai` (`id_pegawai`, `id_agama`, `nama_pegawai`, `alamat_pegawai`, `jenis_kelamin_pegawai`, `no_hp_pegawai`, `status_kepegawaian`, `jabatan_pegawai`, `foto_pegawai`) VALUES
-(1, 1, 'admin', 'admin', 'L', '+6281234567890', 'Pegawai Tetap', 1, 'Pegawai_1_1592455315.png'),
+(1, 1, 'admin', 'admin', 'L', '+6281234567890', 'Pegawai Tetap', 1, 'Pegawai_1_1592470610.jpg'),
 (2, 1, 'Defri Indra Mahardika', 'Ds. Pulung Kec. Pulung', 'L', '+6285604845437', 'Tetap', 1, '');
 
 -- --------------------------------------------------------
@@ -418,8 +429,7 @@ CREATE TABLE `pelanggaran` (
 --
 
 INSERT INTO `pelanggaran` (`id_pelanggaran`, `id_siswa`, `id_aturan`, `tanggal`) VALUES
-(1, 2, 4, '2020-05-31'),
-(2, 2, 4, '2020-06-02');
+(17, 6, 6, '2020-06-01');
 
 -- --------------------------------------------------------
 
@@ -461,9 +471,7 @@ CREATE TABLE `prestasi` (
 --
 
 INSERT INTO `prestasi` (`id_prestasi`, `id_siswa`, `id_penghargaan`, `tanggal`) VALUES
-(1, 2, 1, '2020-06-01'),
-(2, 2, 2, '2020-06-01'),
-(3, 2, 2, '2020-06-01');
+(5, 6, 2, '2020-06-01');
 
 -- --------------------------------------------------------
 
@@ -533,8 +541,8 @@ CREATE TABLE `siswa` (
 --
 
 INSERT INTO `siswa` (`id_siswa`, `id_wali_murid`, `id_agama`, `nis`, `nama_siswa`, `tempat_lahir_siswa`, `tanggal_lahir_siswa`, `jenis_kelamin_siswa`, `alamat_rumah_siswa`, `alamat_domisili_siswa`, `no_hp_siswa`, `foto_siswa`) VALUES
-(2, 1, 1, '1123463434534', 'Vlania Putri Deviantara', 'Ponorogo', '2002-05-19', 'P', '$trans->commit();', '$trans->commit();', '+6285604845437', 'Siswa_2_1592456716.png'),
-(6, 1, 1, '1123463434534', 'Vlania Putri Deviantara II', 'Ponorogo', '2002-05-19', 'L', '-', '-', '+6285604845437', '-');
+(2, 1, 6, '1123463434534', 'Vlania Putri Deviantara', 'Ponorogo', '2002-05-19', 'P', '$trans->commit();', '$trans->commit();', '+6285604845437', 'Siswa_2_1592456716.png'),
+(6, 1, 1, '1123463434532', 'Vlania Putri Deviantara II', 'Ponorogo', '2002-05-19', 'L', '-', '-', '+6285604845437', '-');
 
 -- --------------------------------------------------------
 
@@ -778,10 +786,10 @@ ALTER TABLE `kategori_penghargaan`
 --
 ALTER TABLE `kelas`
   ADD PRIMARY KEY (`id_kelas`),
-  ADD UNIQUE KEY `id_wali_kelas` (`id_wali_kelas`),
   ADD KEY `FK_ON_JURUSAN_KELAS` (`id_jurusan`),
   ADD KEY `FK_ON_WALIKELAS` (`id_wali_kelas`),
-  ADD KEY `FK_TAHUN_AJARAN` (`id_tahun_ajaran`);
+  ADD KEY `FK_TAHUN_AJARAN` (`id_tahun_ajaran`),
+  ADD KEY `id_wali_kelas` (`id_wali_kelas`) USING BTREE;
 
 --
 -- Indexes for table `migration`
@@ -857,6 +865,7 @@ ALTER TABLE `semester`
 --
 ALTER TABLE `siswa`
   ADD PRIMARY KEY (`id_siswa`),
+  ADD UNIQUE KEY `nis` (`nis`),
   ADD KEY `FK_ON_AGAMA_SISWA` (`id_agama`),
   ADD KEY `FK_ON_WALI_MURid_siswa` (`id_wali_murid`);
 
@@ -989,7 +998,7 @@ ALTER TABLE `kategori_penghargaan`
 -- AUTO_INCREMENT for table `kelas`
 --
 ALTER TABLE `kelas`
-  MODIFY `id_kelas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id_kelas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `pegawai`
@@ -1007,7 +1016,7 @@ ALTER TABLE `pekerjaan`
 -- AUTO_INCREMENT for table `pelanggaran`
 --
 ALTER TABLE `pelanggaran`
-  MODIFY `id_pelanggaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_pelanggaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `penghargaan`
@@ -1019,7 +1028,7 @@ ALTER TABLE `penghargaan`
 -- AUTO_INCREMENT for table `prestasi`
 --
 ALTER TABLE `prestasi`
-  MODIFY `id_prestasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_prestasi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `sanksi`
