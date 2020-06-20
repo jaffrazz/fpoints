@@ -42,7 +42,10 @@ return $config;
 ## TODOs List
 
 - [x] Siswa  [ Create ] Error
-- [ ] Select2 Aturan & prestasi to ajax
+- [ ] Pelanggaran add
+    - [ ] telah jalani hukuman
+    - [ ] View
+- [x] Select2 pelanggaran & prestasi to ajax
 - [ ] Hide input date autocomplete
 - [ ] Sms gateway at pelanggaran, and absensi.
 - [ ] Generate NIP automatic
@@ -50,7 +53,7 @@ return $config;
     - [x] Pelanggaran Filter
     - [x] Prestasi Filter
     - [x] Absensi
-    - [ ] Siswa -> id , if form returned
+    - [x] Siswa -> id , if form returned
 - [x] Upload image at Siswa, and Pegawai
 - [x] Advanced Search
     - [x] Date Search Error 
