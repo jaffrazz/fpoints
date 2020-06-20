@@ -13,13 +13,15 @@ use common\models\Prestasi;
  class PrestasiSearch extends Prestasi
 {
     public $tanggal_filter;
+    public $id_kelas;
+
     /**
      * @inheritdoc
      */
     public function rules()
     {
         return [
-            [['id_prestasi', 'id_siswa', 'id_penghargaan'], 'integer'],
+            [['id_prestasi', 'id_siswa', 'id_penghargaan', 'id_kelas'], 'integer'],
             [['tanggal','tanggal_filter'], 'safe'],
         ];
     }
@@ -42,7 +44,10 @@ use common\models\Prestasi;
      */
     public function search($params)
     {
-        $query = Prestasi::find();
+        $query = Prestasi::find()
+            ->joinWith(['siswa'])
+            ->innerJoin('on_kelas_siswa','on_kelas_siswa.id_siswa = siswa.id_siswa')
+            ->innerJoin('kelas','on_kelas_siswa.id_kelas = kelas.id_kelas');
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
@@ -64,6 +69,7 @@ use common\models\Prestasi;
 
         $query->andFilterWhere([
             'id_prestasi' => $this->id_prestasi,
+            'kelas.id_kelas' => $this->id_kelas,
             'id_siswa' => $this->id_siswa,
             'id_penghargaan' => $this->id_penghargaan,
             'tanggal' => $tanggal,
