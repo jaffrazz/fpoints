@@ -17,8 +17,9 @@ class DetailPoint extends BaseDetailPoint
     {
         return array_replace_recursive(parent::rules(),
 	    [
-            [['id_siswa', 'point_pelanggaran', 'point_penghargaan', 'last_update'], 'required'],
-            [['id_siswa', 'point_pelanggaran', 'point_penghargaan', 'last_update'], 'integer']
+            [['id_siswa', 'last_update'], 'required'],
+            [['id_siswa', 'point_pelanggaran', 'point_penghargaan'], 'integer'],
+            [['last_update'], 'safe'],
         ]);
     }
 	

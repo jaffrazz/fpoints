@@ -29,7 +29,8 @@ use yii\widgets\ActiveForm;
                 ->all(), 
             'id_kelas', 
             'namaKelas.nama_kelas'),
-        'options' => ['id' => 'id_kelas', 'placeholder' => 'Pilih Kelas'],
+        'options' => 
+            ['id' => 'id_kelas', 'placeholder' => 'Pilih Kelas'],
         'pluginOptions' => [
             'allowClear' => true
         ],

@@ -6,6 +6,9 @@
 # phpstorm project files
 .idea
 
+# Fix Error git
+.git-old
+
 # netbeans project files
 nbproject
 

@@ -42,13 +42,15 @@ return $config;
 ## TODOs List
 
 - [x] Siswa  [ Create ] Error
+- [ ] Select2 Aturan & prestasi to ajax
 - [ ] Hide input date autocomplete
 - [ ] Sms gateway at pelanggaran, and absensi.
 - [ ] Generate NIP automatic
-- [ ] Dependent dropdown.
+- [x] Dependent dropdown.
     - [x] Pelanggaran Filter
-    - [ ] Prestasi Filter
-    - [ ] Absensi
+    - [x] Prestasi Filter
+    - [x] Absensi
+    - [ ] Siswa -> id , if form returned
 - [x] Upload image at Siswa, and Pegawai
 - [x] Advanced Search
     - [x] Date Search Error 
@@ -69,8 +71,8 @@ return $config;
     - [x] Tanggal Tidak Efektif
     - [x] Kelas
     - [x] Unique siswa NIS
-    - [ ] Prestasi
-    - [ ] Penghargaan
+    - [x] Prestasi
+    - [x] Penghargaan
 - [x] Input Select2
     - [x] Wali Kelas [ pegawai - only pegawai havent active class ]
 - [x] Model label
@@ -81,8 +83,8 @@ return $config;
         - [x] Pegawai View
 - [ ] CRUD 
     - [x] Sanksi
+    - [x] Detail Point (R) [ Update automatic ]
     - [ ] Akumulasi Point [ Action Reset detail point Per semester ]
-    - [ ] Detail Point (R) [ Update Otomatis ]
     - [ ] SP
     - [ ] User
 - [ ] Etc

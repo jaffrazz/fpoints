@@ -3,6 +3,7 @@
 namespace common\models\base;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the base model class for table "detail_point".
@@ -36,8 +37,9 @@ class DetailPoint extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_siswa', 'point_pelanggaran', 'point_penghargaan', 'last_update'], 'required'],
-            [['id_siswa', 'point_pelanggaran', 'point_penghargaan', 'last_update'], 'integer']
+            [['id_siswa', 'last_update'], 'required'],
+            [['id_siswa', 'point_pelanggaran', 'point_penghargaan'], 'integer'],
+            [['last_update'], 'safe'],
         ];
     }
 
@@ -70,6 +72,22 @@ class DetailPoint extends \yii\db\ActiveRecord
         return $this->hasOne(\common\models\Siswa::className(), ['id_siswa' => 'id_siswa']);
     }
     
+    /**
+     * @inheritdoc
+     * @return array mixed
+     */
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => TimestampBehavior::className(),
+                'createdAtAttribute' => 'last_update',
+                'updatedAtAttribute' => 'last_update',
+                'value' => date('Y-m-d'),
+            ],
+        ];
+    }
+
 
     /**
      * @inheritdoc
