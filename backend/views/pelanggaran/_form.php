@@ -7,6 +7,10 @@ use yii\widgets\ActiveForm;
 /* @var $model common\models\Pelanggaran */
 /* @var $form yii\widgets\ActiveForm */
 
+$id_kelas = $model->isNewRecord
+? null
+: $model->siswa->onKelasSiswa->id_kelas;
+
 ?>
 
 <div class="pelanggaran-form">
@@ -26,6 +30,7 @@ use yii\widgets\ActiveForm;
                 ->all(), 
             'id_kelas', 
             'namaKelas.nama_kelas'),
+        'value' => $id_kelas,
         'options' => ['id' => 'id_kelas', 'placeholder' => 'Pilih Kelas'],
         'pluginOptions' => [
             'allowClear' => true
@@ -40,18 +45,11 @@ use yii\widgets\ActiveForm;
         'options'=>['id'=>'id_siswa'],
         'pluginOptions'=>[
             'depends'=>['id_kelas'],
+            'initialize' => $model->isNewRecord ? false : true,
             'placeholder'=>'Pilih Siswa...',
             'url'=>\yii\helpers\Url::to(['/v9/siswa'])
         ]
     ]); ?>
-
-    <?php /* $form->field($model, 'id_siswa')->widget(\kartik\widgets\Select2::classname(), [
-        'data' => \yii\helpers\ArrayHelper::map(\common\models\Siswa::find()->orderBy('id_siswa')->asArray()->all(), 'id_siswa', 'nama_siswa'),
-        'options' => ['placeholder' => 'Pilih Siswa'],
-        'pluginOptions' => [
-            'allowClear' => true
-        ],
-    ]); */?>
 
     <?= $form->field($model, 'id_aturan')->widget(\kartik\widgets\Select2::classname(), [
         'data' => \yii\helpers\ArrayHelper::map(\common\models\Aturan::find()->joinWith('kategori')->orderBy('id_aturan')->asArray()->all(), 'id_aturan', 'uraian_aturan','kategori.kategori_aturan'),
