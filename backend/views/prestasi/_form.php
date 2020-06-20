@@ -7,6 +7,11 @@ use yii\widgets\ActiveForm;
 /* @var $model common\models\Prestasi */
 /* @var $form yii\widgets\ActiveForm */
 
+
+$id_kelas = $model->isNewRecord 
+    ? null 
+    : $model->siswa->onKelasSiswa->id_kelas;
+
 ?>
 
 
@@ -29,10 +34,11 @@ use yii\widgets\ActiveForm;
                 ->all(), 
             'id_kelas', 
             'namaKelas.nama_kelas'),
+        'value' => $id_kelas,
         'options' => 
             ['id' => 'id_kelas', 'placeholder' => 'Pilih Kelas'],
         'pluginOptions' => [
-            'allowClear' => true
+            'allowClear' => true,
         ],
     ]); ?>
 
@@ -44,6 +50,7 @@ use yii\widgets\ActiveForm;
         'options'=>['id'=>'id_siswa'],
         'pluginOptions'=>[
             'depends'=>['id_kelas'],
+            'initialize' => $model->isNewRecord ? false : true,
             'placeholder'=>'Pilih Siswa...',
             'url'=>\yii\helpers\Url::to(['/v9/siswa'])
         ]
