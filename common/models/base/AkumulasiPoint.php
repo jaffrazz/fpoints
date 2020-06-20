@@ -3,6 +3,7 @@
 namespace common\models\base;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the base model class for table "akumulasi_point".
@@ -40,13 +41,7 @@ class AkumulasiPoint extends \yii\db\ActiveRecord
     {
         return [
             [['id_tahun_ajaran', 'id_semester'], 'required'],
-            [['id_tahun_ajaran', 'id_semester'], 'integer'],
-            [
-                ['id_semester'],
-                'unique',
-                'targetAttribute' => ['id_tahun_ajaran','id_semester'],
-                'message' => 'Data untuk semester ini telah diakumulasikan'
-            ],
+            [['id_tahun_ajaran', 'id_semester'], 'integer']
         ];
     }
 
@@ -65,8 +60,8 @@ class AkumulasiPoint extends \yii\db\ActiveRecord
     {
         return [
             'id_akumulasi_point' => 'Id Akumulasi Point',
-            'id_tahun_ajaran' => 'Tahun Ajaran',
-            'id_semester' => 'Semester',
+            'id_tahun_ajaran' => 'Id Tahun Ajaran',
+            'id_semester' => 'Id Semester',
         ];
     }
     
@@ -94,6 +89,22 @@ class AkumulasiPoint extends \yii\db\ActiveRecord
         return $this->hasMany(\common\models\DetailAkumulasiPoint::className(), ['id_akumulasi_point' => 'id_akumulasi_point']);
     }
     
+    /**
+     * @inheritdoc
+     * @return array mixed
+     */
+    public function behaviors()
+    {
+        return [
+            'timestamp' => [
+                'class' => TimestampBehavior::className(),
+                'createdAtAttribute' => 'last_update',
+                'updatedAtAttribute' => 'last_update',
+                'value' => new Expression('now()'),
+            ],
+        ];
+    }
+
 
     /**
      * @inheritdoc
@@ -102,9 +113,5 @@ class AkumulasiPoint extends \yii\db\ActiveRecord
     public static function find()
     {
         return new \app\models\AkumulasiPointQuery(get_called_class());
-    }
-     
-    public function formName() {
-        return '';
     }
 }
