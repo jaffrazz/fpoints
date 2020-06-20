@@ -106,6 +106,8 @@ class PelanggaranController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $trans = yii::$app->db->beginTransaction();
+
         $point_update = $model->aturan->point_aturan;
         $old_id_siswa = $model->id_siswa;
 
@@ -117,7 +119,8 @@ class PelanggaranController extends Controller
                 Yii::$app->session->setFlash('error', $check['failed'] );
                 return $this->redirect(['index']);
             }
-
+            
+            $trans->commit();
             Yii::$app->session->setFlash('success','Pelanggaran berhasil diubah.');
             return $this->redirect(['index']);
         } else {
@@ -190,7 +193,6 @@ class PelanggaranController extends Controller
 
         $ret = []; // return value
         $new_data = 0;// its new data
-// <A></A>
 
         if($query != null){
             $det_model = $query;
