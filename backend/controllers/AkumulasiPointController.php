@@ -6,6 +6,7 @@ use Yii;
 use common\models\AkumulasiPoint;
 use common\models\AkumulasiPointSearch;
 use common\models\DetailAkumulasiPoint;
+use common\models\DetailPoint;
 use common\models\Pelanggaran;
 use common\models\Sanksi;
 use yii\web\Controller;
@@ -109,15 +110,24 @@ class AkumulasiPointController extends Controller
                     $detail_model->point_penghargaan = $point_penghargaan;
                     $detail_model->id_sanksi = $sanksi->id_sanksi;
                     $detail_model->save();
+
+                    // reset point
+                    $detailPointSiswa = DetailPoint::findOne($detail['id_siswa']);
+                    $detailPointSiswa->point_pelanggaran = 0;
+                    $detailPointSiswa->point_penghargaan = 0;
+                    $detailPointSiswa->last_update = date('Y-m-d');
+                    $detailPointSiswa->save();
                 }
+
+                // drop list prestasi & pelanggaran
+                $this->dropPelanggaranAndPrestasi($model);
 
                 $trans->commit();
                 Yii::$app->session->setFlash('success', 'Point Berhasil diakumulasikan.');
                 return $this->redirect(['view', 'id' => $model->id_akumulasi_point]);
             }catch(\Exception $e){
-                var_dump($e);
                 $trans->rollBack();
-                Yii::$app->session->setFlash('error', 'Point gagal diakumulasikan.');
+                Yii::$app->session->setFlash('error', "Point gagal diakumulasikan. $e");
                 return $this->render('create', [
                     'model' => $model,
                 ]);
@@ -274,5 +284,30 @@ class AkumulasiPointController extends Controller
         $result = $command->queryAll();
 
         return $result;
+    }
+
+    protected function dropPelanggaranAndPrestasi($model){
+        $pelanggaran = "DELETE FROM pelanggaran WHERE
+                        ( MONTH(tanggal) >= :bulan_awal AND YEAR( tanggal ) = :tahun ) 
+                        AND ( MONTH(tanggal) <= :bulan_akhir AND YEAR( tanggal ) = :tahun )";
+        $prestasi = "DELETE FROM prestasi WHERE
+                        ( MONTH(tanggal) >= :bulan_awal AND YEAR( tanggal ) = :tahun ) 
+                        AND ( MONTH(tanggal) <= :bulan_akhir AND YEAR( tanggal ) = :tahun )";
+        $connection = Yii::$app->getDb();
+
+        $cmd1 = $connection->createCommand($pelanggaran,[
+            ':bulan_awal' => $model->semester->awal_bulan_semester,
+            ':bulan_akhir' => $model->semester->akhir_bulan_semester,
+            ':tahun' => explode('/',$model->tahunAjaran->tahun_ajaran)[0],
+        ]);
+
+        $cmd2 = $connection->createCommand($prestasi,[
+            ':bulan_awal' => $model->semester->awal_bulan_semester,
+            ':bulan_akhir' => $model->semester->akhir_bulan_semester,
+            ':tahun' => explode('/',$model->tahunAjaran->tahun_ajaran)[0],
+        ]);
+
+        $cmd1->execute();
+        $cmd2->execute();
     }
 }
