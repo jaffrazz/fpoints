@@ -66,6 +66,7 @@ return $config;
     - [ ] -
 - [ ] Roles
 - [ ] APIs Android
+- [ ] Absensi only in hari efektif.
 - [x] View Show Detail
     - [x] Jurusan
     - [x] Aturan, Penghargaan [ Add total history, and history in month ]
