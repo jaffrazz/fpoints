@@ -82,6 +82,7 @@ return $config;
 - [x] Structure Updated
     - [x] Add ( start_date, end_date ) to hari tidak efektif
     - [x] Delete Tanggal Efektif
+    - [ ] Remove maximum point from table sanksi
     - [x] Add Active Status at Kelas
         - [x] Pegawai View
 - [ ] CRUD 
