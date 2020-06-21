@@ -18,8 +18,7 @@ use common\models\AkumulasiPoint;
     public function rules()
     {
         return [
-            [['id_siswa', 'id_sanksi', 'total_point_pelanggaran', 'total_point_prestasi', 'id_tahun_ajaran', 'id_semester'], 'integer'],
-            [['tanggal'], 'safe'],
+            [['id_akumulasi_point', 'id_tahun_ajaran', 'id_semester'], 'integer'],
         ];
     }
 
@@ -56,11 +55,7 @@ use common\models\AkumulasiPoint;
         }
 
         $query->andFilterWhere([
-            'id_siswa' => $this->id_siswa,
-            'id_sanksi' => $this->id_sanksi,
-            'total_point_pelanggaran' => $this->total_point_pelanggaran,
-            'total_point_prestasi' => $this->total_point_prestasi,
-            'tanggal' => $this->tanggal,
+            'id_akumulasi_point' => $this->id_akumulasi_point,
             'id_tahun_ajaran' => $this->id_tahun_ajaran,
             'id_semester' => $this->id_semester,
         ]);

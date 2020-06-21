@@ -59,8 +59,8 @@ class AkumulasiPoint extends \yii\db\ActiveRecord
     {
         return [
             'id_akumulasi_point' => 'Id Akumulasi Point',
-            'id_tahun_ajaran' => 'Id Tahun Ajaran',
-            'id_semester' => 'Id Semester',
+            'id_tahun_ajaran' => 'Tahun Ajaran',
+            'id_semester' => 'Semester',
         ];
     }
     
