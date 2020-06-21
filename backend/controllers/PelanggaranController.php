@@ -29,7 +29,7 @@ class PelanggaranController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'create', 'update', 'delete'],
+                        'actions' => ['index', 'create', 'update', 'view', 'delete'],
                         'roles' => ['@']
                     ],
                     [
@@ -60,13 +60,13 @@ class PelanggaranController extends Controller
      * @param integer $id
      * @return mixed
      */
-    // public function actionView($id)
-    // {
-    //     $model = $this->findModel($id);
-    //     return $this->render('view', [
-    //         'model' => $this->findModel($id),
-    //     ]);
-    // }
+    public function actionView($id)
+    {
+        $model = $this->findModel($id);
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
 
     /**
      * Creates a new Pelanggaran model.
