@@ -28,7 +28,7 @@ class SanksiController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'view', 'create', 'update', 'delete', 'add-akumulasi-point'],
+                        'actions' => ['index', 'create', 'update', 'delete'],
                         'roles' => ['@']
                     ],
                     [
@@ -59,17 +59,17 @@ class SanksiController extends Controller
      * @param integer $id
      * @return mixed
      */
-    public function actionView($id)
-    {
-        $model = $this->findModel($id);
-        $providerAkumulasiPoint = new \yii\data\ArrayDataProvider([
-            'allModels' => $model->akumulasiPoints,
-        ]);
-        return $this->render('view', [
-            'model' => $this->findModel($id),
-            'providerAkumulasiPoint' => $providerAkumulasiPoint,
-        ]);
-    }
+    // public function actionView($id)
+    // {
+    //     $model = $this->findModel($id);
+    //     $providerAkumulasiPoint = new \yii\data\ArrayDataProvider([
+    //         'allModels' => $model->akumulasiPoints,
+    //     ]);
+    //     return $this->render('view', [
+    //         'model' => $this->findModel($id),
+    //         'providerAkumulasiPoint' => $providerAkumulasiPoint,
+    //     ]);
+    // }
 
     /**
      * Creates a new Sanksi model.
@@ -83,7 +83,7 @@ class SanksiController extends Controller
         if ($model->loadAll(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', "Sanksi berhasil ditambahkan.");
 
-            return $this->redirect(['view', 'id' => $model->id_sanksi]);
+            return $this->redirect('index');
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -104,7 +104,7 @@ class SanksiController extends Controller
         if ($model->loadAll(Yii::$app->request->post()) && $model->save()) {
             Yii::$app->session->setFlash('success', "Sanksi berhasil diubah.");
 
-            return $this->redirect(['view', 'id' => $model->id_sanksi]);
+            return $this->redirect('index');
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -159,15 +159,15 @@ class SanksiController extends Controller
     *
     * @return mixed
     */
-    public function actionAddAkumulasiPoint()
-    {
-        if (Yii::$app->request->isAjax) {
-            $row = Yii::$app->request->post('AkumulasiPoint');
-            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('_action') == 'load' && empty($row)) || Yii::$app->request->post('_action') == 'add')
-                $row[] = [];
-            return $this->renderAjax('_formAkumulasiPoint', ['row' => $row]);
-        } else {
-            throw new NotFoundHttpException('The requested page does not exist.');
-        }
-    }
+    // public function actionAddAkumulasiPoint()
+    // {
+    //     if (Yii::$app->request->isAjax) {
+    //         $row = Yii::$app->request->post('AkumulasiPoint');
+    //         if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('_action') == 'load' && empty($row)) || Yii::$app->request->post('_action') == 'add')
+    //             $row[] = [];
+    //         return $this->renderAjax('_formAkumulasiPoint', ['row' => $row]);
+    //     } else {
+    //         throw new NotFoundHttpException('The requested page does not exist.');
+    //     }
+    // }
 }
