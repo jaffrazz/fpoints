@@ -41,7 +41,7 @@ use common\models\Sanksi;
      */
     public function search($params)
     {
-        $query = Sanksi::find();
+        $query = Sanksi::find()->orderBy(['minimum_point' => SORT_ASC]);
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
