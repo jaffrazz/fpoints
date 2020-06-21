@@ -8,8 +8,8 @@ use Yii;
  * This is the base model class for table "detail_akumulasi_point".
  *
  * @property integer $id_detail_akumulasi_point
- * @property integer $id_siswa
  * @property integer $id_akumulasi_point
+ * @property integer $id_siswa
  * @property integer $point_pelanggaran
  * @property integer $point_penghargaan
  * @property integer $id_sanksi
@@ -42,8 +42,8 @@ class DetailAkumulasiPoint extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id_siswa', 'id_akumulasi_point', 'point_pelanggaran', 'point_penghargaan', 'id_sanksi'], 'required'],
-            [['id_siswa', 'id_akumulasi_point', 'point_pelanggaran', 'point_penghargaan', 'id_sanksi'], 'integer']
+            [['id_akumulasi_point', 'id_siswa', 'id_sanksi'], 'required'],
+            [['id_akumulasi_point', 'id_siswa', 'point_pelanggaran', 'point_penghargaan', 'id_sanksi'], 'integer']
         ];
     }
 
@@ -62,8 +62,8 @@ class DetailAkumulasiPoint extends \yii\db\ActiveRecord
     {
         return [
             'id_detail_akumulasi_point' => 'Id Detail Akumulasi Point',
-            'id_siswa' => 'Siswa',
             'id_akumulasi_point' => 'Akumulasi Point',
+            'id_siswa' => 'Siswa',
             'point_pelanggaran' => 'Point Pelanggaran',
             'point_penghargaan' => 'Point Penghargaan',
             'id_sanksi' => 'Sanksi',
