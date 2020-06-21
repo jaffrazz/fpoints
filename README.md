@@ -43,8 +43,8 @@ return $config;
 
 - [x] Siswa  [ Create ] Error
 - [ ] Pelanggaran add
+    - [x] View
     - [ ] telah jalani hukuman [ next version ]
-    - [ ] View
 - [x] Select2 pelanggaran & prestasi to ajax
 - [ ] Hide input date autocomplete
 - [ ] Sms gateway at pelanggaran, and absensi.
@@ -89,7 +89,8 @@ return $config;
     - [x] Sanksi
     - [x] Detail Point (R) [ Update automatic ]
     - [x] Akumulasi Point [ Action Reset detail point Per semester ]
-        - [ ] View
+        - [x] View
+        - [ ] only can perfom action in specific month
     - [ ] SP
     - [ ] User
 - [ ] Etc
