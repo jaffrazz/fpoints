@@ -60,6 +60,7 @@ $this->registerJs($search);
                         ],
                         [
                             'class' => 'yii\grid\ActionColumn',
+                            'template' => '{view}',
                         ],
                     ];
                     ?>

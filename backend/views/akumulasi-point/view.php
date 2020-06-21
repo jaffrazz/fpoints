@@ -20,15 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="box box-primary">
                 <div class="box-header">
 
-                    <?=Html::a('Update', ['update', 'id' => $model->id_akumulasi_point], ['class' => 'btn btn-primary'])?>
-                    <?=Html::a('Delete', ['delete', 'id' => $model->id_akumulasi_point], [
-                        'class' => 'btn btn-danger',
-                        'data' => [
-                            'confirm' => 'Are you sure you want to delete this item?',
-                            'method' => 'post',
-                        ],
-                    ])
-                    ?>
+                    <?=Html::a('Index',['index'], ['class' => 'btn btn-danger'])?>
                 </div>
                 <div class="box-body">
                     <?php
