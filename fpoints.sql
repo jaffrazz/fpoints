@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 20, 2020 at 06:43 PM
+-- Generation Time: Jun 21, 2020 at 11:43 AM
 -- Server version: 10.1.44-MariaDB-0ubuntu0.18.04.1
 -- PHP Version: 7.2.26-1+ubuntu18.04.1+deb.sury.org+1
 
@@ -77,6 +77,13 @@ CREATE TABLE `akumulasi_point` (
   `id_semester` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Dumping data for table `akumulasi_point`
+--
+
+INSERT INTO `akumulasi_point` (`id_akumulasi_point`, `id_tahun_ajaran`, `id_semester`) VALUES
+(17, 4, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -133,12 +140,20 @@ INSERT INTO `detail_absensi` (`id_detail_absensi`, `id_absensi`, `id_siswa`, `id
 
 CREATE TABLE `detail_akumulasi_point` (
   `id_detail_akumulasi_point` int(11) NOT NULL,
-  `id_siswa` bigint(20) NOT NULL,
   `id_akumulasi_point` int(11) NOT NULL,
-  `point_pelanggaran` int(11) NOT NULL,
-  `point_penghargaan` int(11) NOT NULL,
+  `id_siswa` bigint(20) NOT NULL,
+  `point_pelanggaran` int(11) NOT NULL DEFAULT '0',
+  `point_penghargaan` int(11) NOT NULL DEFAULT '0',
   `id_sanksi` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `detail_akumulasi_point`
+--
+
+INSERT INTO `detail_akumulasi_point` (`id_detail_akumulasi_point`, `id_akumulasi_point`, `id_siswa`, `point_pelanggaran`, `point_penghargaan`, `id_sanksi`) VALUES
+(1, 17, 2, 60, 0, 2),
+(2, 17, 6, 25, 30, 3);
 
 -- --------------------------------------------------------
 
@@ -158,8 +173,8 @@ CREATE TABLE `detail_point` (
 --
 
 INSERT INTO `detail_point` (`id_siswa`, `point_pelanggaran`, `point_penghargaan`, `last_update`) VALUES
-(2, 0, 0, '2020-06-20'),
-(6, 20, 15, '2020-06-20');
+(2, 60, 0, '2020-06-21'),
+(6, 25, 15, '2020-06-21');
 
 -- --------------------------------------------------------
 
@@ -429,7 +444,12 @@ CREATE TABLE `pelanggaran` (
 --
 
 INSERT INTO `pelanggaran` (`id_pelanggaran`, `id_siswa`, `id_aturan`, `tanggal`) VALUES
-(17, 6, 6, '2020-06-01');
+(17, 6, 6, '2020-06-01'),
+(18, 6, 4, '2020-06-09'),
+(19, 2, 4, '2020-06-01'),
+(20, 2, 6, '2020-06-14'),
+(21, 2, 5, '2020-06-15'),
+(22, 2, 6, '2020-06-16');
 
 -- --------------------------------------------------------
 
@@ -492,7 +512,8 @@ CREATE TABLE `sanksi` (
 
 INSERT INTO `sanksi` (`id_sanksi`, `uraian`, `minimum_point`, `maximum_point`) VALUES
 (1, 'Skorsing 3 hari', 25, 60),
-(2, 'Skorsing selama 6 hari\r\nMembuat surat pernyataan', 50, NULL);
+(2, 'Skorsing selama 6 hari\r\nMembuat surat pernyataan', 50, NULL),
+(3, 'Toleransi', 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -596,7 +617,9 @@ CREATE TABLE `tahun_ajaran` (
 
 INSERT INTO `tahun_ajaran` (`id_tahun_ajaran`, `tahun_ajaran`) VALUES
 (1, '2017/2018'),
-(3, '2018/2019');
+(3, '2018/2019'),
+(5, '2019/2020'),
+(4, '2020/2021');
 
 -- --------------------------------------------------------
 
@@ -938,7 +961,7 @@ ALTER TABLE `agama`
 -- AUTO_INCREMENT for table `akumulasi_point`
 --
 ALTER TABLE `akumulasi_point`
-  MODIFY `id_akumulasi_point` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_akumulasi_point` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
 
 --
 -- AUTO_INCREMENT for table `aturan`
@@ -956,7 +979,7 @@ ALTER TABLE `detail_absensi`
 -- AUTO_INCREMENT for table `detail_akumulasi_point`
 --
 ALTER TABLE `detail_akumulasi_point`
-  MODIFY `id_detail_akumulasi_point` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id_detail_akumulasi_point` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `hari_efektif`
@@ -1016,7 +1039,7 @@ ALTER TABLE `pekerjaan`
 -- AUTO_INCREMENT for table `pelanggaran`
 --
 ALTER TABLE `pelanggaran`
-  MODIFY `id_pelanggaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id_pelanggaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
 -- AUTO_INCREMENT for table `penghargaan`
@@ -1034,7 +1057,7 @@ ALTER TABLE `prestasi`
 -- AUTO_INCREMENT for table `sanksi`
 --
 ALTER TABLE `sanksi`
-  MODIFY `id_sanksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_sanksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `semester`
@@ -1064,7 +1087,7 @@ ALTER TABLE `status_absensi`
 -- AUTO_INCREMENT for table `tahun_ajaran`
 --
 ALTER TABLE `tahun_ajaran`
-  MODIFY `id_tahun_ajaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_tahun_ajaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tindakan`
