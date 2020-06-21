@@ -34,11 +34,38 @@ $this->params['breadcrumbs'][] = $this->title;
                         ['attribute' => 'id_prestasi', 'visible' => false],
                         [
                             'attribute' => 'siswa.id_siswa',
-                            'label' => 'Id Siswa',
+                            'label' => 'Siswa',
+                            'value' => function($model){
+                                return $model->siswa->nama_siswa;
+                            }
                         ],
                         [
-                            'attribute' => 'penghargaan.id_penghargaan',
-                            'label' => 'Id Penghargaan',
+                            'attribute' => 'siswa.id_kelas',
+                            'label' => 'Kelas',
+                            'value' => function($model){
+                                return $model->siswa->onKelasSiswa->kelas->namaKelas->nama_kelas;
+                            }
+                        ],
+                        [
+                            'attribute' => 'penghargaan.id_kategori_penghargaan',
+                            'label' => 'Jenis Penghargaan',
+                            'value' => function($model){
+                                return $model->penghargaan->kategoriPenghargaan->kategori_penghargaan;
+                            }
+                        ],
+                        [
+                            'attribute' => 'penghargaan.id__penghargaan',
+                            'label' => 'Penghargaan Atas',
+                            'value' => function($model){
+                                return $model->penghargaan->uraian_penghargaan;
+                            }
+                        ],
+                        [
+                            'attribute' => 'penghargaan.point',
+                            'label' => 'Jumlah Point',
+                            'value' => function($model){
+                                return $model->penghargaan->point_penghargaan. " Point";
+                            }
                         ],
                         'tanggal',
                     ];
@@ -46,42 +73,6 @@ $this->params['breadcrumbs'][] = $this->title;
                         'model' => $model,
                         'attributes' => $gridColumn,
                     ]);
-                    ?>
-                    <!-- </div> -->
-                    <div class="pt-3">
-                        <h3><b>Siswa<?=' ' . Html::encode($this->title)?></b></h3>
-                    </div>
-                    <?php
-                    $gridColumnSiswa = [
-                        'id_wali_murid',
-                        'id_agama',
-                        'nis',
-                        'nama_siswa',
-                        'tempat_lahir_siswa',
-                        'tanggal_lahir_siswa',
-                        'jenis_kelamin_siswa',
-                        'alamat_rumah_siswa',
-                        'alamat_domisili_siswa',
-                        'no_hp_siswa',
-                        'foto_siswa',
-                    ];
-                    echo DetailView::widget([
-                        'model' => $model->siswa,
-                        'attributes' => $gridColumnSiswa]);
-                    ?>
-                    <div class="pt-3">
-                        <h3><b>Penghargaan<?=' ' . Html::encode($this->title)?></b></h3>
-                    </div>
-                    <?php
-                    $gridColumnPenghargaan = [
-                        'id_kategori_penghargaan',
-                        'uraian_penghargaan',
-                        'point_penghargaan',
-                        'pasal',
-                    ];
-                    echo DetailView::widget([
-                        'model' => $model->penghargaan,
-                        'attributes' => $gridColumnPenghargaan]);
                     ?>
                 </div>
             </div>

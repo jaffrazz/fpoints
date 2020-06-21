@@ -29,7 +29,7 @@ class PrestasiController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'create', 'update', 'delete'],
+                        'actions' => ['index', 'create', 'view', 'update', 'delete'],
                         'roles' => ['@']
                     ],
                     [
@@ -60,13 +60,13 @@ class PrestasiController extends Controller
      * @param integer $id
      * @return mixed
      */
-    // public function actionView($id)
-    // {
-    //     $model = $this->findModel($id);
-    //     return $this->render('view', [
-    //         'model' => $this->findModel($id),
-    //     ]);
-    // }
+    public function actionView($id)
+    {
+        $model = $this->findModel($id);
+        return $this->render('view', [
+            'model' => $this->findModel($id),
+        ]);
+    }
 
     /**
      * Creates a new Prestasi model.
