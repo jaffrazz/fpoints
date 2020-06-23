@@ -3,6 +3,7 @@
 use kartik\grid\GridView;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
+use mdm\admin\components\Helper;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Absensi */
@@ -26,16 +27,18 @@ $this->params['breadcrumbs'][] = $this->title;
         <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-header">
-
-                    <?=Html::a('Update', ['update', 'id' => $model->id_absensi], ['class' => 'btn btn-primary'])?>
-                    <?=Html::a('Delete', ['delete', 'id' => $model->id_absensi], [
-                        'class' => 'btn btn-danger',
-                        'data' => [
-                            'confirm' => 'Are you sure you want to delete this item?',
-                            'method' => 'post',
-                        ],
-                    ])
-                    ?>
+                    <?php if(Helper::checkRoute('Update')){
+                        echo Html::a('Update', ['update', 'id' => $model->id_absensi], ['class' => 'btn btn-primary']);
+                    } ?>
+                    <?php if(Helper::checkRoute('Update')){
+                        echo Html::a('Delete', ['delete', 'id' => $model->id_absensi], [
+                            'class' => 'btn btn-danger',
+                            'data' => [
+                                'confirm' => 'Are you sure you want to delete this item?',
+                                'method' => 'post',
+                            ],
+                        ]);
+                    } ?>
                 </div>
                 <div class="box-body">
                     <?php

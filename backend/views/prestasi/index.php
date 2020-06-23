@@ -7,6 +7,7 @@
 use kartik\export\ExportMenu;
 use kartik\grid\GridView;
 use yii\helpers\Html;
+use mdm\admin\components\Helper;
 
 $this->title = 'Prestasi';
 $this->params['breadcrumbs'][] = $this->title;
@@ -82,7 +83,7 @@ $this->registerJs($search);
                         ],
                         [
                             'class' => 'yii\grid\ActionColumn',
-                            'template' => '{view} {update} {delete}',
+                            'template' => Helper::filterActionColumn('{view} {update} {delete}')
                         ],
                     ];
                     ?>

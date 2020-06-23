@@ -7,6 +7,7 @@
 use kartik\export\ExportMenu;
 use kartik\grid\GridView;
 use yii\helpers\Html;
+use mdm\admin\components\Helper;
 
 $this->title = 'Absensi';
 $this->params['breadcrumbs'][] = $this->title;
@@ -22,9 +23,6 @@ $this->registerJs($search);
         <div class="col-md-12">
             <div class="box box-primary">
                 <div class="box-header">
-
-                    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
-
                     <p>
                         <?=Html::a('Create Absensi', ['create'], ['class' => 'btn btn-success'])?>
                         <?=Html::a('Advance Search', '#', ['class' => 'btn btn-info search-button'])?>
@@ -58,6 +56,7 @@ $this->registerJs($search);
                         ],
                         [
                             'class' => 'yii\grid\ActionColumn',
+                            'template' => Helper::filterActionColumn('{view} {update} {delete}')
                         ],
                     ];
                     ?>
