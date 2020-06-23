@@ -36,6 +36,15 @@ if (Yii::$app->controller->action->id === 'login') {
     // initial nama pegawai
     $namaPegawai = $pegawai->nama_pegawai;
 
+$js =
+    <<<Js
+    let inputs = document.querySelectorAll('input[type=text]');
+    if(inputs.length){
+        inputs.forEach(input => (input.hasAttribute('data-datepicker-source')) ? input.setAttribute('autocomplete','off') : '' )
+    }
+Js;
+$this->registerJs($js);
+
     ?>
     <?php $this->beginPage() ?>
     <!DOCTYPE html>
