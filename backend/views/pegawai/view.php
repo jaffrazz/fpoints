@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 use kartik\grid\GridView;
 use yii\helpers\Url;
+use backend\helpers\File;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Pegawai */
@@ -11,6 +12,7 @@ use yii\helpers\Url;
 $this->title = $model->nama_pegawai;
 $this->params['breadcrumbs'][] = ['label' => 'Pegawai', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="pegawai-view">
 
@@ -30,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ?>
                 </div>
                 <div class="box-body">
-                    <img src="<?= Url::to('@web/uploaded/profile/'. $model->foto_pegawai) ?>" 
+                    <img src="<?= File::check('uploaded/profile', $model->foto_siswa, 'default.png') ?>" 
                         alt="Profile-<?= $model->id_pegawai ?>"
                         class="img img-responsive img-thumbnail"
                         style="max-width: 250px; margin: 20px auto; display: block;">
