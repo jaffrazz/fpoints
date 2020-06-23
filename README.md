@@ -42,14 +42,9 @@ return $config;
 ## TODOs List
 
 - [x] Siswa  [ Create ] Error
-- [ ] Pelanggaran add
-    - [x] View
-    - [ ] telah jalani hukuman [ next version ]
 - [x] Select2 pelanggaran & prestasi to ajax
 - [x] user, when pict not found
-- [ ] Hide input date autocomplete
-- [ ] Sms gateway at pelanggaran, and absensi.
-- [ ] Generate NIP automatic
+- [x] Hide input date autocomplete
 - [x] Dependent dropdown.
     - [x] Pelanggaran Filter
     - [x] Prestasi Filter
@@ -59,16 +54,6 @@ return $config;
 - [x] Advanced Search
     - [x] Date Search Error 
     - [x] Kelas [ kelas ] search
-- [ ] Filters
-    - [x] Aturan [ point - input number ]
-    - [x] Absensi [ Tanggal Efektif ]
-    - [x] Pelanggaran [ Add kelas - for depend dropdown, Point - Number ]
-    - [x] Prestasi [ Add Kelas - for depend dropdown]
-    - [ ] Activate sort by kelas [ prestasi, pelanggaran ]
-    - [ ] -
-- [x] Roles
-- [ ] APIs Android
-- [ ] Absensi only in hari efektif.
 - [x] View Show Detail
     - [x] Jurusan
     - [x] Aturan, Penghargaan [ Add total history, and history in month ]
@@ -82,12 +67,12 @@ return $config;
 - [x] Input Select2
     - [x] Wali Kelas [ pegawai - only pegawai havent active class ]
 - [x] Model label
-- [x] Structure Updated
+- [ ] Structure Updated
     - [x] Add ( start_date, end_date ) to hari tidak efektif
     - [x] Delete Tanggal Efektif
-    - [ ] Remove maximum point from table sanksi
     - [x] Add Active Status at Kelas
         - [x] Pegawai View
+    - [ ] Remove maximum point from table sanksi
 - [ ] CRUD 
     - [x] Sanksi
     - [x] Detail Point (R) [ Update automatic ]
@@ -96,4 +81,19 @@ return $config;
         - [ ] only can perfom action in specific month
     - [ ] SP
     - [ ] User
+- [ ] Filters
+    - [x] Aturan [ point - input number ]
+    - [x] Absensi [ Tanggal Efektif ]
+    - [x] Pelanggaran [ Add kelas - for depend dropdown, Point - Number ]
+    - [x] Prestasi [ Add Kelas - for depend dropdown]
+    - [ ] Activate sort by kelas [ prestasi, pelanggaran ]
+    - [ ] -
+- [x] Roles
+- [ ] APIs Android
+- [ ] Absensi only in hari efektif.
+- [ ] Sms gateway at pelanggaran, and absensi.
+- [ ] Generate NIP automatic
+- [ ] Pelanggaran add
+    - [x] View
+    - [ ] telah jalani hukuman [ next version ]
 - [ ] Etc
