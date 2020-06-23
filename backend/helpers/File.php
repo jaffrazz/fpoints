@@ -93,4 +93,25 @@ class File {
 
         return $ret;
     }
+
+    /**
+     * Check and return file path
+     * 
+     * @param $path         path to file directory
+     * @param $filename     name of file
+     * @param $default      secondary file if primary file not exist
+     * @return $imageLink   path to exist file
+     */
+    public function check($path, $filename, $default, $fullDefaulPath = false){
+        $webroot = Url::to("@webroot/$path/");
+        $web = Url::to("@web/$path/");
+
+        $defaultImage = $fullDefaulPath ? $default : $web . $default;
+        $userImage = $web . $filename;
+
+        $userImagePath = $webroot . $filename;
+        $imageLink = file_exists($userImagePath) ? $userImage : $defaultImage;
+
+        return $imageLink;
+    }
 }
