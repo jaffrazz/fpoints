@@ -34,7 +34,7 @@ class AbsensiController extends Controller
                     ],[
                         'allow' => true,
                         'actions' => ['index', 'view', 'create', 'add-detail-absensi'],
-                        'roles' => ['Admin','Petugas TATIB']
+                        'roles' => ['Admin','Petugas ABSENSI']
                     ],
                     [
                         'allow' => false
