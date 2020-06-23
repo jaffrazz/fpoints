@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Html;
+use backend\helpers\File;
 
 /* @var $this \yii\web\View */
 /* @var $content string */
@@ -26,18 +27,11 @@ if (Yii::$app->controller->action->id === 'login') {
 
     $directoryAsset = Yii::$app->assetManager->getPublishedUrl('@vendor/almasaeed2010/adminlte/dist');
 
-    // set profile pictures
-    $web =\yii\helpers\Url::to('@web/uploaded/profile/');
-    $webroot =\yii\helpers\Url::to('@webroot/uploaded/profile/');
-
     $pegawai = \common\models\Pegawai::findOne(Yii::$app->user->identity->id_pegawai);
 
-    $path_profile = $web . $pegawai->foto_pegawai;
-    $real_path_profile = $webroot . $pegawai->foto_pegawai;
+    $default_profile = $directoryAsset . "/img/user2-160x160.jpg";
 
-    $defaul_profile = $directoryAsset . "/img/user2-160x160.jpg";
-
-    $profilePict = ( file_exists($real_path_profile) ) ? $path_profile : $defaul_profile;
+    $profilePict = File::check('uploaded/profile', $pegawai->foto_pegawai, $default_profile, true);
 
     // initial nama pegawai
     $namaPegawai = $pegawai->nama_pegawai;
