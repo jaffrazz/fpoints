@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 21, 2020 at 03:21 PM
+-- Generation Time: Jun 23, 2020 at 01:34 PM
 -- Server version: 10.1.44-MariaDB-0ubuntu0.18.04.1
 -- PHP Version: 7.2.26-1+ubuntu18.04.1+deb.sury.org+1
 
@@ -107,6 +107,107 @@ INSERT INTO `aturan` (`id_aturan`, `id_kategori`, `id_tindakan`, `pasal`, `uraia
 (4, 1, 1, 'A1', 'Datang terlambat < 15 menit', 5),
 (5, 1, 1, 'A2', 'Datang terlambat > 15 menit', 15),
 (6, 1, 1, 'A3', 'Tidak masuk tanpa keterangan', 20);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auth_assignment`
+--
+
+CREATE TABLE `auth_assignment` (
+  `item_name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `user_id` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `created_at` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auth_item`
+--
+
+CREATE TABLE `auth_item` (
+  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `type` smallint(6) NOT NULL,
+  `description` text COLLATE utf8_unicode_ci,
+  `rule_name` varchar(64) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `data` blob,
+  `created_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `auth_item`
+--
+
+INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `created_at`, `updated_at`) VALUES
+('/absensi/add-detail-absensi', 2, NULL, NULL, NULL, 1592741952, 1592741952),
+('/absensi/create', 2, NULL, NULL, NULL, 1592741952, 1592741952),
+('/absensi/delete', 2, NULL, NULL, NULL, 1592741952, 1592741952),
+('/absensi/index', 2, NULL, NULL, NULL, 1592741952, 1592741952),
+('/absensi/update', 2, NULL, NULL, NULL, 1592741952, 1592741952),
+('/absensi/view', 2, NULL, NULL, NULL, 1592741952, 1592741952),
+('/pelanggaran/create', 2, NULL, NULL, NULL, 1592741777, 1592741777),
+('/pelanggaran/delete', 2, NULL, NULL, NULL, 1592741777, 1592741777),
+('/pelanggaran/index', 2, NULL, NULL, NULL, 1592741777, 1592741777),
+('/pelanggaran/update', 2, NULL, NULL, NULL, 1592741777, 1592741777),
+('/pelanggaran/view', 2, NULL, NULL, NULL, 1592741777, 1592741777),
+('createAbsensi', 2, 'permission to create absensi', NULL, NULL, 1592742441, 1592742441),
+('createPelanggaran', 2, 'permission to create pelanggaran', NULL, NULL, 1592742529, 1592742529),
+('ManageAbsensi', 2, 'Permission to manage absensi', NULL, NULL, 1592742474, 1592742474),
+('managePelanggaran', 2, 'Permission to manage pelanggaran', NULL, NULL, 1592742555, 1592742555),
+('Petugas Absensi', 1, 'Petugas yang bertugas melakukan absensi setiap harinya', NULL, NULL, 1592740799, 1592740799),
+('Petugas TATIB', 1, 'Petugas tata tertib , bertanggung jawab atas pelanggaran yang dilakukan oleh siswa', NULL, NULL, 1592740760, 1592740760);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auth_item_child`
+--
+
+CREATE TABLE `auth_item_child` (
+  `parent` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `child` varchar(64) COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+
+--
+-- Dumping data for table `auth_item_child`
+--
+
+INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+('createAbsensi', '/absensi/add-detail-absensi'),
+('createAbsensi', '/absensi/create'),
+('createAbsensi', '/absensi/index'),
+('createAbsensi', '/absensi/view'),
+('createPelanggaran', '/pelanggaran/create'),
+('createPelanggaran', '/pelanggaran/index'),
+('createPelanggaran', '/pelanggaran/view'),
+('ManageAbsensi', '/absensi/add-detail-absensi'),
+('ManageAbsensi', '/absensi/create'),
+('ManageAbsensi', '/absensi/delete'),
+('ManageAbsensi', '/absensi/index'),
+('ManageAbsensi', '/absensi/update'),
+('ManageAbsensi', '/absensi/view'),
+('managePelanggaran', '/pelanggaran/create'),
+('managePelanggaran', '/pelanggaran/delete'),
+('managePelanggaran', '/pelanggaran/index'),
+('managePelanggaran', '/pelanggaran/update'),
+('managePelanggaran', '/pelanggaran/view'),
+('Petugas Absensi', 'createAbsensi'),
+('Petugas TATIB', 'createPelanggaran');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `auth_rule`
+--
+
+CREATE TABLE `auth_rule` (
+  `name` varchar(64) COLLATE utf8_unicode_ci NOT NULL,
+  `data` blob,
+  `created_at` int(11) DEFAULT NULL,
+  `updated_at` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -326,6 +427,21 @@ INSERT INTO `kelas` (`id_kelas`, `id_jurusan`, `id_wali_kelas`, `kelas`, `grade`
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `menu`
+--
+
+CREATE TABLE `menu` (
+  `id` int(11) NOT NULL,
+  `name` varchar(128) NOT NULL,
+  `parent` int(11) DEFAULT NULL,
+  `route` varchar(255) DEFAULT NULL,
+  `order` int(11) DEFAULT NULL,
+  `data` blob
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `migration`
 --
 
@@ -340,7 +456,13 @@ CREATE TABLE `migration` (
 
 INSERT INTO `migration` (`version`, `apply_time`) VALUES
 ('m000000_000000_base', NULL),
-('m130524_201442_init', NULL);
+('m130524_201442_init', NULL),
+('m140506_102106_rbac_init', 1592737980),
+('m140602_111327_create_menu_table', 1592728179),
+('m160312_050000_create_user', 1592728179),
+('m170907_052038_rbac_add_index_on_auth_assignment_user_id', 1592737980),
+('m180523_151638_rbac_updates_indexes_without_prefix', 1592737981),
+('m200409_110543_rbac_update_mssql_trigger', 1592737981);
 
 -- --------------------------------------------------------
 
@@ -738,6 +860,34 @@ ALTER TABLE `aturan`
   ADD KEY `FK_ON_TINDAKAN_ATURAN` (`id_tindakan`);
 
 --
+-- Indexes for table `auth_assignment`
+--
+ALTER TABLE `auth_assignment`
+  ADD PRIMARY KEY (`item_name`,`user_id`),
+  ADD KEY `idx-auth_assignment-user_id` (`user_id`);
+
+--
+-- Indexes for table `auth_item`
+--
+ALTER TABLE `auth_item`
+  ADD PRIMARY KEY (`name`),
+  ADD KEY `rule_name` (`rule_name`),
+  ADD KEY `idx-auth_item-type` (`type`);
+
+--
+-- Indexes for table `auth_item_child`
+--
+ALTER TABLE `auth_item_child`
+  ADD PRIMARY KEY (`parent`,`child`),
+  ADD KEY `child` (`child`);
+
+--
+-- Indexes for table `auth_rule`
+--
+ALTER TABLE `auth_rule`
+  ADD PRIMARY KEY (`name`);
+
+--
 -- Indexes for table `detail_absensi`
 --
 ALTER TABLE `detail_absensi`
@@ -808,6 +958,13 @@ ALTER TABLE `kelas`
   ADD KEY `FK_ON_WALIKELAS` (`id_wali_kelas`),
   ADD KEY `FK_TAHUN_AJARAN` (`id_tahun_ajaran`),
   ADD KEY `id_wali_kelas` (`id_wali_kelas`) USING BTREE;
+
+--
+-- Indexes for table `menu`
+--
+ALTER TABLE `menu`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `parent` (`parent`);
 
 --
 -- Indexes for table `migration`
@@ -1019,6 +1176,12 @@ ALTER TABLE `kelas`
   MODIFY `id_kelas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
+-- AUTO_INCREMENT for table `menu`
+--
+ALTER TABLE `menu`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
 -- AUTO_INCREMENT for table `pegawai`
 --
 ALTER TABLE `pegawai`
@@ -1133,6 +1296,25 @@ ALTER TABLE `aturan`
   ADD CONSTRAINT `FK_ON_TINDAKAN_ATURAN` FOREIGN KEY (`id_tindakan`) REFERENCES `tindakan` (`id_tindakan`) ON UPDATE CASCADE;
 
 --
+-- Constraints for table `auth_assignment`
+--
+ALTER TABLE `auth_assignment`
+  ADD CONSTRAINT `auth_assignment_ibfk_1` FOREIGN KEY (`item_name`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `auth_item`
+--
+ALTER TABLE `auth_item`
+  ADD CONSTRAINT `auth_item_ibfk_1` FOREIGN KEY (`rule_name`) REFERENCES `auth_rule` (`name`) ON DELETE SET NULL ON UPDATE CASCADE;
+
+--
+-- Constraints for table `auth_item_child`
+--
+ALTER TABLE `auth_item_child`
+  ADD CONSTRAINT `auth_item_child_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `auth_item_child_ibfk_2` FOREIGN KEY (`child`) REFERENCES `auth_item` (`name`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `detail_absensi`
 --
 ALTER TABLE `detail_absensi`
@@ -1161,6 +1343,12 @@ ALTER TABLE `kelas`
   ADD CONSTRAINT `FK_ON_JURUSAN_KELAS` FOREIGN KEY (`id_jurusan`) REFERENCES `jurusan` (`id_jurusan`),
   ADD CONSTRAINT `FK_ON_WALIKELAS` FOREIGN KEY (`id_wali_kelas`) REFERENCES `wali_kelas` (`id_wali_kelas`),
   ADD CONSTRAINT `FK_TAHUN_AJARAN` FOREIGN KEY (`id_tahun_ajaran`) REFERENCES `tahun_ajaran` (`id_tahun_ajaran`);
+
+--
+-- Constraints for table `menu`
+--
+ALTER TABLE `menu`
+  ADD CONSTRAINT `menu_ibfk_1` FOREIGN KEY (`parent`) REFERENCES `menu` (`id`) ON DELETE SET NULL ON UPDATE CASCADE;
 
 --
 -- Constraints for table `nama_kelas`
