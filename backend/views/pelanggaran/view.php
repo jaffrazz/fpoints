@@ -18,10 +18,10 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="box box-primary">
                 <div class="box-header">
                     <?php if(Helper::checkRoute('Update')){
-                        echo Html::a('Update', ['update', 'id' => $model->id_absensi], ['class' => 'btn btn-primary']);
+                        echo Html::a('Update', ['update', 'id' => $model->id_pelanggaran], ['class' => 'btn btn-primary']);
                     } ?>
                     <?php if(Helper::checkRoute('Update')){
-                        echo Html::a('Delete', ['delete', 'id' => $model->id_absensi], [
+                        echo Html::a('Delete', ['delete', 'id' => $model->id_pelanggaran], [
                             'class' => 'btn btn-danger',
                             'data' => [
                                 'confirm' => 'Are you sure you want to delete this item?',
