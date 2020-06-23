@@ -1,3 +1,12 @@
+<?php 
+
+$admin = Yii::$app->user->can('Admin');
+$tatib = Yii::$app->user->can('Petugas TATIB');
+$absensi = Yii::$app->user->can('Petugas ABSENSI');
+
+
+
+?>
 <aside class="main-sidebar">
 
     <section class="sidebar">
@@ -35,16 +44,20 @@
                         'label' => 'Kepegawaian',
                         'icon' => 'book',
                         'url' => '#',
+                        'visible' => $admin,
                         'items' => [
                             ['label' => 'Jabatan', 'icon' => 'file-code-o', 'url' => ['/jabatan']],
                             ['label' => 'Pegawai', 'icon' => 'file-code-o', 'url' => ['/pegawai']],
                             // ['label' => 'User', 'icon' => 'file-code-o', 'url' => ['/user']],
                         ]
                     ],
+                    ['label' => 'Pelanggaran', 'icon' => 'file-code-o', 'visible' => $tatib, 'url' => ['/pelanggaran']],
+                    ['label' => 'Prestasi', 'icon' => 'file-code-o', 'visible' => $tatib, 'url' => ['/prestasi']],
                     [
                         'label' => 'Kejadian',
                         'icon' => 'book',
                         'url' => '#',
+                        'visible' => $admin,
                         'items' => [
                             ['label' => 'Aturan', 'icon' => 'file-code-o', 'url' => ['/aturan']],
                             ['label' => 'Pelanggaran', 'icon' => 'file-code-o', 'url' => ['/pelanggaran']],
@@ -55,6 +68,7 @@
                     [
                         'label' => 'Master Data', 
                         'icon' => 'book',
+                        'visible' => $admin,
                         'url' => '#',
                         'items' => [
                             ['label' => 'Agama', 'icon' => 'file-code-o', 'url' => ['/agama']],
@@ -74,6 +88,7 @@
                     [
                         'label' => 'Master Siswa & Kelas',
                         'icon' => 'book',
+                        'visible' => $admin,
                         'url' => '#',
                         'items' => [
                             ['label' => 'Kelas', 'icon' => 'file-code-o', 'url' => ['/kelas']],
@@ -82,40 +97,8 @@
                             ['label' => 'Wali Murid', 'icon' => 'file-code-o', 'url' => ['/wali-murid']],
                         ]
                     ],
-                    ['label' => 'Absensi', 'icon' => 'file-code-o', 'url' => ['/absensi']],
-                    ['label' => 'Akumulasi Point', 'icon' => 'file-code-o', 'url' => ['/akumulasi-point']],
-                    // ['label' => 'Tanggal Efektif', 'icon' => 'file-code-o', 'url' => ['/tanggal-efektif']],
-
-                    ['label' => 'Menu Yii2', 'options' => ['class' => 'header']],
-                    ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii']],
-                    ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug']],
-                    ['label' => 'Login', 'url' => ['site/login'], 'visible' => Yii::$app->user->isGuest],
-                    [
-                        'label' => 'Some tools',
-                        'icon' => 'share',
-                        'url' => '#',
-                        'items' => [
-                            ['label' => 'Gii', 'icon' => 'file-code-o', 'url' => ['/gii'],],
-                            ['label' => 'Debug', 'icon' => 'dashboard', 'url' => ['/debug'],],
-                            [
-                                'label' => 'Level One',
-                                'icon' => 'circle-o',
-                                'url' => '#',
-                                'items' => [
-                                    ['label' => 'Level Two', 'icon' => 'circle-o', 'url' => '#',],
-                                    [
-                                        'label' => 'Level Two',
-                                        'icon' => 'circle-o',
-                                        'url' => '#',
-                                        'items' => [
-                                            ['label' => 'Level Three', 'icon' => 'circle-o', 'url' => '#',],
-                                            ['label' => 'Level Three', 'icon' => 'circle-o', 'url' => '#',],
-                                        ],
-                                    ],
-                                ],
-                            ],
-                        ],
-                    ],
+                    ['label' => 'Absensi', 'visible' => $admin or $absensi, 'icon' => 'file-code-o', 'url' => ['/absensi']],
+                    ['label' => 'Akumulasi Point', 'visible' => $admin, 'icon' => 'file-code-o', 'url' => ['/akumulasi-point']],
                 ],
             ]
         ) ?>
