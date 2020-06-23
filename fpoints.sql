@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 23, 2020 at 01:34 PM
+-- Generation Time: Jun 23, 2020 at 04:28 PM
 -- Server version: 10.1.44-MariaDB-0ubuntu0.18.04.1
 -- PHP Version: 7.2.26-1+ubuntu18.04.1+deb.sury.org+1
 
@@ -120,6 +120,15 @@ CREATE TABLE `auth_assignment` (
   `created_at` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 
+--
+-- Dumping data for table `auth_assignment`
+--
+
+INSERT INTO `auth_assignment` (`item_name`, `user_id`, `created_at`) VALUES
+('Admin', '1', 1592898828),
+('Petugas ABSENSI', '2', 1592904018),
+('Petugas TATIB', '2', 1592901278);
+
 -- --------------------------------------------------------
 
 --
@@ -152,11 +161,17 @@ INSERT INTO `auth_item` (`name`, `type`, `description`, `rule_name`, `data`, `cr
 ('/pelanggaran/index', 2, NULL, NULL, NULL, 1592741777, 1592741777),
 ('/pelanggaran/update', 2, NULL, NULL, NULL, 1592741777, 1592741777),
 ('/pelanggaran/view', 2, NULL, NULL, NULL, 1592741777, 1592741777),
+('/prestasi/create', 2, NULL, NULL, NULL, 1592901589, 1592901589),
+('/prestasi/delete', 2, NULL, NULL, NULL, 1592901590, 1592901590),
+('/prestasi/index', 2, NULL, NULL, NULL, 1592901589, 1592901589),
+('/prestasi/update', 2, NULL, NULL, NULL, 1592901590, 1592901590),
+('/prestasi/view', 2, NULL, NULL, NULL, 1592901589, 1592901589),
+('Admin', 1, NULL, NULL, NULL, 1592898478, 1592898478),
+('adminManage', 2, NULL, NULL, NULL, 1592902625, 1592902625),
 ('createAbsensi', 2, 'permission to create absensi', NULL, NULL, 1592742441, 1592742441),
 ('createPelanggaran', 2, 'permission to create pelanggaran', NULL, NULL, 1592742529, 1592742529),
-('ManageAbsensi', 2, 'Permission to manage absensi', NULL, NULL, 1592742474, 1592742474),
-('managePelanggaran', 2, 'Permission to manage pelanggaran', NULL, NULL, 1592742555, 1592742555),
-('Petugas Absensi', 1, 'Petugas yang bertugas melakukan absensi setiap harinya', NULL, NULL, 1592740799, 1592740799),
+('createPrestasi', 2, NULL, NULL, NULL, 1592901563, 1592901563),
+('Petugas ABSENSI', 1, NULL, NULL, NULL, 1592899661, 1592899661),
 ('Petugas TATIB', 1, 'Petugas tata tertib , bertanggung jawab atas pelanggaran yang dilakukan oleh siswa', NULL, NULL, 1592740760, 1592740760);
 
 -- --------------------------------------------------------
@@ -175,6 +190,16 @@ CREATE TABLE `auth_item_child` (
 --
 
 INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
+('Admin', 'adminManage'),
+('adminManage', '/absensi/delete'),
+('adminManage', '/absensi/update'),
+('adminManage', '/pelanggaran/delete'),
+('adminManage', '/pelanggaran/update'),
+('adminManage', '/prestasi/delete'),
+('adminManage', '/prestasi/update'),
+('adminManage', 'createAbsensi'),
+('adminManage', 'createPelanggaran'),
+('adminManage', 'createPrestasi'),
 ('createAbsensi', '/absensi/add-detail-absensi'),
 ('createAbsensi', '/absensi/create'),
 ('createAbsensi', '/absensi/index'),
@@ -182,19 +207,12 @@ INSERT INTO `auth_item_child` (`parent`, `child`) VALUES
 ('createPelanggaran', '/pelanggaran/create'),
 ('createPelanggaran', '/pelanggaran/index'),
 ('createPelanggaran', '/pelanggaran/view'),
-('ManageAbsensi', '/absensi/add-detail-absensi'),
-('ManageAbsensi', '/absensi/create'),
-('ManageAbsensi', '/absensi/delete'),
-('ManageAbsensi', '/absensi/index'),
-('ManageAbsensi', '/absensi/update'),
-('ManageAbsensi', '/absensi/view'),
-('managePelanggaran', '/pelanggaran/create'),
-('managePelanggaran', '/pelanggaran/delete'),
-('managePelanggaran', '/pelanggaran/index'),
-('managePelanggaran', '/pelanggaran/update'),
-('managePelanggaran', '/pelanggaran/view'),
-('Petugas Absensi', 'createAbsensi'),
-('Petugas TATIB', 'createPelanggaran');
+('createPrestasi', '/prestasi/create'),
+('createPrestasi', '/prestasi/index'),
+('createPrestasi', '/prestasi/view'),
+('Petugas ABSENSI', 'createAbsensi'),
+('Petugas TATIB', 'createPelanggaran'),
+('Petugas TATIB', 'createPrestasi');
 
 -- --------------------------------------------------------
 
@@ -526,8 +544,8 @@ CREATE TABLE `pegawai` (
 --
 
 INSERT INTO `pegawai` (`id_pegawai`, `id_agama`, `nama_pegawai`, `alamat_pegawai`, `jenis_kelamin_pegawai`, `no_hp_pegawai`, `status_kepegawaian`, `jabatan_pegawai`, `foto_pegawai`) VALUES
-(1, 1, 'admin', 'admin', 'L', '+6281234567890', 'Pegawai Tetap', 1, 'Pegawai_1_1592470610.jpg'),
-(2, 1, 'Defri Indra Mahardika', 'Ds. Pulung Kec. Pulung', 'L', '+6285604845437', 'Tetap', 1, '');
+(1, 1, 'admin', 'admin', 'L', '+6281234567890', 'Pegawai Tetap', 1, 'Pegawai_1_1592896622.jpg'),
+(2, 1, 'Defri Indra Mahardika', 'Ds. Pulung Kec. Pulung', 'L', '+6285604845437', 'Pegawai Tetap', 1, 'Pegawai_2_1592895812.png');
 
 -- --------------------------------------------------------
 
@@ -780,7 +798,8 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`id`, `id_pegawai`, `username`, `auth_key`, `password_hash`, `password_reset_token`, `email`, `status`, `created_at`, `updated_at`) VALUES
-(1, 1, 'admin', '68r2xcRUUj-MNODNLTd3C-FyqU91ENQF', '$2y$13$CX9I6C0VQa6blxgbbPo.cOsMZrsip6xO94/dnYRVnRSjRfJjgrxPG', NULL, 'admin@admin.com', 10, '2020-06-11 02:05:49', '2020-06-11 02:05:49');
+(1, 1, 'admin', '68r2xcRUUj-MNODNLTd3C-FyqU91ENQF', '$2y$13$CX9I6C0VQa6blxgbbPo.cOsMZrsip6xO94/dnYRVnRSjRfJjgrxPG', NULL, 'admin@admin.com', 10, '2020-06-11 02:05:49', '2020-06-11 02:05:49'),
+(2, 2, 'defri', NULL, '$2y$13$CX9I6C0VQa6blxgbbPo.cOsMZrsip6xO94/dnYRVnRSjRfJjgrxPG', NULL, NULL, 10, '2020-06-23 06:54:58', '2020-06-23 06:54:58');
 
 -- --------------------------------------------------------
 
@@ -1101,7 +1120,7 @@ ALTER TABLE `wali_murid`
 -- AUTO_INCREMENT for table `absensi`
 --
 ALTER TABLE `absensi`
-  MODIFY `id_absensi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id_absensi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `agama`
@@ -1125,7 +1144,7 @@ ALTER TABLE `aturan`
 -- AUTO_INCREMENT for table `detail_absensi`
 --
 ALTER TABLE `detail_absensi`
-  MODIFY `id_detail_absensi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id_detail_absensi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `detail_akumulasi_point`
@@ -1257,7 +1276,7 @@ ALTER TABLE `tindakan`
 -- AUTO_INCREMENT for table `user`
 --
 ALTER TABLE `user`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `wali_kelas`
