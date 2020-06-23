@@ -31,12 +31,16 @@ if (Yii::$app->controller->action->id === 'login') {
     $webroot =\yii\helpers\Url::to('@webroot/uploaded/profile/');
 
     $pegawai = \common\models\Pegawai::findOne(Yii::$app->user->identity->id_pegawai);
+
     $path_profile = $web . $pegawai->foto_pegawai;
     $real_path_profile = $webroot . $pegawai->foto_pegawai;
 
     $defaul_profile = $directoryAsset . "/img/user2-160x160.jpg";
 
     $profilePict = ( file_exists($real_path_profile) ) ? $path_profile : $defaul_profile;
+
+    // initial nama pegawai
+    $namaPegawai = $pegawai->nama_pegawai;
 
     ?>
     <?php $this->beginPage() ?>
@@ -55,12 +59,12 @@ if (Yii::$app->controller->action->id === 'login') {
 
         <?= $this->render(
             'header.php',
-            ['directoryAsset' => $directoryAsset, 'profilePict' => $profilePict]
+            ['directoryAsset' => $directoryAsset, 'profilePict' => $profilePict,  'namaPegawai' => $namaPegawai]
         ) ?>
 
         <?= $this->render(
             'left.php',
-            ['directoryAsset' => $directoryAsset, 'profilePict' => $profilePict]
+            ['directoryAsset' => $directoryAsset, 'profilePict' => $profilePict,  'namaPegawai' => $namaPegawai]
         )
         ?>
 

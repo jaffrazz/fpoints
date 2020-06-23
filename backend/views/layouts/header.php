@@ -21,7 +21,7 @@ use yii\helpers\Html;
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         <img src="<?= $profilePict ?>" class="user-image" alt="User Image"/>
-                        <span class="hidden-xs">Alexander Pierce</span>
+                        <span class="hidden-xs"><?= $namaPegawai ?></span>
                     </a>
                     <ul class="dropdown-menu">
                         <!-- User image -->
@@ -30,7 +30,7 @@ use yii\helpers\Html;
                                  alt="User Image"/>
 
                             <p>
-                                Alexander Pierce - Web Developer
+                                <?= $namaPegawai ?> - Web Developer
                                 <small>Member since Nov. 2012</small>
                             </p>
                         </li>
