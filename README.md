@@ -46,6 +46,7 @@ return $config;
     - [x] View
     - [ ] telah jalani hukuman [ next version ]
 - [x] Select2 pelanggaran & prestasi to ajax
+- [ ] user, when pict not found
 - [ ] Hide input date autocomplete
 - [ ] Sms gateway at pelanggaran, and absensi.
 - [ ] Generate NIP automatic
@@ -64,7 +65,7 @@ return $config;
     - [x] Pelanggaran [ Add kelas - for depend dropdown, Point - Number ]
     - [x] Prestasi [ Add Kelas - for depend dropdown]
     - [ ] -
-- [ ] Roles
+- [x] Roles
 - [ ] APIs Android
 - [ ] Absensi only in hari efektif.
 - [x] View Show Detail
