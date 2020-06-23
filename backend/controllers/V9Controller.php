@@ -17,7 +17,6 @@ class V9Controller extends Controller {
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    // 'delete' => ['post'],
                 ],
             ],
             'access' => [

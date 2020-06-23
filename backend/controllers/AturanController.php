@@ -29,7 +29,7 @@ class AturanController extends Controller
                     [
                         'allow' => true,
                         'actions' => ['index', 'view', 'create', 'update', 'delete', 'get-pasal'],
-                        'roles' => ['@']
+                        'roles' => ['Admin']
                     ],
                     [
                         'allow' => false

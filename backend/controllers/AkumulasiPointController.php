@@ -33,7 +33,7 @@ class AkumulasiPointController extends Controller
                     [
                         'allow' => true,
                         'actions' => ['index', 'view', 'create', 'add-detail-akumulasi-point'],
-                        'roles' => ['@']
+                        'roles' => ['Admin']
                     ],
                     [
                         'allow' => false

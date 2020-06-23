@@ -29,7 +29,7 @@ class PekerjaanController extends Controller
                     [
                         'allow' => true,
                         'actions' => ['index', 'create', 'update', 'delete'],
-                        'roles' => ['@']
+                        'roles' => ['Admin']
                     ],
                     [
                         'allow' => false

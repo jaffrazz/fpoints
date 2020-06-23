@@ -29,7 +29,7 @@ class WaliKelasController extends Controller
                     [
                         'allow' => true,
                         'actions' => ['index', 'view', 'create', 'update', 'delete', 'add-kelas'],
-                        'roles' => ['@']
+                        'roles' => ['Admin']
                     ],
                     [
                         'allow' => false

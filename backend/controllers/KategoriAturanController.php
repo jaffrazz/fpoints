@@ -29,7 +29,7 @@ class KategoriAturanController extends Controller
                     [
                         'allow' => true,
                         'actions' => ['index', 'view', 'create', 'update', 'delete', 'add-aturan'],
-                        'roles' => ['@']
+                        'roles' => ['Admin']
                     ],
                     [
                         'allow' => false

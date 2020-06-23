@@ -28,7 +28,7 @@ class HariEfektifController extends Controller
                     [
                         'allow' => true,
                         'actions' => ['index', 'update'],
-                        'roles' => ['@']
+                        'roles' => ['Admin']
                     ],
                     [
                         'allow' => false

@@ -31,7 +31,7 @@ class KelasController extends Controller
                     [
                         'allow' => true,
                         'actions' => ['index', 'view', 'create', 'update', 'delete', 'add-on-kelas-siswa'],
-                        'roles' => ['@']
+                        'roles' => ['Admin']
                     ],
                     [
                         'allow' => false

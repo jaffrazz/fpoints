@@ -29,8 +29,13 @@ class PelanggaranController extends Controller
                 'rules' => [
                     [
                         'allow' => true,
-                        'actions' => ['index', 'create', 'update', 'view', 'delete'],
-                        'roles' => ['@']
+                        'actions' => ['update', 'delete'],
+                        'roles' => ['Admin']
+                    ],
+                    [
+                        'allow' => true,
+                        'actions' => ['index', 'create', 'view'],
+                        'roles' => ['Admin','Petugas TATIB']
                     ],
                     [
                         'allow' => false
