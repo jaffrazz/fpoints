@@ -32,7 +32,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             ?>
                 </div>
                 <div class="box-body">
-                    <img src="<?= File::check('uploaded/profile', $model->foto_siswa, 'default.png') ?>" 
+                    <img src="<?= File::check('uploaded/profile', $model->foto_pegawai, 'default.png') ?>" 
                         alt="Profile-<?= $model->id_pegawai ?>"
                         class="img img-responsive img-thumbnail"
                         style="max-width: 250px; margin: 20px auto; display: block;">
