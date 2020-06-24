@@ -35,6 +35,8 @@ if (Yii::$app->controller->action->id === 'login') {
 
     // initial nama pegawai
     $namaPegawai = $pegawai->nama_pegawai;
+    $statusKepegawaian = $pegawai->status_kepegawaian;
+    $jabatan = $pegawai->jabatan->jabatan;
 
 $js =
     <<<Js
@@ -62,7 +64,13 @@ $this->registerJs($js);
 
         <?= $this->render(
             'header.php',
-            ['directoryAsset' => $directoryAsset, 'profilePict' => $profilePict,  'namaPegawai' => $namaPegawai]
+            [
+                'directoryAsset' => $directoryAsset,
+                'profilePict' => $profilePict,
+                'namaPegawai' => $namaPegawai,
+                'jabatan' => $jabatan,
+                'statusKepegawaian' => $statusKepegawaian
+            ]
         ) ?>
 
         <?= $this->render(
