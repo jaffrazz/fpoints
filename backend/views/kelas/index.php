@@ -76,6 +76,12 @@ $this->registerJs($search);
                             ],
                             [
                                 'attribute' => 'status',
+                                'filter' => [ '1' => 'Active', '0' => 'Non-Active' ],
+                                'filterType' => Gridview::FILTER_SELECT2,
+                                'filterWidgetOptions' => [
+                                    'pluginOptions' => ['allowClear' => true],
+                                ],
+                                'filterInputOptions' => ['placeholder' => 'Status', 'id' => 'grid-kelas-search-status'],
                                 'value' => function($model){
                                     return ($model->status == 0) ? 'Non Active' : 'Active';
                                 }
