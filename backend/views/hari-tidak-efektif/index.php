@@ -44,7 +44,7 @@ $this->registerJs($search);
                             'attribute' => 'tanggal_akhir',
                             'filter' => false,
                             'value' => function($model){
-                                return ($model->tanggal_akhir != null) ? $model->tanggal_akhir : "-";
+                                return ($model->tanggal_akhir != null) ? date('M d, Y',strtotime($model->tanggal_akhir)) : "-";
                             }
                         ],
                         'keterangan_tidak_efektif:ntext',
