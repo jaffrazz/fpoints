@@ -76,9 +76,22 @@ class HariTidakEfektifController extends Controller
     {
         $model = new HariTidakEfektif();
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->save()) {
-            Yii::$app->session->setFlash('success', "Hari tidak efektif berhasil ditambahkan.");
-            return $this->redirect(['view', 'id' => $model->id_hari_tidak_efektif]);
+        if ($model->loadAll(Yii::$app->request->post())) {
+
+            if( $this->checkDate($model->tanggal_awal, $model->tanggal_akhir) ){
+                if( $this->validDate($model) ){
+                    $model->save();
+                    Yii::$app->session->setFlash('success', "Hari tidak efektif berhasil ditambahkan.");
+                    return $this->redirect(['view', 'id' => $model->id_hari_tidak_efektif]);
+                }else{
+                    Yii::$app->session->setFlash('error', "Tanggal akhir tidak boleh lebih kecil dari tanggal awal.");
+                }
+            }else{
+                Yii::$app->session->setFlash('error', 'Tanggal yang anda input telah tersedia, didata lain.');
+            }
+            return $this->render('create', [
+                'model' => $model,
+            ]);
         } else {
             return $this->render('create', [
                 'model' => $model,
@@ -96,9 +109,20 @@ class HariTidakEfektifController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->loadAll(Yii::$app->request->post()) && $model->save()) {
-Yii::$app->session->setFlash('success', "Hari tidak efektif berhasil diubah.");
-            return $this->redirect(['view', 'id' => $model->id_hari_tidak_efektif]);
+        if ($model->loadAll(Yii::$app->request->post())) {
+            
+            if( $this->validDate($model) ){
+                $model->save();
+                Yii::$app->session->setFlash('success', "Hari tidak efektif berhasil diubah.");
+                return $this->redirect(['view', 'id' => $model->id_hari_tidak_efektif]);
+            }else{
+                Yii::$app->session->setFlash('error', "Tanggal akhir tidak boleh lebih kecil dari tanggal awal.");
+
+                return $this->render('update', [
+                    'model' => $model,
+                ]);
+            }
+            
         } else {
             return $this->render('update', [
                 'model' => $model,
@@ -143,5 +167,68 @@ Yii::$app->session->setFlash('success', "Hari tidak efektif berhasil diubah.");
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    /**
+     * check if tanggal_awal less than 
+     * tanggal akhir
+     * 
+     * @param $model
+     * @return boolean
+     */
+    protected function validDate($model){
+        if($model->tanggal_akhir == null){
+            return true;
+        }
+
+        if(strtotime($model->tanggal_awal) < strtotime($model->tanggal_akhir) ){
+            return true;
+        }
+
+        return  false;
+
+    }
+
+    /**
+     * Check if date exist
+     * in database or not
+     * 
+     * @param $start_date
+     * @param $end_date
+     * @return boolean
+     */
+    protected function checkDate($start_date, $end_date = null){
+        $checkStartDate = HariTidakEfektif::find()
+            ->where([
+                'Or',
+                "date(tanggal_awal) = '$start_date' And tanggal_akhir IS null",
+                [
+                    'And',
+                    "date(tanggal_awal) <= '$start_date'",
+                    "date(tanggal_akhir) >= '$start_date'"
+                ]
+            ])->one();
+        if( $end_date != null ){
+            $checkEndDate = HariTidakEfektif::find()
+                ->where([
+                    'Or',
+                    "date(tanggal_awal) = '$end_date' And tanggal_akhir IS null",
+                    [
+                        'And',
+                        "date(tanggal_awal) <= '$end_date'",
+                        "date(tanggal_akhir) >= '$end_date'"
+                    ]
+                ])->one();
+        }
+
+        if ( is_null($checkStartDate)){
+            if( isset($checkEndDate) ){
+                if (is_null($checkEndDate)) return true;
+                else false;
+            } else {
+                return true;
+            }
+        } 
+        return false;
     }
 }
