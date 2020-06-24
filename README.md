@@ -69,18 +69,19 @@ return $config;
 - [x] Model label
 - [x] Roles
 - [x] Absensi only in hari efektif.
-- [ ] Structure Updated
+- [x] Structure Updated
     - [x] Add ( start_date, end_date ) to hari tidak efektif
     - [x] Delete Tanggal Efektif
     - [x] Add Active Status at Kelas
         - [x] Pegawai View
-    - [ ] Remove maximum point from table sanksi
+    - [x] Remove maximum point from table sanksi
+- [x] Pelanggaran add
+    - [x] View
 - [ ] CRUD 
     - [x] Sanksi
     - [x] Detail Point (R) [ Update automatic ]
     - [x] Akumulasi Point [ Action Reset detail point Per semester ]
         - [x] View
-        - [ ] only can perfom action in specific month
     - [ ] SP
     - [ ] User
 - [ ] Filters
@@ -89,11 +90,15 @@ return $config;
     - [x] Pelanggaran [ Add kelas - for depend dropdown, Point - Number ]
     - [x] Prestasi [ Add Kelas - for depend dropdown]
     - [ ] Activate sort by kelas [ prestasi, pelanggaran ]
-    - [ ] -
 - [ ] APIs Android
 - [ ] Sms gateway at pelanggaran, and absensi.
 - [ ] Generate NIP automatic
-- [ ] Pelanggaran add
-    - [x] View
-    - [ ] telah jalani hukuman [ next version ]
+- [ ] Pelanggaran & Prestasi [ -not admin- set tanggal to today by default ]
 - [ ] Etc
+
+## List Next Feature
+- [ ] Pelanggaran
+    - [ ] telah jalani hukuman [ next version ]
+- [ ] CRUD 
+    - [ ] Akumulasi Point [ Action Reset detail point Per semester ]
+        - [ ] <s>only can perfom action in specific month</s>
