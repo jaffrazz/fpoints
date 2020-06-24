@@ -38,6 +38,20 @@ return $config;
 
 ```
 
+# Users
+
+```
+username : admin
+role     : Admin 
+password : admin1234
+
+================================
+
+username : defri
+role     : Petugas Absensi & Petugas Tatib
+password : admin1234
+```
+
 
 ## TODOs List
 
