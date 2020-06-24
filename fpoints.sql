@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost
--- Generation Time: Jun 23, 2020 at 04:28 PM
+-- Generation Time: Jun 24, 2020 at 11:59 AM
 -- Server version: 10.1.44-MariaDB-0ubuntu0.18.04.1
 -- PHP Version: 7.2.26-1+ubuntu18.04.1+deb.sury.org+1
 
@@ -292,8 +292,8 @@ CREATE TABLE `detail_point` (
 --
 
 INSERT INTO `detail_point` (`id_siswa`, `point_pelanggaran`, `point_penghargaan`, `last_update`) VALUES
-(2, 0, 0, '2020-06-21'),
-(6, 5, 10, '2020-06-21');
+(2, 20, 0, '2020-06-24'),
+(6, 35, 10, '2020-06-24');
 
 -- --------------------------------------------------------
 
@@ -340,8 +340,7 @@ CREATE TABLE `hari_tidak_efektif` (
 INSERT INTO `hari_tidak_efektif` (`id_hari_tidak_efektif`, `tanggal_awal`, `tanggal_akhir`, `keterangan_tidak_efektif`) VALUES
 (3, '2020-06-01', NULL, 'an only install one of: mpdf/mpdf[v8.0.6, v7.1.8].\r\n    - Installation request for mpdf/mpdf (locked at v7.1.8) -> satisfiable by mpdf/mpdf[v7.1.8].'),
 (4, '2020-06-02', NULL, 'an only install one of: mpdf/mpdf[v8.0.6, v7.1.8].\r\n    - Installation request for mpdf/mpdf (locked at v7.1.8) -> satisfiable by mpdf/mpdf[v7.1.8].'),
-(5, '2020-06-16', '2020-07-16', 'Liburan Semester 1'),
-(6, '2020-06-01', NULL, '-');
+(6, '2020-06-16', '2020-06-22', '-');
 
 -- --------------------------------------------------------
 
@@ -439,7 +438,7 @@ CREATE TABLE `kelas` (
 
 INSERT INTO `kelas` (`id_kelas`, `id_jurusan`, `id_wali_kelas`, `kelas`, `grade`, `id_tahun_ajaran`, `status`) VALUES
 (19, 1, 8, 'B', 'XII', 1, 1),
-(20, 1, 9, 'A', 'XII', 1, 0),
+(20, 1, 9, 'A', 'XII', 1, 1),
 (21, 1, 8, 'O', 'XII', 1, 1);
 
 -- --------------------------------------------------------
@@ -584,7 +583,10 @@ CREATE TABLE `pelanggaran` (
 --
 
 INSERT INTO `pelanggaran` (`id_pelanggaran`, `id_siswa`, `id_aturan`, `tanggal`) VALUES
-(23, 6, 4, '2020-06-01');
+(23, 6, 4, '2020-06-01'),
+(24, 6, 5, '2020-06-24'),
+(25, 2, 6, '2020-06-24'),
+(26, 6, 5, '2020-06-25');
 
 -- --------------------------------------------------------
 
@@ -636,19 +638,18 @@ INSERT INTO `prestasi` (`id_prestasi`, `id_siswa`, `id_penghargaan`, `tanggal`) 
 
 CREATE TABLE `sanksi` (
   `id_sanksi` int(11) NOT NULL,
-  `uraian` text,
-  `minimum_point` int(11) DEFAULT NULL,
-  `maximum_point` int(11) DEFAULT NULL
+  `uraian` text NOT NULL,
+  `minimum_point` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `sanksi`
 --
 
-INSERT INTO `sanksi` (`id_sanksi`, `uraian`, `minimum_point`, `maximum_point`) VALUES
-(1, 'Skorsing 3 hari', 25, 60),
-(2, 'Skorsing selama 6 hari\r\nMembuat surat pernyataan', 50, NULL),
-(3, 'Toleransi', 0, NULL);
+INSERT INTO `sanksi` (`id_sanksi`, `uraian`, `minimum_point`) VALUES
+(1, 'Skorsing 3 hari', 25),
+(2, 'Skorsing selama 6 hari\r\nMembuat surat pernyataan', 50),
+(3, 'Toleransi', 0);
 
 -- --------------------------------------------------------
 
@@ -1120,7 +1121,7 @@ ALTER TABLE `wali_murid`
 -- AUTO_INCREMENT for table `absensi`
 --
 ALTER TABLE `absensi`
-  MODIFY `id_absensi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_absensi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `agama`
@@ -1144,7 +1145,7 @@ ALTER TABLE `aturan`
 -- AUTO_INCREMENT for table `detail_absensi`
 --
 ALTER TABLE `detail_absensi`
-  MODIFY `id_detail_absensi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `id_detail_absensi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `detail_akumulasi_point`
@@ -1162,7 +1163,7 @@ ALTER TABLE `hari_efektif`
 -- AUTO_INCREMENT for table `hari_tidak_efektif`
 --
 ALTER TABLE `hari_tidak_efektif`
-  MODIFY `id_hari_tidak_efektif` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id_hari_tidak_efektif` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT for table `jabatan`
@@ -1216,7 +1217,7 @@ ALTER TABLE `pekerjaan`
 -- AUTO_INCREMENT for table `pelanggaran`
 --
 ALTER TABLE `pelanggaran`
-  MODIFY `id_pelanggaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `id_pelanggaran` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT for table `penghargaan`
@@ -1234,7 +1235,7 @@ ALTER TABLE `prestasi`
 -- AUTO_INCREMENT for table `sanksi`
 --
 ALTER TABLE `sanksi`
-  MODIFY `id_sanksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_sanksi` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `semester`
