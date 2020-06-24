@@ -19,6 +19,7 @@ use common\models\HariTidakEfektif;
     {
         return [
             [['id_hari_tidak_efektif'], 'integer'],
+            [['tanggal_awal', 'tanggal_akhir',], 'required'],
             [['tanggal_awal', 'tanggal_akhir', 'keterangan_tidak_efektif'], 'safe'],
         ];
     }
@@ -71,8 +72,6 @@ use common\models\HariTidakEfektif;
 
         $query->andFilterWhere([
             'id_hari_tidak_efektif' => $this->id_hari_tidak_efektif,
-            // 'tanggal_awal' => $this->tanggal_awal,
-            // 'tanggal_akhir' => $this->tanggal_akhir,
         ]);
 
         $query->andFilterWhere(['between','tanggal_awal', $tanggal_awal,$tanggal_akhir])
