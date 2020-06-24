@@ -6,7 +6,11 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model common\models\HariTidakEfektif */
 
-$title = $model->keterangan_tidak_efektif;
+
+
+$title = $model->keterangan_tidak_efektif == null 
+    ? $model->tanggal_awal." s/d ".$model->tanggal_akhir 
+    : $model->keterangan_tidak_efektif;
 $title = explode(' ',$title);
 
 if(count($title) > 5){
