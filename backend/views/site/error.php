@@ -18,7 +18,7 @@ $this->title = $name;
             <h3><?= $name ?></h3>
 
             <p>
-                <?= nl2br(Html::encode($message)) ?>
+                <b><?= nl2br(Html::encode($message)) ?></b>
             </p>
 
             <p>
@@ -27,17 +27,6 @@ $this->title = $name;
                 Meanwhile, you may <a href='<?= Yii::$app->homeUrl ?>'>return to dashboard</a> or try using the search
                 form.
             </p>
-
-            <form class='search-form'>
-                <div class='input-group'>
-                    <input type="text" name="search" class='form-control' placeholder="Search"/>
-
-                    <div class="input-group-btn">
-                        <button type="submit" name="submit" class="btn btn-primary"><i class="fa fa-search"></i>
-                        </button>
-                    </div>
-                </div>
-            </form>
         </div>
     </div>
 
