@@ -2,13 +2,15 @@
 
 namespace backend\controllers;
 
-use Yii;
 use common\models\Absensi;
 use common\models\AbsensiSearch;
-use yii\web\Controller;
-use yii\web\NotFoundHttpException;
-use yii\web\ForbiddenHttpException;
+use common\models\HariEfektif;
+use common\models\HariTidakEfektif;
+use Yii;
 use yii\filters\VerbFilter;
+use yii\web\Controller;
+use yii\web\ForbiddenHttpException;
+use yii\web\NotFoundHttpException;
 
 /**
  * AbsensiController implements the CRUD actions for Absensi model.
@@ -30,17 +32,17 @@ class AbsensiController extends Controller
                     [
                         'allow' => true,
                         'actions' => ['update', 'delete'],
-                        'roles' => ['Admin']
-                    ],[
+                        'roles' => ['Admin'],
+                    ], [
                         'allow' => true,
                         'actions' => ['index', 'view', 'create', 'add-detail-absensi'],
-                        'roles' => ['Admin','Petugas ABSENSI']
+                        'roles' => ['Admin', 'Petugas ABSENSI'],
                     ],
                     [
-                        'allow' => false
-                    ]
-                ]
-            ]
+                        'allow' => false,
+                    ],
+                ],
+            ],
         ];
     }
 
@@ -84,14 +86,23 @@ class AbsensiController extends Controller
     public function actionCreate()
     {
         $model = new Absensi();
+        $trans = Yii::$app->db->beginTransaction();
+
+        if ($this->isThisHoliday()) {
+        }
 
         if ($model->loadAll(Yii::$app->request->post()) && $model->saveAll()) {
+            $trans->commit();
+            $kelas = $model->kelas->namaKelas->nama_kelas;
+            $tanggal = $model->tanggal;
+            Yii::$app->session->setFlash('success', "Berhasil melakukan Absen untuk $kelas pada $tanggal");
             return $this->redirect(['view', 'id' => $model->id_absensi]);
         } else {
             return $this->render('create', [
                 'model' => $model,
             ]);
         }
+
     }
 
     /**
@@ -126,7 +137,6 @@ class AbsensiController extends Controller
         return $this->redirect(['index']);
     }
 
-    
     /**
      * Finds the Absensi model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
@@ -142,24 +152,77 @@ class AbsensiController extends Controller
             throw new NotFoundHttpException('The requested page does not exist.');
         }
     }
-    
+
     /**
-    * Action to load a tabular form grid
-    * for DetailAbsensi
-    * @author Yohanes Candrajaya <moo.tensai@gmail.com>
-    * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
-    *
-    * @return mixed
-    */
+     * Action to load a tabular form grid
+     * for DetailAbsensi
+     * @author Yohanes Candrajaya <moo.tensai@gmail.com>
+     * @author Jiwantoro Ndaru <jiwanndaru@gmail.com>
+     *
+     * @return mixed
+     */
     public function actionAddDetailAbsensi()
     {
         if (Yii::$app->request->isAjax) {
             $row = Yii::$app->request->post('DetailAbsensi');
-            if((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('_action') == 'load' && empty($row)) || Yii::$app->request->post('_action') == 'add')
+            if ((Yii::$app->request->post('isNewRecord') && Yii::$app->request->post('_action') == 'load' && empty($row)) || Yii::$app->request->post('_action') == 'add') {
                 $row[] = [];
+            }
+
             return $this->renderAjax('_formDetailAbsensi', ['row' => $row]);
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    /**
+     * Checking it is holiday,
+     * or not
+     *
+     * @return mixed
+     */
+    public function isThisHoliday()
+    {
+        if (Yii::$app->user->can('Admin')) {
+            return true;
+        }
+
+        $days = [
+            "Minggu",
+            "Senin",
+            "Selasa",
+            "Rabu",
+            "Kamis",
+            "Jum'at",
+            "Sabtu",
+        ];
+
+        $today = date('Y-m-d');
+
+        // this is lower case of "W" character
+        // https: //www.php.net/manual/en/function.date.php
+        $day = $days[date('w')];
+
+        $checkHari = HariEfektif::find()
+            ->where([
+                'nama_hari_efektif' => $day,
+            ])->AndWhere(['status_hari_efektif' => 1])->one();
+
+        $checkLibur = HariTidakEfektif::find()
+            ->where([
+                'Or',
+                "date(tanggal_awal) = '$today' And tanggal_akhir IS null",
+                [
+                    'And',
+                    "date(tanggal_awal) <= '$today'",
+                    "date(tanggal_akhir) >= '$today'"
+                ]
+            ])->one();
+
+        if ($checkLibur == null && $checkHari != null) {
+            return true;
+        }
+
+        throw new ForbiddenHttpException("Hari ini adalah hari libur.");
     }
 }

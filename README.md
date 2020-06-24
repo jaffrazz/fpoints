@@ -67,6 +67,8 @@ return $config;
 - [x] Input Select2
     - [x] Wali Kelas [ pegawai - only pegawai havent active class ]
 - [x] Model label
+- [x] Roles
+- [x] Absensi only in hari efektif.
 - [ ] Structure Updated
     - [x] Add ( start_date, end_date ) to hari tidak efektif
     - [x] Delete Tanggal Efektif
@@ -88,9 +90,7 @@ return $config;
     - [x] Prestasi [ Add Kelas - for depend dropdown]
     - [ ] Activate sort by kelas [ prestasi, pelanggaran ]
     - [ ] -
-- [x] Roles
 - [ ] APIs Android
-- [ ] Absensi only in hari efektif.
 - [ ] Sms gateway at pelanggaran, and absensi.
 - [ ] Generate NIP automatic
 - [ ] Pelanggaran add
