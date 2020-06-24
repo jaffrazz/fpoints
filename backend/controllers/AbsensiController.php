@@ -181,7 +181,7 @@ class AbsensiController extends Controller
      *
      * @return mixed
      */
-    public function isThisHoliday()
+    protected function isThisHoliday()
     {
         if (Yii::$app->user->can('Admin')) {
             return true;
