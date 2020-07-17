@@ -31,12 +31,11 @@ return [
             'format' => \yii\web\Response::FORMAT_JSON,
             'on beforeSend' => function ($event) {
                 $response = $event->sender;
-                if ($response->data !== null && Yii::$app->request->get('suppress_response_code')) {
+                if ($response->data !== null) {
                     $response->data = [
                         'success' => $response->isSuccessful,
                         'data' => $response->data,
                     ];
-                    $response->statusCode = 200;
                 }
             },
         ],
