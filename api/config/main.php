@@ -7,19 +7,22 @@ $params = array_merge(
 );
 
 return [
-    'id' => 'app-frontend',
+    'id' => 'app-api',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
-    'controllerNamespace' => 'frontend\controllers',
-    'name' => "FPOINTS",
-    'homeUrl' => "/fpoints",
+    'controllerNamespace' => 'api\controllers',
+    'name' => "FPOINTS API",
+    'homeUrl' => "/fpoints/api",
     'components' => [
         'request' => [
-            'csrfParam' => '_csrf-api',
-            'baseUrl' => "/fpoints",
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ],
+            // 'csrfParam' => '_csrf-api',
+            'baseUrl' => "/fpoints/api",
         ],
         'user' => [
-            'identityClass' => 'common\models\User',
+            'identityClass' => 'api\models\User',
             'enableAutoLogin' => true,
             'enableSession' => false, // disabled session
             // 'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
@@ -44,6 +47,13 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                ['class' => 'yii\rest\UrlRule',
+                    'controller' => 'user',
+                    // 'extraPatterns' => [
+                    //     'POST login' => 'login',
+                    //     'POST index' => 'index',
+                    // ],
+                ],
             ],
         ],
     ],
