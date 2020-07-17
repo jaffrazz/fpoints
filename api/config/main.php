@@ -25,6 +25,20 @@ return [
                 'application/json' => 'yii\web\JsonParser',
             ],
             'baseUrl' => "/fpoints/api",
+        ], 
+        'response' => [
+            'class' => 'yii\web\Response',
+            'format' =>  \yii\web\Response::FORMAT_JSON,
+            'on beforeSend' => function ($event) {
+                $response = $event->sender;
+                if ($response->data !== null && Yii::$app->request->get('suppress_response_code')) {
+                    $response->data = [
+                        'success' => $response->isSuccessful,
+                        'data' => $response->data,
+                    ];
+                    $response->statusCode = 200;
+                }
+            },
         ],
         'user' => [
             'identityClass' => 'api\v1\models\User',
