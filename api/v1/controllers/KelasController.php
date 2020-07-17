@@ -59,7 +59,7 @@ class KelasController extends MyActiveController
         foreach ($list_siswa as $sis) {
             array_push($siswa, [
                 "id_siswa" => $sis->id_siswa,
-                "id_agama" => $sis->agama->agama,
+                "agama_siswa" => $sis->agama->agama,
                 "nis_siswa" => $sis->nis,
                 "nama_siswa" => $sis->nama_siswa,
                 "tempat_lahir_siswa" => $sis->tempat_lahir_siswa,
