@@ -20,7 +20,7 @@ class UserController extends ActiveController
         $behaviors['authenticator'] = [
             'class' => JWTHttpBearer::class,
             'optional' => [
-                'login',
+                'oauth',
             ],
         ];
 
@@ -67,7 +67,11 @@ class UserController extends ActiveController
             $user->save(0);
 
             return [
-                'access_token' => (string) $user->access_token,
+                'success' => true,
+                'data' => [
+                    'username' => $user->username,
+                    'access_token' => (string) $user->access_token,
+                ]
             ];
         } else {
             return $model->getFirstErrors();
