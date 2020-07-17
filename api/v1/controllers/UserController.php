@@ -1,10 +1,10 @@
 <?php
 namespace api\v1\controllers;
 
-use sizeg\jwt\Jwt;
 use api\modules\JWTHttpBearer;
 use api\v1\models\LoginForm;
 use api\v1\models\User;
+use sizeg\jwt\Jwt;
 use yii;
 use yii\helpers\Url;
 use yii\rest\ActiveController;
@@ -12,6 +12,7 @@ use yii\rest\ActiveController;
 class UserController extends ActiveController
 {
     public $modelClass = User::class;
+
     public function behaviors()
     {
 
@@ -47,7 +48,7 @@ class UserController extends ActiveController
      * @throws \yii\base\Exception
      * @throws \yii\base\InvalidConfigException
      */
-    public function actionLogin()
+    public function actionOauth()
     {
         $model = new LoginForm();
         if ($model->load(Yii::$app->getRequest()->getBodyParams(), '') && $model->login()) {
@@ -64,13 +65,13 @@ class UserController extends ActiveController
                 ->permittedFor(Url::base(true)) // Configures the audience (aud claim)
                 ->identifiedBy('3L3337#(0_0)', true) // Configures the id (jti claim), replicating as a header item
                 ->issuedAt($time) // Configures the time that the token was issue (iat claim)
-                ->expiresAt($time + (3600*2)) // Configures the expiration time of the token (exp claim)
+                ->expiresAt($time + (3600 * 2)) // Configures the expiration time of the token (exp claim)
                 ->withClaim('uid', $user->id) // Configures a new claim, called "uid"
                 ->getToken($signer, $key); // Retrieves the generated token
 
-            $user->access_token = (string)$token;
+            $user->access_token = (string) $token;
             $user->save(0);
-            
+
             return [
                 'access_token' => (string) $user->access_token,
 

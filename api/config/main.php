@@ -24,19 +24,13 @@ return [
             'parsers' => [
                 'application/json' => 'yii\web\JsonParser',
             ],
-            // 'csrfParam' => '_csrf-api',
             'baseUrl' => "/fpoints/api",
         ],
         'user' => [
             'identityClass' => 'api\v1\models\User',
             'enableAutoLogin' => true,
             'enableSession' => false, // disabled session
-            // 'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
         ],
-        // 'session' => [
-        //     // this is the name of the session cookie used for login on the frontend
-        //     'name' => 'advanced-frontend',
-        // ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
             'targets' => [
@@ -55,10 +49,6 @@ return [
             'rules' => [
                 ['class' => 'yii\rest\UrlRule',
                     'controller' => 'user',
-                    // 'extraPatterns' => [
-                    //     'POST login' => 'login',
-                    //     'POST index' => 'index',
-                    // ],
                 ],
             ],
         ],
