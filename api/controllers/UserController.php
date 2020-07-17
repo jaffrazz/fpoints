@@ -1,13 +1,32 @@
 <?php
 namespace api\controllers;
 
+use sizeg\jwt\Jwt;
+use sizeg\jwt\JwtHttpBearerAuth;
 use api\models\LoginForm;
+use api\models\User;
 use yii;
+use yii\helpers\Url;
 use yii\rest\ActiveController;
 
 class UserController extends ActiveController
 {
     public $modelClass = 'api\models\User';
+
+    public function behaviors()
+    {
+
+        $behaviors = parent::behaviors();
+        $behaviors['authenticator'] = [
+            'class' => JwtHttpBearerAuth::class,
+            'optional' => [
+                'login',
+            ],
+        ];
+
+        return $behaviors;
+
+    }
 
     public function actions()
     {
@@ -20,7 +39,7 @@ class UserController extends ActiveController
 
     public function actionIndex()
     {
-        return json_encode(['success' => true]);
+        return ['success' => true];
     }
 
     /**
@@ -33,8 +52,26 @@ class UserController extends ActiveController
     {
         $model = new LoginForm();
         if ($model->load(Yii::$app->getRequest()->getBodyParams(), '') && $model->login()) {
+            /** @var Jwt $jwt */
+            $user = User::findByUsername($model->username);
+            $jwt = Yii::$app->jwt;
+            $signer = $jwt->getSigner('HS256');
+            $key = $jwt->getKey();
+            $time = time();
+
+            // Adoption for lcobucci/jwt ^4.0 version
+            $token = $jwt->getBuilder()
+                ->issuedBy(Url::base(true)) // Configures the issuer (iss claim)
+                ->permittedFor(Url::base(true)) // Configures the audience (aud claim)
+                ->identifiedBy('3L3337#(0_0)', true) // Configures the id (jti claim), replicating as a header item
+                ->issuedAt($time) // Configures the time that the token was issue (iat claim)
+                ->expiresAt($time + 3600) // Configures the expiration time of the token (exp claim)
+                ->withClaim('uid', $user->id) // Configures a new claim, called "uid"
+                ->getToken($signer, $key); // Retrieves the generated token
+
             return [
-                'access_token' => $model->login(),
+                'access_token' => (string) $token,
+
             ];
         } else {
             return $model->getFirstErrors();

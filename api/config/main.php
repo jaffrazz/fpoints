@@ -14,6 +14,12 @@ return [
     'name' => "FPOINTS API",
     'homeUrl' => "/fpoints/api",
     'components' => [
+        'jwt' => [
+            'class' => \sizeg\jwt\Jwt::class,
+            'key' => 'secret',
+            // You have to configure ValidationData informing all claims you want to validate the token.
+            'jwtValidationData' => \api\modules\JwtValidationData::class,
+        ],
         'request' => [
             'parsers' => [
                 'application/json' => 'yii\web\JsonParser',
