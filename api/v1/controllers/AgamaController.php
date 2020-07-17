@@ -1,13 +1,17 @@
 <?php
 namespace api\v1\controllers;
 
+use Yii;
 use api\modules\MyActiveController;
-use api\v1\models\Agama;
+use common\models\AgamaSearch;
 
 class AgamaController extends MyActiveController {
     public $modelClass = Agama::class;
 
     public function actionIndex(){
-        return Agama::find()->asArray()->all();
+
+        // $query = Agama::find();
+        $dataProvider = (new AgamaSearch())->search(Yii::$app->request->queryParams);
+        return $dataProvider;
     }
 }

@@ -25,10 +25,10 @@ return [
                 'application/json' => 'yii\web\JsonParser',
             ],
             'baseUrl' => "/fpoints/api",
-        ], 
+        ],
         'response' => [
             'class' => 'yii\web\Response',
-            'format' =>  \yii\web\Response::FORMAT_JSON,
+            'format' => \yii\web\Response::FORMAT_JSON,
             'on beforeSend' => function ($event) {
                 $response = $event->sender;
                 if ($response->data !== null && Yii::$app->request->get('suppress_response_code')) {
@@ -59,10 +59,16 @@ return [
         ],
         'urlManager' => [
             'enablePrettyUrl' => true,
+            // 'enableStrictParsing' => true,
             'showScriptName' => false,
             'rules' => [
-                ['class' => 'yii\rest\UrlRule',
+                [
+                    'class' => 'yii\rest\UrlRule',
                     'controller' => 'user',
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'agama',
                 ],
             ],
         ],

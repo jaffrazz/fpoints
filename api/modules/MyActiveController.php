@@ -5,7 +5,10 @@ use yii\rest\ActiveController;
 
 class MyActiveController extends ActiveController
 {
-    public $modelClass = User::class;
+    public $serializer = [
+        'class' => 'yii\rest\Serializer',
+        'collectionEnvelope' => 'items',
+    ];
 
     public function behaviors()
     {
