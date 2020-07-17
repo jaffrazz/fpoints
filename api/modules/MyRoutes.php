@@ -5,7 +5,7 @@ class MyRoutes
 {
     public static function get()
     {
-        $MyRoutes = ['agama','hari-efektif'];
+        $MyRoutes = ['agama','hari-efektif', 'hari-tidak-efektif', 'kelas'];
 
         $routes = [
             [

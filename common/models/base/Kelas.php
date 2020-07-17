@@ -138,6 +138,11 @@ class Kelas extends \yii\db\ActiveRecord
         return $this->hasMany(\common\models\Siswa::className(), ['id_siswa' => 'id_siswa'])->viaTable('on_kelas_siswa', ['id_kelas' => 'id_kelas']);
     }
     
+    public function getPegawai()
+    {
+        return $this->hasOne(\common\models\Pegawai::className(), ['id_pegawai' => 'id_pegawai'])->viaTable('wali_kelas', ['id_wali_kelas' => 'id_wali_kelas']);
+    }
+    
 
     /**
      * @inheritdoc
