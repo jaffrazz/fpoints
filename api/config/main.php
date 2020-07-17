@@ -58,18 +58,9 @@ return [
         ],
         'urlManager' => [
             'enablePrettyUrl' => true,
-            // 'enableStrictParsing' => true,
+            'enableStrictParsing' => false,
             'showScriptName' => false,
-            'rules' => [
-                [
-                    'class' => 'yii\rest\UrlRule',
-                    'controller' => 'user',
-                ],
-                [
-                    'class' => 'yii\rest\UrlRule',
-                    'controller' => 'agama',
-                ],
-            ],
+            'rules' => \api\modules\MyRoutes::get()
         ],
     ],
     'params' => $params,
