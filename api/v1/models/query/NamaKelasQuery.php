@@ -1,6 +1,6 @@
 <?php
 
-namespace app\models;
+namespace api\v1\models\query;
 
 /**
  * This is the ActiveQuery class for [[\app\models\NamaKelas]].
