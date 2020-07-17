@@ -10,7 +10,7 @@ return [
     'id' => 'app-api',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
-    'controllerNamespace' => 'api\controllers',
+    'controllerNamespace' => 'api\v1\controllers',
     'name' => "FPOINTS API",
     'homeUrl' => "/fpoints/api",
     'components' => [
@@ -28,7 +28,7 @@ return [
             'baseUrl' => "/fpoints/api",
         ],
         'user' => [
-            'identityClass' => 'api\models\User',
+            'identityClass' => 'api\v1\models\User',
             'enableAutoLogin' => true,
             'enableSession' => false, // disabled session
             // 'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
