@@ -39,6 +39,11 @@ class MyActiveController extends ActiveController
         throw new NotFoundHttpException('No Item found with id ' . $id);
     }
 
+    public function _notFoundAll()
+    {
+        throw new NotFoundHttpException('No Item found');
+    }
+
     public function findModel($id)
     {
         $data = $this->modelClass::findOne($id);
